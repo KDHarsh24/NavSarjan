@@ -7,7 +7,7 @@ function Basic_Info() {
         <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">
           Basic Information
         </h1>
-
+   
         <form>
           {/* Company Information */}
           <h2 className="text-xl font-bold text-orange-500 mb-4">

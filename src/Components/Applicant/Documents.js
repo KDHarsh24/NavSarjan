@@ -4,7 +4,7 @@ function Documents() {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h3 className="text-2xl font-semibold text-orange-600 mb-6">Upload Required Documents</h3>
-
+   
       <div className="space-y-6 mb-6">
         <div>
           <label className="block text-lg text-gray-700 mb-2">GST Certificate</label>

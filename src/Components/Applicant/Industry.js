@@ -41,7 +41,7 @@ function Industry() {
                             <span className="ml-2">{tech}</span>
                         </label>
                     ))}
-                </div>
+                </div>   
             </div>
 
             <div className="mt-8 flex justify-between items-center">

@@ -6,7 +6,7 @@ import Basic_Info from './Applicant/Basic_Info';
 import Team from './Applicant/Team';
 import Financials from './Applicant/Financials';
 import Industry from './Applicant/Industry';
-import Pitch_desk from './Applicant/Pitch_desk';
+import Pitch_desk from './Applicant/Pitch_desk';   
 import Documents from './Applicant/Documents';
 
 const Home = () => {

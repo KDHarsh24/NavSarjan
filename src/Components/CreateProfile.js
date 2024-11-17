@@ -61,7 +61,7 @@ function CreateProfile() {
             className="block text-orange-700 font-medium mb-1"
           >
             Phone Number
-          </label>
+          </label>   
           <input
             type="number"
             id="phoneNumber"

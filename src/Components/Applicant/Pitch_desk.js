@@ -26,7 +26,7 @@ function Pitch_desk() {
           accept="video/*"
           className="block w-full p-3 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
         />
-      </div>
+      </div>   
 
       <div className="flex justify-between items-center">
         <button className="px-6 py-2 bg-white border border-orange-600 text-orange-600 rounded-md hover:bg-orange-50 transition duration-300">

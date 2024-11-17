@@ -11,6 +11,5 @@ function Incubation_Applypage() {
       </Link>
     </div>
   );
-}
-
+}    
 export default Incubation_Applypage;

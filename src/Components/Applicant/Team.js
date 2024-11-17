@@ -21,7 +21,7 @@ function Team() {
               type="text"
               placeholder="Enter Name"
               className="w-full mt-1 block px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
+            />   
           </label>
 
           <label className="block mb-4">
