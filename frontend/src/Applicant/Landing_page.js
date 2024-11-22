@@ -11,6 +11,12 @@ import SwiggyImage from './Images/Swiggy.webp';
 import blinkitimage from'./Images/blinkit.jpeg';
 import Atlassianimage from'./Images/Atlassian.png';
 import Zeptoimage from './Images/Zepto.jpeg';
+import Basic_Info from "./Basic_Info";
+import Team from "./Team";
+import Financials from './Financials';
+import Industry from './Industry';
+import Pitch_desk from './Pitch_desk';   
+import Documents from './Documents';
 
 function Landing_Page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,7 +107,7 @@ function Landing_Page() {
             technology labs, specialized researchers, technical & business
             mentors, and world-class infrastructure.
           </p>
-          <Link to="/Somepath">
+          <Link to="/Basic_Info">
             <button className="mt-4 w-full py-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 transition duration-200">
               Apply Now
             </button>
@@ -176,6 +182,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing_Page />} />
         <Route path="/Somepath" element={<Somepath />} />
+        <Route path="/Basic_Info" element={<Basic_Info/>}/>
+        <Route path="/Team" element={<Team/>}/>
+        <Route path="/Financials" element={<Financials/>}/>
+        <Route path="/Industry" element={<Industry/>}/>
+        <Route path="/Pitch_desk" element={<Pitch_desk/>}/>
+        <Route path="/Documents" element={<Documents/>}/>
       </Routes>
     </BrowserRouter>
   );
