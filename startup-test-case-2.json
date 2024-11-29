@@ -1,0 +1,16 @@
+{
+    "startupName": "PayEase Technologies",
+    "founder": "Nikhil Rajput",
+    "sector": "Finance",
+    "foundedYear": "2023",
+    "initialInvestment": "3500000",
+    "requiredFunding": "15000000",
+    "operationalRisk": "4",
+    "competitionRisk": "8",
+    "regulatoryRisk": "7",
+    "technologicalRisk": "5",
+    "marketRisk": "6",
+    "businessModel": "Digital Payment Aggregator",
+    "targetMarket": "Small and Medium Enterprises",
+    "additionalDetails": "UPI and blockchain-integrated payment solutions"
+}
