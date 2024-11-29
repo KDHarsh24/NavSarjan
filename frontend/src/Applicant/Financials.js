@@ -7,9 +7,9 @@ function Financials() {
       <form className="space-y-8">
         {/* Current Stage Section */}
         <div>
-          <h3 className="text-3xl font-semibold text-blue-700 mb-6">Current Stage</h3>
+          <h3 className="text-3xl font-semibold text-black-700 mb-6">Current Stage</h3>
           <div>
-            <h4 className="text-xl font-medium text-blue-600 mb-4">Funding Stage</h4>
+            <h4 className="text-xl font-medium text-black-600 mb-4">Funding Stage</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 "Bootstrapped",
@@ -33,19 +33,19 @@ function Financials() {
           <div>
             <h4 className="text-xl font-medium text-blue-600 mb-4">Are you raising funds?</h4>
             <label className="block mb-4">
-              <span className="text-gray-700">How much are you looking to raise (in USD)?</span>
+              <span className="text-gray-700">How much are you looking to raise (in INR)?</span>
               <input
                 type="text"
                 className="mt-2 p-3 w-full border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Target fundraise for upcoming round (in USD)"
+                placeholder="Target fundraise for upcoming round (in INR)"
               />
             </label>
             <label className="block mb-4">
-              <span className="text-gray-700">Tentative valuation (in USD)</span>
+              <span className="text-gray-700">Tentative valuation (in INR)</span>
               <input
                 type="text"
                 className="mt-2 p-3 w-full border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Tentative valuation for upcoming round (in USD)"
+                placeholder="Tentative valuation for upcoming round (in INR)"
               />
             </label>
             <h4 className="text-xl font-medium text-blue-600 mb-4">Funding Against</h4>
@@ -105,4 +105,4 @@ function Financials() {
   );
 }
 
-export default Financials;
+export default Financials; 

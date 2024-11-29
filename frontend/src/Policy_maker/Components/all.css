@@ -1,0 +1,87 @@
+
+:root{
+    --white:#FFF;
+    --black:#000;
+    --lite:rgba(255, 255, 255, 0.6);
+    --gray:rgba(1,1,1,0.6);
+    --dark:#101010;
+    --primary:linear-gradient(145deg,#002347,#3399ff);
+    --primary_dark:#002347;
+    --primary_lite:#3399ff;
+    --secondary:#3ab068;
+    --default_font:'Mukta', sans-serif;
+    --title_font:'Kanit', sans-serif;
+}
+.top_menu{
+    background-color:#800000;
+    padding:0.1rem 3rem;
+    margin:0;
+    align-items:center;
+    justify-content:center;
+}
+
+.top_menu .flex_content:last-child{
+    text-align:right;
+}
+
+.top_menu a{
+    color:rgba(209, 209, 50, 0.863);
+    font-size:14px;
+    white-space:nowrap;
+}
+
+.top_menu a:not(:last-child){
+    margin-right:20px;
+}
+
+.top_menu a .fa{
+    margin-right:5px;
+}
+.row_dir{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+.flex_content{
+    width:100%;
+    position:relative;
+}
+.top_sec1{
+    justify-content: left;
+}
+@media screen and (max-width: 500px){
+    .col_dir{
+        display: flex;
+        flex-direction: column;
+    }
+    .center{
+        justify-content: center;
+    }
+}
+
+@keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-30%);
+    }
+  }
+  
+.animate-slide {
+animation: slide 20s linear infinite alternate;
+}
+  
+.custom-scrollbar::-webkit-scrollbar {
+width: 8px;
+}
+    .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+}

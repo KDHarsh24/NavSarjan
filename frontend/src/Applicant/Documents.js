@@ -53,15 +53,17 @@ function Documents() {
             PREVIOUS
           </button>
         </Link>
+        <Link to="/dashboard">
         <button
           type="submit"
           className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300"
         >
           SUBMIT
         </button>
+        </Link>
       </div>
     </div>
   );
-}
+} 
 
 export default Documents;

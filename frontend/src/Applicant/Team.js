@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 
 function Team() {
   return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-white-50 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">
+        <h1 className="text-3xl font-bold text-black-600 mb-6 text-center">
           Team Information
         </h1>
 
         {/* Leadership Team Section */}
         <form className="mb-8">
-          <h2 className="text-xl font-bold text-blue-500 mb-4">
+          <h2 className="text-xl font-bold text-black-500 mb-4">
             Leadership Team
           </h2>
 
           {/* Name Input */}
           <label className="block mb-4">
-            <span className="text-blue-700">Name</span>
+            <span className="text-black-700">Name</span>
             <input
               type="text"
               placeholder="Enter Name"
@@ -28,7 +28,7 @@ function Team() {
 
           {/* LinkedIn Input */}
           <label className="block mb-4">
-            <span className="text-blue-700">LinkedIn Profile</span>
+            <span className="text-black-700">LinkedIn Profile</span>
             <input
               type="url"
               placeholder="Enter LinkedIn Profile URL"
@@ -39,7 +39,7 @@ function Team() {
 
           {/* Role Dropdown */}
           <label className="block mb-4">
-            <span className="text-blue-700">Role</span>
+            <span className="text-black-700">Role</span>
             <select
               className="w-full mt-1 block px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               aria-label="Select role"
@@ -54,7 +54,7 @@ function Team() {
 
           {/* Designation Input */}
           <label className="block mb-4">
-            <span className="text-blue-700">Designation</span>
+            <span className="text-black-700">Designation</span>
             <input
               type="text"
               placeholder="Enter Designation"
@@ -66,7 +66,7 @@ function Team() {
           {/* Save Button */}
           <button
             type="button"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+            className="bg-black-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
           >
             Save
           </button>
@@ -77,13 +77,13 @@ function Team() {
 
         {/* Advisory Board Section */}
         <form className="mb-8">
-          <h2 className="text-xl font-bold text-blue-500 mb-4">
+          <h2 className="text-xl font-bold text-black-500 mb-4">
             Advisory Board
           </h2>
 
           {/* Name Input */}
           <label className="block mb-4">
-            <span className="text-blue-700">Name</span>
+            <span className="text-black-700">Name</span>
             <input
               type="text"
               placeholder="Enter Name"
@@ -94,7 +94,7 @@ function Team() {
 
           {/* LinkedIn Input */}
           <label className="block mb-4">
-            <span className="text-blue-700">LinkedIn Profile</span>
+            <span className="text-black-700">LinkedIn Profile</span>
             <input
               type="url"
               placeholder="Enter LinkedIn Profile URL"
@@ -106,7 +106,7 @@ function Team() {
           {/* Save Button */}
           <button
             type="button"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+            className="bg-black-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
           >
             Save
           </button>
@@ -120,16 +120,17 @@ function Team() {
           <Link to="/Basic_Info">
             <button
               type="button"
-              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-300"
+              className="bg-white-300 text-black-700 px-4 py-2 rounded-md transition duration-300"
               aria-label="Navigate to previous section"
             >
               Previous
             </button>
           </Link>
+
           <Link to="/Financials">
             <button
               type="button"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+              className=" text-white px-4 py-2 rounded-md bg-blue-600 transition duration-300"
               aria-label="Navigate to next section"
             >
               Next
@@ -141,4 +142,4 @@ function Team() {
   );
 }
 
-export default Team;
+export default Team; 

@@ -11,14 +11,14 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function Basic_Info() {
+function Basic_info() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center drop-shadow-sm">
           Basic Information
         </h1>
-        <form>
+        <form>  
           {/* Company Information */}
           <h2 className="text-2xl font-semibold text-gray-700 mb-6">
             Company Information
@@ -48,12 +48,7 @@ function Basic_Info() {
                   placeholder="Startup Name"
                   fullWidth
                 />
-                <TextField
-                  label="Company Size"
-                  placeholder="Team Size"
-                  type="number"
-                  fullWidth
-                />
+               
               </div>
 
               <div className="mt-6">
@@ -68,18 +63,30 @@ function Basic_Info() {
             </div>
 
             {/* Address Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-              <TextField label="Country" placeholder="Country Name" fullWidth />
-              <TextField label="State" placeholder="State Name" fullWidth />
-              <TextField label="City" placeholder="City Name" fullWidth />
+
+            <div className="mt-6">
+              <FormLabel className="text-gray-700 mb-2 block">
+                Address
+              </FormLabel>
+              <TextareaAutosize
+                minRows={3}
+                placeholder="Address"
+                className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              />
             </div>
 
-            <TextField
-              label="Elevator Pitch"
-              placeholder="We help (x) do (y) by doing (z)"
-              fullWidth
-              className="mt-6"
-            />
+
+            
+            <div className="mt-6">
+              <FormLabel className="text-gray-700 mb-2 block">
+                Elevator Pitch
+              </FormLabel>
+              <TextareaAutosize
+                minRows={3}
+                placeholder="We help (x) do (y) by doing (z)"
+                className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              />
+            </div>
 
             <div className="mt-6">
               <FormLabel className="text-gray-700 mb-2 block">
@@ -93,31 +100,7 @@ function Basic_Info() {
             </div>
           </div>
 
-          {/* Product Stage */}
-          <div className="mt-8">
-            <FormLabel className="text-gray-600 font-medium mb-4 block">
-              Product Stage
-            </FormLabel>
-            <RadioGroup row>
-              {[
-                "Idea",
-                "Proof of Concept",
-                "Prototype Development",
-                "Ideation",
-                "Minimum Viable Product Developed",
-                "Commercialized",
-                "Other",
-              ].map((stage, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={stage}
-                  control={<Radio color="primary" />}
-                  label={stage}
-                />
-              ))}
-            </RadioGroup>
-          </div>
-
+          
           {/* Business Models */}
           <div className="mt-8">
             <FormLabel className="text-gray-600 font-medium mb-4 block">
@@ -171,4 +154,5 @@ function Basic_Info() {
   );
 }
 
-export default Basic_Info;
+export default Basic_info;
+

@@ -1,0 +1,9 @@
+[
+  { "id": 1, "amount": "$2M", "project": "Project 1", "date": "Dec 1" },
+  { "id": 2, "amount": "$1M", "project": "Project 2", "date": "Nov 20" },
+  { "id": 3, "amount": "$500K", "project": "Project 3", "date": "Nov 15" },
+  { "id": 4, "amount": "$3M", "project": "Project 4", "date": "Nov 10" },
+  { "id": 5, "amount": "$1.5M", "project": "Project 5", "date": "Nov 5" },
+  { "id": 6, "amount": "$2.5M", "project": "Project 6", "date": "Oct 30" },
+  { "id": 7, "amount": "$3.5M", "project": "Project 7", "date": "Oct 25" }
+]
