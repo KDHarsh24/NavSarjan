@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Project 1",
+    "description": "Description for Project 1",
+    "status": "In Progress"
+  },
+  {
+    "id": 2,
+    "name": "Project 1",
+    "description": "Description for Project 1",
+    "status": "In Progress"
+  },
+  {
+    "id": 3,
+    "name": "Project 1",
+    "description": "Description for Project 1",
+    "status": "In Progress"
+  },
+  {
+    "id": 4,
+    "name": "Project 1",
+    "description": "Description for Project 1",
+    "status": "In Progress"
+  },
+  {
+    "id": 5,
+    "name": "Project 1",
+    "description": "Description for Project 1",
+    "status": "In Progress"
+  },
+  {
+    "id": 6,
+    "name": "Project 2",
+    "description": "Description for Project 2",
+    "status": "Completed"
+  },
+  {
+    "id": 7,
+    "name": "Project 2",
+    "description": "Description for Project 2",
+    "status": "Completed"
+  },
+  {
+    "id": 8,
+    "name": "Project 2",
+    "description": "Description for Project 2",
+    "status": "Completed"
+  },
+  {
+    "id": 9,
+    "name": "Project 2",
+    "description": "Description for Project 2",
+    "status": "Completed"
+  }
+]
