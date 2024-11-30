@@ -1,7 +1,0 @@
-[
-  { "id": 1, "name": "Policy 1", "status": "Active" },
-  { "id": 2, "name": "Policy 2", "status": "Pending Updates" },
-  { "id": 3, "name": "Policy 3", "status": "Review In Progress" },
-  { "id": 4, "name": "Policy 4", "status": "Archived" },
-  { "id": 5, "name": "Policy 5", "status": "Active"}
-]

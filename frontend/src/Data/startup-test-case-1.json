@@ -1,0 +1,16 @@
+{
+    "startupName": "MediConnect Solutions",
+    "founder": "Dr. Aditya Sharma",
+    "sector": "Healthcare",
+    "foundedYear": "2022",
+    "initialInvestment": "5000000",
+    "requiredFunding": "20000000",
+    "operationalRisk": "5",
+    "competitionRisk": "7",
+    "regulatoryRisk": "6",
+    "technologicalRisk": "4",
+    "marketRisk": "5",
+    "businessModel": "Telemedicine Platform",
+    "targetMarket": "Urban Middle-Class Healthcare Consumers",
+    "additionalDetails": "AI-powered health consultation and medical record management system"
+}
