@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "John Doe", "project": "Project 1", "status": "In Progress" },
+  { "id": 2, "name": "Jane Smith", "project": "Project 2", "status": "Completed" },
+  { "id": 3, "name": "Michael Johnson", "project": "Project 3", "status": "In Progress" },
+  { "id": 4, "name": "Emily Davis", "project": "Project 4", "status": "Completed" },
+  { "id": 5, "name": "David Lee", "project": "Project 5", "status": "Completed" },
+  { "id": 6, "name": "Sarah Brown", "project": "Project 6", "status": "In Progress" }
+]

@@ -11,6 +11,7 @@ import ProfilePage from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import Homepage from './pages/Home/Homepage';
 import StartupInvestmentTracker from './Data/startuptrack';
+import PolicyMakerLandingPage from './pages/Policy_maker/Components/policymakerpage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/startups/new'} exact={true} element={<StartupForm/>}/>
           <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage/>}/>
+          <Route path={'/dashboard/policymaker'} exact={true} element={<PolicyMakerLandingPage/>}/>
         </Route>
       </Routes>
   </BrowserRouter>
