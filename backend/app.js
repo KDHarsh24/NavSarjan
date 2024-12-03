@@ -29,17 +29,7 @@ app.get('/', (req, res) => {
 });
 
 // Custom Routes
-app.use("/home/startup", startUpRoutes); // Ensure startUpRoutes is properly exported and matches
-
-
-app.get('/',(req,res)=>{
-    
-    res.send("<h6>Welcome to backened </h6>");
-})
-
-// Routes
-app.use('/home/startUp', startUpRoutes);
-
+app.use("/home/startUp", startUpRoutes); // Ensure startUpRoutes is properly exported and matches
 
 
 

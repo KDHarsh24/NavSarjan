@@ -1,5 +1,5 @@
 import express from "express";
-import { dashboardDetail } from "../Controller/startUpController.js"; // Ensure this controller is properly implemented
+import { dashboardDetail} from "../Controller/startUpController.js"; // Ensure this controller is properly implemented
 
 const router = express.Router();
 

@@ -306,7 +306,7 @@ const Startup = () => {
     
     useEffect(()=>{
       console.log("checking api");
-      axios.get('http://localhost:3000/home/startUp/detail')
+      axios.get('http://localhost:8081/home/startUp/detail')
             .then(res=>{
               
               console.log(res.data);

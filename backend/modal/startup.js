@@ -1,13 +1,23 @@
 import mongoose from "mongoose";
 
-// Define the Startup Schema
+const ProductSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  price: String
+});
+
+const SocialSchema = new mongoose.Schema({
+  platform: String,
+  url: String
+});
+
 const StartupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
   industry: {
-    type: [String], // Array of strings for multiple industries
+    type: [String],
     required: true,
   },
   description: {
@@ -23,64 +33,63 @@ const StartupSchema = new mongoose.Schema({
     required: true,
   },
   coFounders: {
-    type: [String], // Array of co-founder names
+    type: [String],
     default: [],
   },
   model: {
-    type: [String], // Array of business models
+    type: [String],
     default: [],
   },
   funding: {
-    type: String, // Funding amount as a string
+    type: String,
     default: "0",
   },
   established: {
-    type: String, // Date when the startup was established
+    type: String,
     required: true,
   },
   logo: {
-    type: String, // URL to the startup's logo
+    type: String,
     default: "",
   },
   images: {
-    type: [String], // Array of URLs to additional images
+    type: [String],
     default: [],
   },
   social: {
-    type: [String], // Array of social media links
+    type: [SocialSchema], // Updated to accept object structure
     default: [],
   },
   incorporated: {
-    type: Boolean, // Indicates if the startup is incorporated
+    type: Boolean,
     default: false,
   },
   address: {
-    type: String, // Address of the startup
+    type: String,
     required: true,
   },
   pitch: {
-    type: String, // Elevator pitch for the startup
+    type: String,
     default: "",
   },
-  documents: {
-    type: [String], // Array of document URLs
-    default: [],
-  },
+  documents: [{
+    title: String,
+    url: String
+  }], // Updated to match document structure in data
   products: {
-    type: [String], // Array of product names or descriptions
+    type: [ProductSchema], // Updated to accept object structure
     default: [],
   },
   website: {
-    type: String, // Website URL
+    type: String,
     default: "",
   },
   graph: {
-    type: mongoose.Schema.Types.Mixed, // Object for storing graph-related data
+    type: mongoose.Schema.Types.Mixed,
     default: {},
   },
 }, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
+  timestamps: true,
 });
 
-// Export the Model
 export default mongoose.model("Startup", StartupSchema, "startup");

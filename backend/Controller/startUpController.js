@@ -1,7 +1,8 @@
 
 import startup from '../modal/startup.js'
 
-export const dashboardDetail = async (req, res) => {
+export const dashboardDetail = async (req, res) => 
+  {
     try {
       // Fetch all documents from the startup collection
       const startups = await startup.find(); 
