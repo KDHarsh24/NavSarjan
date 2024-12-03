@@ -4,7 +4,6 @@ import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Project from './pages/Project/Project';
 import ProjectProfile from './pages/Project/ProjectProfile';
-import Startup from './pages/Startup/Startup';
 import StartupProfile from './pages/Startup/Startupprofile';
 import ProfilePage from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
@@ -40,7 +39,6 @@ function App() {
             <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm/>}/>
           </Route>
           <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
-          <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
           <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
