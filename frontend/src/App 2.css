@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+  font-family: Poppins;
+  background: #ebe9e9;
+  position: relative;
+  top: 0px !important;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+}
+header{
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 3;
+}
+header .headerlogo{
+  text-decoration: none;
+}
+header .headerlogo img{
+  width: 120px;
+  padding: 5px;
+}
+header button.rounded-circle{
+  min-width: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #f0f5ff !important;
+  color: #292929;
+  border-radius: 100%;
+}
+header button.rounded-circle:hover{
+  color: #0858f7;
+  transition: 0.2s ease-in-out;
+}
+.searchbox{
+  width: 380px;
+  height: 40px;
+  background: #f0f5ff;
+  border-radius: 6px;
+  display: flex;
+  margin-left: 10px;
+  align-items: center;
+  padding-left: 10px;
+}
+.searchbox input{
+  background: transparent;
+  border: 0px;
+  outline: none;
+  width: 90%;
+  padding-left: 10px;
+  font-size: 15px;
+  color: #292929;
+}
+.searchbox input::-webkit-input-placeholder{
+  color: rgba(0, 0, 0, 0.5);
+}
+.searchbox svg {
+  font-size: 18px;
+  color: #292929;
+}
+.myAcc{
+  text-align: left !important;
+  color: #0858f7;
+}
+.myAcc .userImg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 40px;
+  height: 40px; 
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #0858f7;
+  padding: 3px;
+  border-radius: 100%;
+}
+.part3 Button{
+  margin-right: 5px;
+}
+.myAcc{
+  text-align: left !important;
+  color: #000 !important;
+}
+.myAcc .userImg .rounded-circle{
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.myAcc .userImg .rounded-circle img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.myAcc .userInfo{
+  padding-left: 10px;
+
+}
+.myAcc .userInfo h4{
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.myAcc .userInfo p{
+  margin: 0px;
+  font-size: 11px;
+  color: #292929;
+  opacity: 0.7;
+}
+
+.skiptranslate iframe{
+  visibility: hidden !important;
+}
+.goog-te-gadget-simple{
+  margin-right: 10px;
+  font-size: 0.5px;
+  border-radius: 100%;
+  width: 40px;
+  height: 30px;
+  margin-left: 10px;
+  opacity: 0% !important;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+.langbtn{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  z-index: 0;
+}
+::-webkit-scrollbar{
+  width: 5px; 
+  color: red;
+}
+::-webkit-scrollbar-thumb{
+  width: 5px;
+}
+.main .sidebarWrapper{
+  width: 20%;
+  flex: 0 0 20%;
+  transition: all 0.5s ease-in-out;
+}
+
+.main .sidebarWrapper.toggle{
+  width: 0%;
+  flex: 0 0 0%;
+  transition: all 1s ease-in-out;
+}
+.main .sidebarWrapper.toggle .sidebar{
+  left: -100%;
+  transition: all 1s ease-in-out;
+}
+.main .sidebarWrapper .sidebar{
+  width: 20%;
+  height: 100vh;
+  max-height: calc(100%-80px);
+  position: fixed;
+  top: 70px;
+  left: 0px;
+  background: #fff;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  transition: all 1s ease-in-out;
+}
+.main .sidebarWrapper .sidebar ul{
+  margin-bottom: 0px;
+  padding: 0px 7px;
+}
+.main .sidebarWrapper .sidebar ul li{
+  list-style: none;
+}
+.main .sidebarWrapper .sidebar ul li Button{
+  width: 100% !important;
+  padding: 15px 4px 15px 2px;
+  margin-left: 5px;
+  color: #000;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px !important;
+}
+.main .sidebarWrapper .sidebar ul li Button *{
+  color: rgba(0, 0, 0, 0.7);
+}
+.main .sidebarWrapper .sidebar ul li Button:hover{
+  background: #f1f1f1 !important;
+}
+.main .sidebarWrapper .sidebar ul li Button .icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+  font-size: 22px;
+  margin-right: 10px;
+}
+.main .sidebarWrapper .sidebar ul li Button .arrow{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  opacity: 0.7;
+  font-size: 22px;
+  margin-left: auto;
+}
+.logoutWrapper{
+  margin: 0px 5px;
+  margin-left: 5px;
+  position: relative;
+  border-radius: 10px;
+  top: 7%;
+  overflow: hidden;
+}
+.logoutWrapper .logoutBox{
+  width: 100%;
+  height: 120px;
+  background: #bcd2fd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.logoutWrapper .logoutBox::before{
+  content: ''; 
+  width: 80px;
+  height: 80px;
+  background-color: #0858f7;
+  border-radius: 100%;
+  position: absolute;
+  top: -30px;
+  right: -10px;
+}
+.logoutWrapper .logoutBox::after{
+  content: ''; 
+  width: 25px;
+  height: 25px;
+  background-color: #0858f7;
+  border-radius: 100%;
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  z-index: 0;
+}
+.logoutWrapper .logoutBox Button{
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.logoutWrapper .logoutBox Button svg{
+  margin-right: 5px;
+  font-size: 18px !important;
+}
+
+.main .content{
+  padding: 80px 30px 30px 20px;
+  width: 80%;
+  flex: 0 0 80%;
+  transition: all 1s ease-in-out;
+}
+
+.dashboardBoxWrapper{
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.dashboardBoxWrapper .dashboardBox{
+  width: 48%;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 15px;
+}
+.projectStats .dashboardBox{
+  height: 150px;
+  width: 31%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.projectStats .dashboardBox .dashboardBoxlogo svg{
+  font-size: 50px;
+  color: #29292988;
+}
+.projectStats .dashboardBox .dashboardBoxdescribe{
+  color: #ffffff;
+  font-size: 22px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.projectStats .dashboardBox .dashboardBoxdescribe .dashboardBoxval{
+  font-size: 36px;
+  padding: 0px 0px 10px 10px;
+}
+.projectStats .dashboardBox .dashboardBoxdescribe, .projectStats .dashboardBox .dashboardBoxlogo{
+  padding: 15px;
+}
+.projectTop{
+  padding: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.projectTop .projectDash{
+  height: 80px;
+  background-color: #f0f5ff;
+  margin: 10px 0px 20px 0px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 600;
+  padding: 30px;
+}
+.projectTop .projectStats{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.dashboardBoxWrapperRow .box{
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+}
+.main .content.toggle{
+  width: 100%;
+  flex: 0 0 100%;
+  transition: all 1s ease-in-out;
+}
+.project{
+  font-size: 50px;
+}
+.filterButton{
+  padding: 20px;
+}
+.tablerows{
+  text-align: center;
+}
+.even-row {
+  background-color: #f5f5f5;
+}
+.odd-row {
+  background-color: #ffffff;
+}
+.even-row *, .odd-row *{
+  padding: 10px 0px 10px 0px !important;
+}
+.even-row *:nth-child(2), .odd-row *:nth-child(2){
+  padding: 0px 0px 0px 0px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+
+}
+.profilebox{
+  background-color: transparent;
+  padding: 0px !important;
+}
+.profileimagebox{
+  padding: 0px !important;
+}
+.firstboxprofile div label{
+  margin-bottom: 3.92499999px !important;
+}
+.startupproduct{
+  display: flex !important;
+  flex-direction: column !important;
+}
+/* Hide Google Translate branding */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.goog-logo-link {
+  display: none !important;
+}
+.goog-te-gadget {
+  font-size: 0 !important;
+}
+.goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #000 !important;
+}
+.goog-te-gadget-simple span {
+  display: none !important;
+}
+.goog-te-gadget-simple:after {
+  content: "Change Language";
+  font-size: 14px;
+  color: #000;
+}
+.revenue-line-chart{
+  height: fit-content;
+}

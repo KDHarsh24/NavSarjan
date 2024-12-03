@@ -1,0 +1,16 @@
+{
+    "startupName": "FarmTech Innovations",
+    "founder": "Ravi Patel",
+    "sector": "Other",
+    "foundedYear": "2021",
+    "initialInvestment": "2500000",
+    "requiredFunding": "10000000",
+    "operationalRisk": "6",
+    "competitionRisk": "5",
+    "regulatoryRisk": "5",
+    "technologicalRisk": "7",
+    "marketRisk": "4",
+    "businessModel": "Smart Farming IoT Solutions",
+    "targetMarket": "Agricultural Cooperatives and Large Farmers",
+    "additionalDetails": "AI-driven crop monitoring and precision agriculture platform"
+}
