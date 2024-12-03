@@ -12,10 +12,6 @@ import './all.css'
 
 const PolicyMakerLandingPage = () => {
   return (
-    <div className="flex min-h-screen">
-
-      <div className="flex-1 bg-gray-100">
-        {/* Main Content */}
 
         <div className="p-8 space-y-8">
           {/* Dashboard Overview */}
@@ -45,8 +41,6 @@ const PolicyMakerLandingPage = () => {
           <Feedback/>
 
         </div>
-      </div>
-    </div>
   );
 };
 
