@@ -305,8 +305,10 @@ const Startup = () => {
     const projectDash = [{text: 'Registered Startups', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Total revenue', val: 'Rs. 100cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
     
     useEffect(()=>{
+      console.log("checking api");
       axios.get('http://localhost:3000/home/startUp/detail')
             .then(res=>{
+              
               console.log(res.data);
               //update projectRows
             })

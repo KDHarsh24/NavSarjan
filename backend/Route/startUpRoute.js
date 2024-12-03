@@ -3,7 +3,8 @@ import { dashboardDetail } from "../Controller/startUpController.js";
 
 const router = express.Router();
 
-router.get('/detail',);
+router.get('/detail',dashboardDetail);
+
 
 export default router;
 

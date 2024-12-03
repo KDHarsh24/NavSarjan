@@ -29,7 +29,7 @@ app.get('/',(req,res)=>{
 })
 
 // Routes
-app.use("/home/startUp", startUpRoutes);
+app.use('/home/startUp', startUpRoutes);
 
 
 
@@ -38,8 +38,7 @@ app.use("/home/startUp", startUpRoutes);
 
 //making port 
 const port= '8081' || process.env.PORT ;
-
-httpServer.listen(port,()=>{
+app.listen(port,()=>{
     console.log(`server listening at http://localhost:${port}`)
 })
 
