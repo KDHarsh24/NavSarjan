@@ -4,8 +4,7 @@ import DashboardBox from "../Dashboard/DasboardBox";
 import { AiOutlineCalculator } from "react-icons/ai";
 import { FaLightbulb, FaMoneyBill, FaThList } from 'react-icons/fa';
 import axios from 'axios';
-import { useState,useEffect } from "react";
-
+import { useState, useEffect } from "react";
 
 function countDistinctValues(arr, key) {
     const distinctValues = new Set(arr.map(item => item[key]));
@@ -13,13 +12,15 @@ function countDistinctValues(arr, key) {
 }
 
 const Startup = () => {
-    const projectColumns =[
+    const [projectRows, setProjectRows] = useState([]); // State to store project data
+
+    const projectColumns = [
         { field: "name", headerName: "Brand", flex: 1.5,
-        renderCell: (params) => (
-            <Link to='startupprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
-              {params.row.name}
-            </Link>
-          ),
+            renderCell: (params) => (
+                <Link to='startupprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
+                    {params.row.name}
+                </Link>
+            ),
         },
         { field: "description", headerName: "Description", flex: 3.2 },
         { field: "startDate", headerName: "Revenue", flex: 0.8 },
@@ -306,7 +307,7 @@ const Startup = () => {
     
     useEffect(()=>{
       console.log("checking api");
-      axios.get('http://localhost:8081/home/startUp/detail')
+      axios.get('http://localhost:3000/home/startUp/detail')
             .then(res=>{
               
               console.log(res.data);
@@ -327,20 +328,21 @@ const Startup = () => {
 
 
     return (
-    <div classprojectName="projectpage">
-        <div className="projectTop">
-            <div className="projectDash">
-                <span>Startups</span> <FaLightbulb/>
+        <div className="projectpage">
+            <div className="projectTop">
+                <div className="projectDash">
+                    <span>Startups</span> <FaLightbulb />
+                </div>
+                <div className="projectStats w-100">
+                    {projectDash.map((row, index) => (
+                        <DashboardBox key={index} valUser={row} color={row.color} />
+                    ))}
+                </div>
             </div>
-            <div className="projectStats w-100">
-            {projectDash.map((row, index) => {
-                return(
-                    <DashboardBox valUser={row} color={row.color}/>
-                ); })}
-            </div>
+            {/* Ensure DataTable is properly receiving the data */}
+            <DataTable columns={projectColumns} initialrows={projectRows} />
         </div>
-        <DataTable columns={projectColumns} initialrows={projectRows}/>
-    </div>
     );
-}
-export default Startup
+};
+
+export default Startup;
