@@ -56,6 +56,7 @@ export default function ProfilePage({email}) {
     const handleSave = (e) => {
         setIsEditing(false); // Save changes and exit edit mode
         e.preventDefault();
+        setProfile({...profile, image: photo})
         console.log("data is: ", profile)
 
     };

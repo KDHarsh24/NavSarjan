@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box } from "@mui/material";
+import { Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
 import { CloudUpload as CloudUploadIcon, Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
@@ -14,20 +14,24 @@ const StartupProfile = () => {
   const [editMode, setEditMode] = useState(false);
   const [startup, setStartup] = useState({
     name: "TechVision Inc.",
-    industry: "Technology",
+    industry: ["Technology"],
     description: "An innovative tech startup focusing on AI-driven solutions.",
     founder: "Jane Doe",
     founderuserid: 'ethan.hunt@example.com',
     coFounders: ["John Smith", "Alice Johnson"],
+    model: ['B2B', 'B2B2C'],
     funding: "$10M",
     established: "2018",
-    location: "San Francisco, CA",
     logo: "https://via.placeholder.com/100",
     images: [
-      "https://via.placeholder.com/300",
+      "https://via.placeholder.com/500",
       "https://via.placeholder.com/300",
       "https://via.placeholder.com/300",
     ],
+    social: [{handle: 'website',link: 'https://www.google.com',}, {handle: 'Instagram', link: 'nhi hai hmara'}],
+    incorporated: true,
+    address: 'Mountain View, \nPalo Altos, \nCalifornia',
+    pitch: 'Please Invest',
     documents: [
       { name: "Business Plan.pdf", url: "https://example.com/business-plan.pdf" },
       { name: "Pitch Deck.ppt", url: "https://example.com/pitch-deck.ppt" },
@@ -46,14 +50,13 @@ const StartupProfile = () => {
     graph: {
       label: "Revenue, Profit & Net Profit (in Rs.(lac))",
       data: [
-        { label: "2019", revenue: 5, profit: 3, netProfit: 2 },
-        { label: "2020", revenue: 12, profit: 8, netProfit: 6 },
-        { label: "2021", revenue: 18, profit: 14, netProfit: 10 },
-        { label: "2022", revenue: 25, profit: 20, netProfit: 15 },
+        { label: "2019", revenue: 5, profit: 3, netProfit: 2, document: null },
+        { label: "2020", revenue: 12, profit: 8, netProfit: 6, document: null },
+        { label: "2021", revenue: 18, profit: 14, netProfit: 10, document: null },
+        { label: "2022", revenue: 25, profit: 20, netProfit: 15, document: null },
       ],
     },
   });
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStartup({ ...startup, [name]: value });
@@ -128,7 +131,17 @@ const StartupProfile = () => {
     const updatedImages = startup.images.filter((_, i) => i !== index);
     setStartup({ ...startup, images: updatedImages });
   };
-
+  
+  const handleYearDocumentUpload = (yearIndex, e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newDocument = { name: file.name, url: URL.createObjectURL(file) };
+      const updatedGraph = [...startup.graph.data];
+      updatedGraph[yearIndex].document = newDocument;
+      setStartup({ ...startup, graph: { ...startup.graph, data: updatedGraph } });
+    }
+  };
+  
   const barChartData = {
     labels: startup.graph.data.map(item => item.label),
     datasets: [
@@ -185,8 +198,7 @@ const StartupProfile = () => {
   };
   return (
     <div>
-     <Button
-      variant="contained"
+     <Button variant="contained"
       color={editMode ? "secondary" : "primary"}
       onClick={() => {
         if (editMode) {
@@ -215,9 +227,34 @@ const StartupProfile = () => {
             <CardContent>
               <TextField fullWidth label="Company Name" variant="outlined" value={startup.name} name="name" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <TextField fullWidth label="Industry" variant="outlined" value={startup.industry} name="industry" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
-              <TextField fullWidth label="Description" variant="outlined" value={startup.description} name="description" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <TextField fullWidth multiline label="Description" variant="outlined" value={startup.description} name="description" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <Button style={{marginBottom: '20px'}} variant="contained" color="primary" onClick={() => navigate(`/dashboard/profile/${startup.founderuserid}`)}>Founder: {startup.founder}</Button>
               <TextField fullWidth label="Co-Founders" variant="outlined" value={startup.coFounders.join(", ")} name="coFounders" onChange={(e) => setStartup({ ...startup, coFounders: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <div className="mt-6">
+                <FormLabel className="text-gray-700 block mb-2">
+                  Is your startup incorporated?
+                    </FormLabel>
+                  <FormControlLabel control={<Checkbox color="primary" defaultChecked={startup.incorporated}/>}  disabled={!editMode}/>
+              </div>
+              <TextField fullWidth multiline label="Address" variant="outlined" value={startup.address} name="Address" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth multiline label="Elevator Pitch" variant="outlined" value={startup.pitch} name="pitch" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth label="Model" variant="outlined" value={startup.model.join(", ")} name="model" onChange={(e) => setStartup({ ...startup, model: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <h3 className="text-2xl font-semibold text-gray-700 mt-8 mb-6">
+                        Social Links
+                    </h3>
+                    {startup.social.map(
+                        (socials, index) => (
+                        <TextField
+                            key={index}
+                            label={socials.handle}
+                            value={socials.link}
+                            type="url"
+                            fullWidth
+                            disabled={!editMode}
+                            className="mb-4"
+                        />
+                        )
+                    )}
             </CardContent>
           </Grid>
         </Grid>
@@ -235,6 +272,40 @@ const StartupProfile = () => {
                   <TextField label="Revenue" value={year.revenue} onChange={(e) => handleGraphDataChange(index, "revenue", e.target.value)}/>
                   <TextField label="Profit" value={year.profit} onChange={(e) => handleGraphDataChange(index, "profit", e.target.value)}/>
                   <TextField label="Net Profit" value={year.netProfit} onChange={(e) => handleGraphDataChange(index, "netProfit", e.target.value)}/>
+                  
+                  <div>
+                    {year.document ? (
+                      <div>
+                        <a href={year.document.url} target="_blank" rel="noopener noreferrer">
+                          {year.document.name}
+                        </a>
+                        {editMode && (
+                          <IconButton
+                            color="error"
+                            onClick={() => handleGraphDataChange(index, "document", null)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        )}
+                      </div>
+                    ) : (
+                      editMode && (
+                        <Button
+                          variant="contained"
+                          component="label"
+                          startIcon={<CloudUploadIcon />}
+                          color="primary"
+                        >
+                          Add Document
+                          <input
+                            type="file"
+                            hidden
+                            onChange={(e) => handleYearDocumentUpload(index, e)}
+                          />
+                        </Button>
+                      )
+                    )}
+                  </div>
                   <IconButton onClick={() => handleRemoveGraphData(index)} color="error">
                     <DeleteIcon />
                   </IconButton>

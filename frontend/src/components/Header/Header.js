@@ -88,7 +88,7 @@ const Header = ({userdata}) => {
                 <div className="container-fluid w-100">
                     <div className="col d-flex align-items-center">
                         <div className="col-sm-2 part1">
-                            <Link to={'/'} className="d-flex align-items-center headerlogo">
+                            <Link to={'/dashboard'} className="d-flex align-items-center headerlogo">
                                 <img src={logo} alt="NavSarjan"/>
                             </Link>
                         </div>

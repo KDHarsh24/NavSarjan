@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import {RxDashboard} from 'react-icons/rx'
 import { FaAngleRight, FaProjectDiagram, FaSeedling, FaFileAlt, FaHandshake } from "react-icons/fa";
 import { AiFillProject, AiOutlineLogout } from "react-icons/ai";
 import { MdTrendingUp, MdEmojiObjects } from "react-icons/md";
@@ -11,16 +10,16 @@ import {FaGear} from "react-icons/fa6"
 
 const Sidebar = ({userlog}) => {
     const investor = [
-        { text: "Investments", icon: <MdTrendingUp />, link: "Investments" },
+        { text: "Investments", icon: <MdTrendingUp />, link: "investments" },
         { text: "Projects", icon: <AiFillProject />, link: "projects" },
         { text: "Startups", icon: <MdEmojiObjects />, link: "startups" }
     ];
     const user = [
-        { text: "My Project", icon: <FaProjectDiagram />, link: "MyProject" },
+        { text: "My Project", icon: <FaProjectDiagram />, link: "myprojects" },
         { text: "Projects", icon: <AiFillProject />, link: "projects" },
         { text: "Startups", icon: <MdEmojiObjects />, link: "startups" },
-        { text: "My Brand", icon: <FaSeedling />, link: "MyBrand" },
-        { text: "Patents", icon: <FaFileAlt />, link: "Patents" }
+        { text: "My Brand", icon: <FaSeedling />, link: "mystartups" },
+        { text: "Patents", icon: <FaFileAlt />, link: "patents" }
     ];
         
     let valUser = user;
@@ -30,15 +29,6 @@ const Sidebar = ({userlog}) => {
     return(
     <div className="sidebar">
         <ul>
-            <li>
-                <Link to="/">
-                <Button className="w-100">
-                    <span className="icon"><RxDashboard/></span>
-                        Dashboard
-                    <span className="arrow"><FaAngleRight/></span>
-                </Button>
-                </Link>
-            </li>
             {valUser.map((row, index) => {
                 return(
                     <li key={index}>

@@ -316,7 +316,7 @@ header button.rounded-circle:hover{
   padding: 15px;
 }
 .projectTop{
-  padding: 16px;
+  padding: 16px 16px 0px 16px;
   display: flex;
   width: 100%;
   flex-direction: column;
