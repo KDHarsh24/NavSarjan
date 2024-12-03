@@ -7,7 +7,7 @@ export const dashboardDetail = async (req, res) =>
     try {
       // Fetch all documents from the startup collection
       const startups = await Startup.find(); 
-  
+      console.log("data: "+startups)
       // Send data as response
       res.status(200).json({
         success: true,

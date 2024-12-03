@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
 import { CloudUpload as CloudUploadIcon, Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { postData } from "../../Data/backendmsg";
+import axios from "axios";
+
+
+//take user from login id
+
+
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -13,6 +19,34 @@ const StartupProfile = () => {
   const [response, setResponse] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [startup, setStartup] = useState({
+    name: "",
+    logo: "",
+    industry: "",
+    description: "",
+    coFounders: [],
+    incorporated: false,
+    address: "",
+    pitch: "",
+    model: [],
+    social: [],
+    graph: {
+      label: "",
+      data: [],
+    },
+    products: [],
+    images: [],
+    documents: [],
+    founder: "",
+    founderuserid: "",
+  });
+  const [barChartData, setBarChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+
+
+  /*const [startup, setStartup] = useState({
     name: "TechVision Inc.",
     industry: ["Technology"],
     description: "An innovative tech startup focusing on AI-driven solutions.",
@@ -57,6 +91,54 @@ const StartupProfile = () => {
       ],
     },
   });
+
+*/
+//do not know user sent user as parameter to get detail
+useEffect(() => {
+    axios.get('http://localhost:8081/home/startUp/detail')
+         .then((res) => {
+           const data = res.data.data;
+           console.log("data: "+res.data.data);
+           setStartup(data[0]);
+         })
+         .catch((err) => console.log("error: " + err));
+}, []);
+
+useEffect(() => {
+  if (startup?.graph?.data && startup?.graph?.label) {
+    setBarChartData({
+      labels: startup.graph.data.map((item) => item.label),
+      datasets: [
+        {
+          label: startup.graph.label,
+          data: startup.graph.data.map((item) => item.revenue),
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
+        },
+        {
+          label: "Profit",
+          data: startup.graph.data.map((item) => item.profit),
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1,
+        },
+        {
+          label: "Net Profit",
+          data: startup.graph.data.map((item) => item.netProfit),
+          backgroundColor: "rgba(153, 102, 255, 0.5)",
+          borderColor: "rgba(153, 102, 255, 1)",
+          borderWidth: 1,
+        },
+      ],
+    });
+  }
+}, [startup]);
+
+
+
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStartup({ ...startup, [name]: value });
@@ -142,32 +224,33 @@ const StartupProfile = () => {
     }
   };
   
-  const barChartData = {
+  /*const barChartData = {
     labels: startup.graph.data.map(item => item.label),
     datasets: [
       {
         label: startup.graph.label,
         data: startup.graph.data.map(item => item.revenue),
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
       },
       {
         label: "Profit",
-        data: startup.graph.data.map(item => item.profit),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        data: startup.graph.data.map(item => item.profit) ,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
       {
         label: "Net Profit",
         data: startup.graph.data.map(item => item.netProfit),
-        backgroundColor: 'rgba(153, 102, 255, 0.5)',
-        borderColor: 'rgba(153, 102, 255, 1)',
+        backgroundColor: "rgba(153, 102, 255, 0.5)",
+        borderColor: "rgba(153, 102, 255, 1)",
         borderWidth: 1,
       },
     ],
   };
+  */
 
   const barChartOptions = {
     responsive: true,
@@ -196,7 +279,17 @@ const StartupProfile = () => {
       setResponse("An error occurred while sending data.");
     }
   };
+
+  if (Object.keys(startup).length <= 0) {
+    return (
+      <>
+        <h3>loading data . . . .</h3>
+      </>
+    );
+  }
+
   return (
+    
     <div>
      <Button variant="contained"
       color={editMode ? "secondary" : "primary"}
@@ -229,7 +322,7 @@ const StartupProfile = () => {
               <TextField fullWidth label="Industry" variant="outlined" value={startup.industry} name="industry" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <TextField fullWidth multiline label="Description" variant="outlined" value={startup.description} name="description" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <Button style={{marginBottom: '20px'}} variant="contained" color="primary" onClick={() => navigate(`/dashboard/profile/${startup.founderuserid}`)}>Founder: {startup.founder}</Button>
-              <TextField fullWidth label="Co-Founders" variant="outlined" value={startup.coFounders.join(", ")} name="coFounders" onChange={(e) => setStartup({ ...startup, coFounders: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Co-Founders" variant="outlined" value={startup.coFounders?.join(", ") || ""}  name="coFounders" onChange={(e) => setStartup({ ...startup, coFounders: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <div className="mt-6">
                 <FormLabel className="text-gray-700 block mb-2">
                   Is your startup incorporated?
@@ -238,23 +331,28 @@ const StartupProfile = () => {
               </div>
               <TextField fullWidth multiline label="Address" variant="outlined" value={startup.address} name="Address" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
               <TextField fullWidth multiline label="Elevator Pitch" variant="outlined" value={startup.pitch} name="pitch" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
-              <TextField fullWidth label="Model" variant="outlined" value={startup.model.join(", ")} name="model" onChange={(e) => setStartup({ ...startup, model: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth label="Model" variant="outlined" value={startup.coFounders?.join(", ") || ""}  name="model" onChange={(e) => setStartup({ ...startup, model: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
               <h3 className="text-2xl font-semibold text-gray-700 mt-8 mb-6">
                         Social Links
                     </h3>
-                    {startup.social.map(
-                        (socials, index) => (
-                        <TextField
-                            key={index}
-                            label={socials.handle}
-                            value={socials.link}
-                            type="url"
-                            fullWidth
-                            disabled={!editMode}
-                            className="mb-4"
-                        />
-                        )
-                    )}
+                   
+                    {startup.length > 0 ? (
+                          startup.coFounders.length > 0 ? (
+                            startup.coFounders.map((socials, index) => (
+                              <TextField
+                                  key={index}
+                                  label={socials.handle}
+                                  value={socials.link}
+                                  type="url"
+                                  fullWidth
+                                  disabled={!editMode}
+                                  className="mb-4"
+                              />
+                            ))
+                          ) : null
+                        
+                      ) : null}
+
             </CardContent>
           </Grid>
         </Grid>
@@ -262,8 +360,13 @@ const StartupProfile = () => {
       {/* Graph Section */}
       <Card>
         <CardContent>
-          <Typography variant="h5">{startup.graph.label}</Typography>
-          <Bar data={barChartData} options={barChartOptions} />
+          {(startup.length>0)?(
+            <Typography variant="h5">{startup.graph.label}</Typography>
+          ):null}
+          
+          
+            <Bar data={barChartData} options={barChartOptions} />
+               
           {editMode && (
             <>
               {startup.graph.data.map((year, index) => (
@@ -324,24 +427,30 @@ const StartupProfile = () => {
         <CardContent>
           <Typography variant="h5">Products</Typography>
           <List>
-            {startup.products.map((product, index) => (
-              <ListItem key={index}>
-                {editMode ? (
-                  <div className="startupproduct">
-                    <TextField label="Product Name" value={product.name} onChange={(e) => handleProductChange(index, "name", e.target.value)}/>
-                    <TextField label="Description" value={product.description} onChange={(e) => handleProductChange(index, "description", e.target.value)}/>
-                    <IconButton onClick={() => handleRemoveProduct(index)} color="error">
-                      <DeleteIcon />
-                    </IconButton>
-                  </div>
-                ) : (
-                  <div className="startupproduct">
-                    <Typography variant="h6">{product.name}</Typography>
-                    <Typography variant="body2">{product.description}</Typography>
-                  </div>
-                )}
-              </ListItem>
-            ))}
+            {startup.length > 0 ? (
+               
+                  startup.products && startup.products.length > 0 ? (
+                    startup.products.map((product, index) => (
+                      <ListItem key={index}>
+                          {editMode ? (
+                            <div className="startupproduct">
+                              <TextField label="Product Name" value={product.name} onChange={(e) => handleProductChange(index, "name", e.target.value)}/>
+                              <TextField label="Description" value={product.description} onChange={(e) => handleProductChange(index, "description", e.target.value)}/>
+                              <IconButton onClick={() => handleRemoveProduct(index)} color="error">
+                                <DeleteIcon />
+                              </IconButton>
+                            </div>
+                          ) : (
+                            <div className="startupproduct">
+                              <Typography variant="h6">{product.name}</Typography>
+                              <Typography variant="body2">{product.description}</Typography>
+                            </div>
+                          )}
+                      </ListItem>
+                    ))
+                  ) : null
+                
+              ) : null}
           </List>
           {editMode && (
             <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleAddProduct}>
@@ -358,22 +467,31 @@ const StartupProfile = () => {
             Product Images
           </Typography>
           <Grid container spacing={2}>
-            {startup.images.map((image, index) => (
-              <Grid item xs={6} sm={4} key={index}>
-                <CardMedia component="img" image={image} alt={`Product ${index + 1}`} />
-                {editMode && (
-                  <IconButton onClick={() => handleRemoveImage(index)} color="error">
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-                {editMode && (
-                  <Button component="label" startIcon={<CloudUploadIcon />}>
-                    Upload Image
-                    <input type="file" hidden accept="image/*" onChange={(e) => handleImageChange(index, e)}/>
-                  </Button>
-                )}
-              </Grid>
-            ))}
+            { startup.length >0 ?(
+              startup.images && startup.images.length >0 ? (startup.images.map((image, index) => (
+                <Grid item xs={6} sm={4} key={index}>
+                  <CardMedia component="img" image={image} alt={`Product ${index + 1}`} />
+                  {editMode && (
+                    <IconButton onClick={() => handleRemoveImage(index)} color="error">
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                  {editMode && (
+                    <Button component="label" startIcon={<CloudUploadIcon />}>
+                      Upload Image
+                      <input type="file" hidden accept="image/*" onChange={(e) => handleImageChange(index, e)}/>
+                    </Button>
+                  )}
+                </Grid>
+              ))):null
+            ):null
+            }
+
+
+
+
+
+
           </Grid>
           {editMode && (
             <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setStartup({ ...startup, images: [...startup.images, "https://via.placeholder.com/300"] })}>
@@ -388,20 +506,23 @@ const StartupProfile = () => {
         <CardContent>
           <Typography variant="h5">Documents</Typography>
           <List>
-            {startup.documents.map((doc, index) => (
-              <ListItem key={index}>
-                <Typography variant="body1">
-                  <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                    {doc.name}
-                  </a>
-                </Typography>
-                {editMode && (
-                  <IconButton onClick={() => handleRemoveDocument(index)} color="error">
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-              </ListItem>
-            ))}
+            {startup.length >0 ? (
+              startup.documents && startup.documents.length>0?(startup.documents.map((doc, index) => (
+                <ListItem key={index}>
+                  <Typography variant="body1">
+                    <a href={doc.url} target="_blank" rel="noopener noreferrer">
+                      {doc.name}
+                    </a>
+                  </Typography>
+                  {editMode && (
+                    <IconButton onClick={() => handleRemoveDocument(index)} color="error">
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                </ListItem>
+              ))):null
+            ):null}
+
           </List>
           {editMode && (
             <Button variant="contained" component="label" color="primary" startIcon={<CloudUploadIcon />}>
