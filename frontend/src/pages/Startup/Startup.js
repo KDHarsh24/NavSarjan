@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import DashboardBox from "../Dashboard/DasboardBox";
 import { AiOutlineCalculator } from "react-icons/ai";
 import { FaLightbulb, FaMoneyBill, FaThList } from 'react-icons/fa';
+import axios from 'axios';
+import { useState,useEffect } from "react";
 
 
 function countDistinctValues(arr, key) {
@@ -27,7 +29,7 @@ const Startup = () => {
       ];
       /** Fetch API of Database SELECT * from Project; if for Myproject: Select * from Project where userid='value' **/
       const projectRows = [
-        {
+        /*{
           id: 1,
           name: "WebTree",
           description: "An online HTML parser that generates a tree structure from HTML files and detects errors.",
@@ -296,10 +298,32 @@ const Startup = () => {
           status: "In Progress",
           teamLead: "Diana White",
           topic: "Mobile App Development",
-        },
+        },*/
       ];
-      const projectDash = [{text: 'Registered Startups', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Total revenue', val: 'Rs. 100cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
+    
       
+    const projectDash = [{text: 'Registered Startups', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Total revenue', val: 'Rs. 100cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
+    
+    useEffect(()=>{
+      axios.get('http://localhost:3000/home/startUp/detail')
+            .then(res=>{
+              console.log(res.data);
+              //update projectRows
+            })
+            .catch(err=>console.log(err));
+
+
+    },[])
+
+
+
+
+
+
+
+
+
+
     return (
     <div classprojectName="projectpage">
         <div className="projectTop">

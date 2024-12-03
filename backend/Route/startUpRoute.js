@@ -1,9 +1,9 @@
 import express from "express";
-import { demo } from "../Controller/startUpController.js";
+import { dashboardDetail } from "../Controller/startUpController.js";
 
 const router = express.Router();
 
-router.get('/',demo);
+router.get('/detail',);
 
 export default router;
 
