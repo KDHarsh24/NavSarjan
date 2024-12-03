@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Box } from "@mui/material"; // Import Grid2
 import { DataGrid } from "@mui/x-data-grid";
 
 const DataTable = ({ initialrows, columns }) => {
     const [rows, setRows] = useState(initialrows);
+
+    useEffect(() => {
+      setRows(initialrows);
+    }, [initialrows]);
+
     const handleProcessRowUpdate = (newRow) => {
         const updatedRows = rows.map((row) => (row.id === newRow.id ? newRow : row));
         setRows(updatedRows);
