@@ -5,14 +5,13 @@ import startUpRoutes from './Route/startUpRoute.js';
 
 const app = express();
 
-// MongoDB Connection URI
-const mongoURI =
-  'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/testing?retryWrites=true&w=majority&appName=Navsarjan'; // Make sure "testing" is the name of your database
+// MongoDB Connection URI for existing database 'navsarjan'
+const mongoURI = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/?retryWrites=true&w=majority&appName=Navsarjan';
 
 // MongoDB Connection
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB: testing database'))
+  .then(() => console.log('Connected to MongoDB: navsarjan database')) // Ensure this is the correct database
   .catch((err) => console.error('Failed to connect to MongoDB:', err));
 
 // Middleware

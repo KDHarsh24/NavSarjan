@@ -1,5 +1,6 @@
+import { query } from "express";
+import startup from "../modal/startup.js"
 
-import startup from '../modal/startup.js'
 
 export const dashboardDetail = async (req, res) => {
     try {
@@ -19,4 +20,3 @@ export const dashboardDetail = async (req, res) => {
       });
     }
   };
-

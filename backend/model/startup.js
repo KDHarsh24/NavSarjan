@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Define the Startup Schema
 const StartupSchema = new mongoose.Schema({
@@ -46,10 +46,16 @@ const StartupSchema = new mongoose.Schema({
     type: [String], // Array of URLs to additional images
     default: [],
   },
-  social: {
-    type: [String], // Array of social media links
-    default: [],
-  },
+  social: [{
+    platform: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    }
+  }],
   incorporated: {
     type: Boolean, // Indicates if the startup is incorporated
     default: false,
@@ -62,25 +68,47 @@ const StartupSchema = new mongoose.Schema({
     type: String, // Elevator pitch for the startup
     default: "",
   },
-  documents: {
-    type: [String], // Array of document URLs
-    default: [],
-  },
-  products: {
-    type: [String], // Array of product names or descriptions
-    default: [],
-  },
+  documents: [{
+    title: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    }
+  }],
+  products: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: String,
+      required: true,
+    }
+  }],
   website: {
     type: String, // Website URL
     default: "",
   },
   graph: {
-    type: mongoose.Schema.Types.Mixed, // Object for storing graph-related data
-    default: {},
-  },
+    label: {
+      type: String,
+      required: true,
+    },
+    data: [{
+      type: mongoose.Schema.Types.Mixed, // Can store different types (integers, strings, etc.)
+      required: true,
+    }]
+  }
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 
 // Export the Model
-export default mongoose.model("Startup", StartupSchema, "startup");
+export default mongoose.model('Startup', StartupSchema, 'startup');
