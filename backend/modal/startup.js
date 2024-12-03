@@ -67,6 +67,6 @@ const startupSchema=new mongoose.Schema({
       }
 });
 
-const startUp = mongoose.model('startUp', startupSchema,'startUp');
+const startup = mongoose.model('startup', startupSchema,'startup');
 
-export default startUp;
+export default startup;
