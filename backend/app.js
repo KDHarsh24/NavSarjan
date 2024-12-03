@@ -6,7 +6,7 @@ import startUpRoutes from './Route/startUpRoute.js';
 const app = express();
 
 // MongoDB Connection URI for existing database 'navsarjan'
-const mongoURI = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/?retryWrites=true&w=majority&appName=Navsarjan';
+const mongoURI = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/navsarjan?retryWrites=true&w=majority&appName=Navsarjan';
 
 // MongoDB Connection
 mongoose

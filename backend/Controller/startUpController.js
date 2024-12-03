@@ -1,11 +1,11 @@
 import { query } from "express";
-import startup from "../modal/startup.js"
+import Startup from "../model/startup.js"
 
 
 export const dashboardDetail = async (req, res) => {
     try {
       // Fetch all documents from the startup collection
-      const startups = await startup.find(); 
+      const startups = await Startup.find(); 
   
       // Send data as response
       res.status(200).json({
