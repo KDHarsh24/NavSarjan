@@ -39,7 +39,7 @@ function App() {
             <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm/>}/>
           </Route>
           <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
-          <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
+          <Route path={'/dashboard/mystartups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
           <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage/>}/>
