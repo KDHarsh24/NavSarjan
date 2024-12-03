@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose';
-
+import startUpRoutes from './Route/startUpRoute.js';
 
 
 
@@ -28,6 +28,8 @@ app.get('/',(req,res)=>{
     res.send("<h6>Welcome to backened </h6>");
 })
 
+// Routes
+app.use("/home/startUp", startUpRoutes);
 
 
 
