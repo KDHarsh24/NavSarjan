@@ -5,8 +5,8 @@ import {userRegister,userLogin} from "../Controller/userAuthController.js";
 
 const router = express.Router();
 
-router.post('/register');
-router.post('/login');
+router.post('/register',userRegister);
+router.post('/login',userLogin);
 
 
 export default router;
