@@ -29,14 +29,14 @@ const StartupProfile = () => {
     address: "",
     pitch: "",
     model: [],
-    social: [],
+    social: [{}],
     graph: {
       label: "",
       data: [],
     },
-    products: [],
+    products: [{}],
     images: [],
-    documents: [],
+    documents: [{}],
     founder: "",
     founderuserid: "",
   });
@@ -99,11 +99,12 @@ useEffect(() => {
     axios.get('http://localhost:8081/home/startUp/profileDetail',{params: { id } })
          .then((res) => {
            const data = res.data.data;
-           console.log("data: "+data);
-           setStartup(data[0]);
+        
+           setStartup(data);
+          
          })
          .catch((err) => console.log("error: " + err));
-}, []);
+}, [id]);
 
 useEffect(() => {
   if (startup?.graph?.data && startup?.graph?.label) {
@@ -134,6 +135,7 @@ useEffect(() => {
       ],
     });
   }
+  console.log("barChartData: "+ JSON.stringify(barChartData, null, 2));
 }, [startup]);
 
 
@@ -281,7 +283,7 @@ useEffect(() => {
     }
   };
 
-  if (Object.keys(startup).length <= 0) {
+  if (startup && Object.keys(startup).length <= 0) {
     return (
       <>
         <h3>loading data . . . .</h3>
@@ -309,7 +311,7 @@ useEffect(() => {
       <Card style={{ margin: "20px 0px 30px 0px", borderRadius: "8px", padding: "20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
-            <CardMedia component="img" image={startup.logo} alt={`${startup.name} Logo`} style={{ width: "100px", height: "100px", objectFit: "contain", margin: "20px auto", borderRadius: "8px" }}/>
+            <CardMedia component="img" image={(startup && Object.keys(startup).length>0)?(startup.logo):null} alt={`${(startup && Object.keys(startup).length>0)?(startup.name):null} Logo`} style={{ width: "100px", height: "100px", objectFit: "contain", margin: "20px auto", borderRadius: "8px" }}/>
             {editMode && (
               <Button component="label" startIcon={<CloudUploadIcon />} sx={{ marginTop: "10px" }}>
                 Upload Logo
@@ -319,31 +321,32 @@ useEffect(() => {
           </Grid>
           <Grid item xs={12} sm={8}>
             <CardContent>
-              <TextField fullWidth label="Company Name" variant="outlined" value={startup.name} name="name" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
-              <TextField fullWidth label="Industry" variant="outlined" value={startup.industry} name="industry" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
-              <TextField fullWidth multiline label="Description" variant="outlined" value={startup.description} name="description" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
-              <Button style={{marginBottom: '20px'}} variant="contained" color="primary" onClick={() => navigate(`/dashboard/profile/${startup.founderuserid}`)}>Founder: {startup.founder}</Button>
-              <TextField fullWidth label="Co-Founders" variant="outlined" value={startup.coFounders?.join(", ") || ""}  name="coFounders" onChange={(e) => setStartup({ ...startup, coFounders: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Company Name" variant="outlined" value={(startup && Object.keys(startup).length>0)?(startup.name):null} name="name" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Industry" variant="outlined" value={(startup && Object.keys(startup).length>0)?(startup.industry):null} name="industry" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <TextField fullWidth multiline label="Description" variant="outlined" value={(startup && Object.keys(startup).length>0)?(startup.description):null} name="description" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
+              <Button style={{marginBottom: '20px'}} variant="contained" color="primary" onClick={() => navigate(`/dashboard/profile/${startup.founderuserid}`)}>Founder:  Founder: {startup?.founder || "Loading..."}
+              </Button>
+              <TextField fullWidth label="Co-Founders" variant="outlined" value={startup?.coFounders?.join(", ") || ""}  name="coFounders" onChange={(e) => setStartup({ ...startup, coFounders: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "10px" }}/>
               <div className="mt-6">
                 <FormLabel className="text-gray-700 block mb-2">
                   Is your startup incorporated?
                     </FormLabel>
-                  <FormControlLabel control={<Checkbox color="primary" defaultChecked={startup.incorporated}/>}  disabled={!editMode}/>
+                  <FormControlLabel control={<Checkbox color="primary" defaultChecked={(startup && Object.keys(startup).length>0)?(startup.incorporated):null} />}  disabled={!editMode}/>
               </div>
-              <TextField fullWidth multiline label="Address" variant="outlined" value={startup.address} name="Address" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
-              <TextField fullWidth multiline label="Elevator Pitch" variant="outlined" value={startup.pitch} name="pitch" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
-              <TextField fullWidth label="Model" variant="outlined" value={startup.coFounders?.join(", ") || ""}  name="model" onChange={(e) => setStartup({ ...startup, model: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth multiline label="Address" variant="outlined" value={(startup && Object.keys(startup).length>0)?(startup.address):null}  name="Address" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth multiline label="Elevator Pitch" variant="outlined" value={(startup && Object.keys(startup).length>0)?(startup.pitch):null}  name="pitch" onChange={handleInputChange} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
+              <TextField fullWidth label="Model" variant="outlined" value={startup?.coFounders?.join(", ") || ""}  name="model" onChange={(e) => setStartup({ ...startup, model: e.target.value.split(", ") })} disabled={!editMode} sx={{ marginBottom: "20px" }}/>
               <h3 className="text-2xl font-semibold text-gray-700 mt-8 mb-6">
                         Social Links
                     </h3>
                    
-                    {startup.length > 0 ? (
-                        startup.social.length > 0 ? (
+                    {startup && Object.keys(startup).length>0 ? (
+                        startup.social && startup.social.length > 0 ? (
                             startup.social.map((socials, index) => (
                               <TextField
                                   key={index}
                                   label={socials.handle}
-                                  value={socials.link}
+                                  value={socials.url}
                                   type="url"
                                   fullWidth
                                   disabled={!editMode}
@@ -361,7 +364,7 @@ useEffect(() => {
       {/* Graph Section */}
       <Card>
         <CardContent>
-          {(startup.length>0)?(
+          {(startup && Object.keys(startup).length>0)?(
             <Typography variant="h5">{startup.graph.label}</Typography>
           ):null}
           
@@ -428,7 +431,7 @@ useEffect(() => {
         <CardContent>
           <Typography variant="h5">Products</Typography>
           <List>
-            {startup.length > 0 ? (
+            {startup && Object.keys(startup).length>0 ? (
                
                   startup.products && startup.products.length > 0 ? (
                     startup.products.map((product, index) => (
@@ -468,7 +471,7 @@ useEffect(() => {
             Product Images
           </Typography>
           <Grid container spacing={2}>
-            { startup.length >0 ?(
+            { startup && Object.keys(startup).length>0 ?(
               startup.images && startup.images.length >0 ? (startup.images.map((image, index) => (
                 <Grid item xs={6} sm={4} key={index}>
                   <CardMedia component="img" image={image} alt={`Product ${index + 1}`} />
@@ -507,12 +510,12 @@ useEffect(() => {
         <CardContent>
           <Typography variant="h5">Documents</Typography>
           <List>
-            {startup.length >0 ? (
+            {startup && Object.keys(startup).length>0? (
               startup.documents && startup.documents.length>0?(startup.documents.map((doc, index) => (
                 <ListItem key={index}>
                   <Typography variant="body1">
                     <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                      {doc.name}
+                      {doc.title}
                     </a>
                   </Typography>
                   {editMode && (

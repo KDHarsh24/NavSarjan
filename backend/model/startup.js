@@ -47,7 +47,10 @@ const StartupSchema = new mongoose.Schema({
     default: [],
   },
   social: {
-    type: [String], // Array of social media links
+    type: [{
+      platform:{type:String},
+      url:{type:String}
+    }], // Array of social media links
     default: [],
   },
   incorporated: {
@@ -63,11 +66,18 @@ const StartupSchema = new mongoose.Schema({
     default: "",
   },
   documents: {
-    type: [String], // Array of document URLs
+    type: [{
+      title:{type: String},
+      url:{type:String}
+    }], // Array of document URLs
     default: [],
   },
   products: {
-    type: [String], // Array of product names or descriptions
+    type: [{
+      name: { type: String, required: true },
+      description: { type: String },
+      price: { type: String },
+  },], // Array of product names or descriptions
     default: [],
   },
   website: {
@@ -84,3 +94,4 @@ const StartupSchema = new mongoose.Schema({
 
 // Export the Model
 export default mongoose.model("Startup", StartupSchema, "startup");
+

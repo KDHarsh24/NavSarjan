@@ -35,7 +35,7 @@ export const userProfileDetail= async(req,res)=>
     console.log("id: "+id);
     const ObjectId = mongoose.Types.ObjectId;
     console.log("object id: "+ObjectId);
-    let startup = await Startup.find({_id:new ObjectId(id)}); 
+    let startup = await Startup.findOne({_id:new ObjectId(id)}); 
 
     if (startup.graph && startup.graph.data) {
       startup.graph.data = startup.graph.data.map((item) => parseInt(item.$numberInt || item));
