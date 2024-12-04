@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
 import { CloudUpload as CloudUploadIcon, Edit as EditIcon, Save as SaveIcon, Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -15,6 +15,7 @@ import axios from "axios";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const StartupProfile = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [response, setResponse] = useState("");
   const [editMode, setEditMode] = useState(false);
@@ -43,8 +44,8 @@ const StartupProfile = () => {
     labels: [],
     datasets: [],
   });
-
-
+  const { id } = location.state || {}; 
+  console.log("id: "+id);
 
   /*const [startup, setStartup] = useState({
     name: "TechVision Inc.",
@@ -95,10 +96,10 @@ const StartupProfile = () => {
 */
 //do not know user sent user as parameter to get detail
 useEffect(() => {
-    axios.get('http://localhost:8081/home/startUp/detail')
+    axios.get('http://localhost:8081/home/startUp/profileDetail',{params: { id } })
          .then((res) => {
            const data = res.data.data;
-           console.log("data: "+res.data.data);
+           console.log("data: "+data);
            setStartup(data[0]);
          })
          .catch((err) => console.log("error: " + err));
@@ -337,8 +338,8 @@ useEffect(() => {
                     </h3>
                    
                     {startup.length > 0 ? (
-                          startup.coFounders.length > 0 ? (
-                            startup.coFounders.map((socials, index) => (
+                        startup.social.length > 0 ? (
+                            startup.social.map((socials, index) => (
                               <TextField
                                   key={index}
                                   label={socials.handle}
