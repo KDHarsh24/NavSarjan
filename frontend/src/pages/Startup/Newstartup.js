@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Tab, Tabs, TextField, Button, Paper } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Checkbox, RadioGroup, FormControlLabel, FormLabel, TextareaAutosize } from "@mui/material";
-
+import axios from 'axios';
 const Newstartup = () => {
     const industryDomains = [
         "Horizontal", "AgriTech", "Cyber Security", "Drones", "Enterprise SaaS", "Food", "Hardware", "Language Deeptech",
@@ -66,6 +66,10 @@ const Newstartup = () => {
         }
       };
       
+     
+
+
+
       const handleLogoChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -75,7 +79,7 @@ const Newstartup = () => {
           };
         }
       };
-      const handleSocialChange = (e, socialPlatform) => {
+      /*const handleSocialChange = (e, socialPlatform) => {
         const { value } = e.target;
         
         setStartup((prevState) => {
@@ -90,7 +94,31 @@ const Newstartup = () => {
       
           return { ...prevState, social: updatedSocials };
         });
+      };*/
+
+      const handleSocialChange = (e, socialPlatform) => {
+        const { value } = e.target;
+      
+        setStartup((prevState) => {
+          if (socialPlatform === "Website") {
+            // Update the website field if the platform is Website
+            return { ...prevState, website: value };
+          } else {
+            // Update the social array for other platforms
+            const updatedSocials = prevState.social.map((social) =>
+              social.handle === socialPlatform ? { ...social, link: value } : social
+            );
+      
+            // If the platform does not exist, add it
+            if (!updatedSocials.some((social) => social.handle === socialPlatform)) {
+              updatedSocials.push({ handle: socialPlatform, link: value });
+            }
+      
+            return { ...prevState, social: updatedSocials };
+          }
+        });
       };
+      
       const handleDocumentUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -101,6 +129,21 @@ const Newstartup = () => {
           setStartup({ ...startup, documents: [...startup.documents, newDoc] });
         }
       };
+
+
+    const handleSubmit=(e)=>
+    {
+        e.preventDefault();
+        console.log("startup: "+JSON.stringify(startup,null,2));
+        axios.post('http://localhost:8081/home/startUp/newStartUp',startup)
+             .then(res=>{
+              console.log(res);
+             })
+             .catch(err=>console.log(err));
+    }
+
+
+
     return(
         <Box sx={{ p: 3, padding: '0px 16px 10px 16px', width: '100%' }}>
         <Paper elevation={3} sx={{ p: 3, width: '100%' }} style={{width: '100%'}}>
@@ -197,20 +240,26 @@ const Newstartup = () => {
                     <h3 className="text-2xl font-semibold text-gray-700 mt-8 mb-6">
                         Social Links
                     </h3>
+                    
                     {["Website", "LinkedIn", "Twitter", "YouTube", "Facebook", "Instagram"].map(
-                        (social, index) => (
+                      (social, index) => (
                         <TextField
-                            key={index}
-                            label={social}
-                            placeholder={`Enter ${social} URL`}
-                            type="url"
-                            fullWidth
-                            className="mb-4"
-                            value={startup.social.find((item) => item.handle === social)?.link || ''}
-                            onChange={(e) => handleSocialChange(e, social)}
+                          key={index}
+                          label={social}
+                          placeholder={`Enter ${social} URL`}
+                          type="url"
+                          fullWidth
+                          className="mb-4"
+                          value={
+                            social === "Website"
+                              ? startup.website // Bind to the website field for "Website"
+                              : startup.social.find((item) => item.handle === social)?.link || ""
+                          }
+                          onChange={(e) => handleSocialChange(e, social)}
                         />
-                        )
+                      )
                     )}
+
 
                     {/* Buttons */}
                     <div className="flex justify-between mt-8">
@@ -225,7 +274,7 @@ const Newstartup = () => {
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select Industry Domains</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {industryDomains.map((model, index) => (
-                            <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={startup.model.includes(model)} onChange={handleInputChange} name="model"/>} label={model}/>
+                            <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={startup.industry.includes(model)} onChange={handleInputChange} name="industry"/>} label={model}/>
                         ))}
                     </div>
                 </div>
@@ -276,7 +325,7 @@ const Newstartup = () => {
                     <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{setValue('fields')}}>
                             Previous
                         </Button>
-                        <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{console.log(startup, 'Hello')}}>
+                        <Button variant="contained" color="primary" className="px-6 py-3" onClick={handleSubmit}>
                             Submit
                         </Button>
                 </div>
@@ -287,3 +336,31 @@ const Newstartup = () => {
     );
 }
 export default Newstartup;
+
+
+
+
+
+
+//original code
+/*
+
+  {["Website", "LinkedIn", "Twitter", "YouTube", "Facebook", "Instagram"].map(
+                        (social, index) => (
+                        <TextField
+                            key={index}
+                            label={social}
+                            placeholder={`Enter ${social} URL`}
+                            type="url"
+                            fullWidth
+                            className="mb-4"
+                            value={startup.social.find((item) => item.handle === social)?.link || ''}
+                            onChange={(e) => handleSocialChange(e, social)}
+                        />
+                        )
+                    )}
+
+
+*/
+
+

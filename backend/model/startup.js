@@ -3,24 +3,22 @@ import mongoose from "mongoose";
 // Define the Startup Schema
 const StartupSchema = new mongoose.Schema({
   name: {
-    type: String,
-    required: true,
+    type: String
+    
   },
   industry: {
-    type: [String], // Array of strings for multiple industries
-    required: true,
+    type: [String] // Array of strings for multiple industries
+   
   },
   description: {
-    type: String,
-    required: true,
+    type: String
   },
   founder: {
-    type: String,
-    required: true,
+    type: String
   },
   founderuserid: {
-    type: String,
-    required: true,
+    type: String
+    
   },
   coFounders: {
     type: [String], // Array of co-founder names
@@ -35,8 +33,8 @@ const StartupSchema = new mongoose.Schema({
     default: "0",
   },
   established: {
-    type: String, // Date when the startup was established
-    required: true,
+    type: String // Date when the startup was established
+    
   },
   logo: {
     type: String, // URL to the startup's logo
@@ -58,8 +56,8 @@ const StartupSchema = new mongoose.Schema({
     default: false,
   },
   address: {
-    type: String, // Address of the startup
-    required: true,
+    type: String // Address of the startup
+    
   },
   pitch: {
     type: String, // Elevator pitch for the startup
@@ -74,7 +72,7 @@ const StartupSchema = new mongoose.Schema({
   },
   products: {
     type: [{
-      name: { type: String, required: true },
+      name: { type: String},
       description: { type: String },
       price: { type: String },
   },], // Array of product names or descriptions

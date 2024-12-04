@@ -59,4 +59,31 @@ export const userProfileDetail= async(req,res)=>
 }
 
 
+export const newStartUpDetail=async(req,res)=>
+{
+  try
+  {
+    const startup=req.body;
+   
+    let queryResult=new Startup(startup);
+    queryResult=await queryResult.save();
+
+    // Send data as response
+    res.status(200).json({
+      success: true,
+      data: queryResult,
+    });
+  }
+  catch(err)
+  {
+    console.error("Error fetching startup details:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+}
+
+
+
 

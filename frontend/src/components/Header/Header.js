@@ -52,7 +52,7 @@ const dropMenuTop = (data, anchorEl, handleClick, handleClose, open, classname) 
 }
 
 const Header = ({userdata}) => {
-    const myAccountlist = [ {text: 'My account', icon: <Avatar/>, link: `profile/${userdata.userid}`}, {text: 'Reset Password', icon: <RotateLeft/>, link: 'profile/password'}, {text: 'Logout', icon: <Logout/>, link: '/'}]
+    /*const myAccountlist = [ {text: 'My account', icon: <Avatar/>, link: `profile/${userdata.userid}`}, {text: 'Reset Password', icon: <RotateLeft/>, link: 'profile/password'}, {text: 'Logout', icon: <Logout/>, link: '/'}]
     const [accountAnchor, setaccountAnchor] = useState(null);
     const openAccount = Boolean(accountAnchor);
     const handleClickaccount = (event) => {
@@ -126,6 +126,12 @@ const Header = ({userdata}) => {
                 </div>
             </header>
         </div>
-    );
+    );*/
+
+    return(
+        <div>
+            <h1>hello header</h1>
+        </div>
+    )
 }
 export default Header;
