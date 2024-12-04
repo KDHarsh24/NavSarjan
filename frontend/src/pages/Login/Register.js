@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8081/register', { name, email, password });
+      const response = await axios.post('http://localhost:8081/home/register', { name, email, password });
       if (response.data.success) {
         // Update user data in context
         setUserData({ name, email });
