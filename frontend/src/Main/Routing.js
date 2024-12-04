@@ -12,14 +12,16 @@ import Documents from "../Applicant/Documents";
 import Dashboard from "../Applicant/Dashboard";
 import ProjectForm from "../Applicant/Project/Project_form";
 import Somepath from "../Applicant/Somepath";
+import Home_page from "../Home/Home_page";
 
 function Routing(){
     return(
         <>
             <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Option_page/>}></Route>
-                <Route path="/sign-page" element={<Signpage/>}></Route>
+                {/* <Route path="/" element={<Home_page/>}></Route> */}
+                <Route path="/Option_page" element={<Option_page/>}></Route>
+                <Route path="/" element={<Signpage/>}></Route>
                 <Route path="/create-account" element={<Create_account/>}></Route>
                 <Route path="/dashboard" element={<Dashboard/>}></Route>
 

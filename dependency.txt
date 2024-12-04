@@ -2,3 +2,10 @@ npm install tailwindcss postcss autoprefixer
 npm tailwindcss init
 
 npm i -D react-router-dom
+
+npm install react-icons
+
+npm install @mui/material @emotion/react @emotion/styled
+
+npm install @mui/icons-material
+

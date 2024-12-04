@@ -1,7 +1,10 @@
-import React from 'react';
 
-const Somepath = () => {
-  return <div>Some content here</div>;
+function Somepath(){
+    return(
+      <>
+      <h1>Some path</h1>
+      </>
+    );
 };
 
 export default Somepath; 
