@@ -31,47 +31,19 @@ export const userRegister = async (req, res) =>
 
 export const userLogin=async(req,res)=>
 {
-    const { email, password } = req.body;
-
-    // Check if both email and password are provided
-    if (!email || !password) 
-    {
-        return res.status(400).json({ success: false, message: 'Email and password are required' });
-    }
-
-    try 
-    {
-        // Find user by email
-        const user = await User.findOne({ email });
-        
-        // If user does not exist
-        if (!user) 
-        {
-            return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    try {
+        const { email, password } = req.body;
+        // Validate user input (recommended)
+        // ...
+        const check = await User.findOne({ email: email });
+        if (check) {
+          res.status(409).json("exists"); // Use more specific status code
+        } else {
+          res.json("notexist");
+          // Add user creation logic if applicable
         }
-      
-        // Compare the provided password with the stored (hashed) password
-        const isMatch = await user.matchPassword(password);
-      
-        // If the passwords don't match
-        if (!isMatch) 
-        {
-            return res.status(401).json({ success: false, message: 'Invalid credentials' });
-        }
-      
-        // If successful, generate a JWT token (you can replace this with your JWT generation logic)
-        const token = 'your-jwt-token-here'; // For example, using jsonwebtoken library to generate a token
-      
-        res.status(200).json({
-          success: true,
-          message: 'Login successful',
-          token: token, // Send the JWT token in the response
-        });
-    } 
-    catch (error) 
-    {
-        console.error('Error during login:', error);
-        res.status(500).json({ success: false, message: 'Internal server error' });
-    }
-}
-
+      } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    };
