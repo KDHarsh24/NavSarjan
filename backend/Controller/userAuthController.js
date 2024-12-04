@@ -1,5 +1,5 @@
 import User from "../model/user.js"
-import bcrypt from 'bcrypt'; // For password hashing
+import bcrypt from 'bcryptjs'; // For password hashing
 import jwt from 'jsonwebtoken'; // For generating tokens
 
 
