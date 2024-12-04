@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import { useState, createContext } from "react";
 import Header from "../../components/Header/Header";
 import { useLocation, Outlet } from "react-router-dom";
-import { userData } from "../Login/Login";
+import { useUser } from '../../context/UserContext';
 const MyContext = createContext();
 
 
@@ -18,9 +18,9 @@ const Dashboard = () => {
     return(
         <MyContext.Provider value={values}>
             <div className="main d-flex">
-                    <Header userdata={userData}/>
+                    <Header useUser={useUser}/>
                 <div className={`sidebarWrapper ${isToggleSidebar===true? 'toggle': ''}`}>
-                    <Sidebar userlog={userData}/>
+                    <Sidebar userlog={useUser}/>
                 </div>
                 <div className={`content ${isToggleSidebar===true? 'toggle': ''} `}>
                     <Outlet/>

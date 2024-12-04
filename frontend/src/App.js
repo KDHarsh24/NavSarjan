@@ -18,12 +18,16 @@ import Newstartup from './pages/Startup/Newstartup';
 import MyProject from './pages/Project/myProject';
 import MyStartup from './pages/Startup/myStartup';
 import NewProject from './pages/Project/newProject';
+import Startup from './pages/Startup/startup';
+import Register from './pages/Login/Register';
+
 
 function App() {
   return (
   <BrowserRouter>
       <Routes>
         <Route path={'/login'} exact={true} element={<Login/>}/>
+        <Route path={'/register'} exact={true} element={<Register/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
         <Route path='/' exact={true} element={<Homepage/>}/>
         <Route path="/sign-page" element={<Signpage/>}/>
@@ -40,6 +44,8 @@ function App() {
           </Route>
           <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
           <Route path={'/dashboard/mystartups/startupprofile'} exact={true} element={<StartupProfile/>}/>
+          <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
+          <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
           <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage/>}/>

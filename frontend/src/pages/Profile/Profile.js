@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBBreadcrumb, MDBBreadcrumbItem, MDBIcon, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useParams } from 'react-router-dom';
-import { userData } from '../Login/Login';
+import { useUser } from '../../context/UserContext';
 
 export default function ProfilePage({email}) {
   const { userId } = useParams(); // Get the userId from the URL
@@ -166,7 +166,7 @@ export default function ProfilePage({email}) {
             </MDBCard>
 
             <MDBRow className="text-center">
-              {(userData.userid === userId) ? ( <MDBCol>
+              {(useUser.userid === userId) ? ( <MDBCol>
                     {isEditing ? (
                       <>
                         <MDBBtn color="success" onClick={handleSave}>

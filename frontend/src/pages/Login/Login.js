@@ -1,79 +1,71 @@
 import React, { useState } from 'react';
-import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBCheckbox } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // useNavigate is the new way in React Router v6
-import { postData } from '../../Data/backendmsg';
-export let userData = {};
-
+import { useUser } from '../../context/UserContext'; // Import context
 
 const Login = () => {
-  const [userId, setUserId] = useState(''); 
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setUserData } = useUser(); // Access context function
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Prepare the login data with userId (email) and password
-    const loginData = {
-      userId: userId,  // userId will be the email entered by the user
-      password: password,
-    };
-    console.log(loginData)
     try {
-      // Send the login data to the backend
-      const response = await postData('login', loginData);
-      console.log(response);
-      if (response.success) {
-        // On successful login, store the username (or userId) in localStorage
-        userData = response.userdata;
-        navigate('/dashboard'); 
+      const response = await axios.post('http://localhost:8081/login', { email, password });
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        setUserData({ email }); // Update context with user data
+        alert('Login Successful!');
+        navigate('/dashboard');
       } else {
-        alert('Login failed. Please check your credentials and try again.');
+        alert(response.data.message);
       }
     } catch (error) {
-      console.error("Error logging in:", error);
-      alert('An error occurred while logging in. Please try again later.');
+      alert('Login failed. Please try again.');
     }
   };
 
   return (
-    <MDBContainer fluid>
-      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-        <MDBCol col='12'>
-          <MDBCard className='bg-white my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '500px' }}>
-            <MDBCardBody className='p-5 w-100 d-flex flex-column'>
-              <h2 className="fw-bold mb-2 text-center">Sign in</h2>
-              <p className="text-white-50 mb-3">Please enter your login and password!</p>
-              <MDBInput wrapperClass='mb-4 w-100' label='User ID (Email address)' id='formControlname' type='email' size="lg" value={userId} onChange={(e) => setUserId(e.target.value)}/>
-
-              {/* Password Input */}
-              <MDBInput wrapperClass='mb-4 w-100' label='Password' id='formControlpassw' type='password' size="lg" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-              {/* Remember Password Checkbox */}
-              <MDBCheckbox name='flexCheck' id='flexCheckDefault' className='mb-4' label='Remember password'/>
-
-              {/* Submit Button */}
-              <MDBBtn size='lg' onClick={handleLogin}>Login</MDBBtn>
-
-              <hr className="my-4" />
-
-              {/* Google Sign-in Button */}
-              <MDBBtn className="mb-2 w-100" size="lg" style={{ backgroundColor: '#dd4b39' }}>
-                <MDBIcon fab icon="google" className="mx-2" />
-                Sign in with Google
+    <MDBContainer fluid className="p-3 my-5 h-custom">
+      <MDBRow className="d-flex justify-content-center align-items-center h-100">
+        <MDBCol col="12" md="8" lg="6" xl="5">
+          <MDBCard className="bg-light text-dark rounded-3">
+            <MDBCardBody className="p-4 text-center">
+              <h2 className="fw-bold mb-4">Sign In</h2>
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Email"
+                type="email"
+                size="lg"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Password"
+                type="password"
+                size="lg"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <MDBBtn
+                className="mb-4 w-100"
+                size="lg"
+                style={{ backgroundColor: '#007bff', color: '#fff' }}
+                onClick={handleLogin}
+              >
+                Login
               </MDBBtn>
-
-              {/* Facebook Sign-in Button */}
-              <MDBBtn className="mb-4 w-100" size="lg" style={{ backgroundColor: '#3b5998' }}>
-                <MDBIcon fab icon="facebook-f" className="mx-2" />
-                Sign in with Facebook
-              </MDBBtn>
+              <p className="small text-muted">
+                Don't have an account? <a href="/register">Register here</a>
+              </p>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
   );
-}
+};
 
 export default Login;
