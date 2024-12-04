@@ -1,6 +1,66 @@
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import { useState} from 'react';
+import axios from 'axios'
+
+function isValidPass(pass)
+{
+    return true;
+}
+
 
 function CreateAccount(){
+
+    const[email,setEmail]=useState('');
+    const[pass,setPass]=useState('');
+    const[confirmPass,setConfirmPass]=useState('');
+    const navigate=useNavigate();
+    const handleSubmit=(e)=>
+    {
+        e.preventDefault();
+
+        if(pass===confirmPass)
+        {
+            //check pass word meet its requirenment or follow all constarint
+            if(isValidPass(pass)===true)
+            {
+                // check already existing user or not
+                axios.get('http://localhost:8081/home/userExist',{email})
+                     .then(res=>{
+                        console.log("res: "+JSON.stringify(res,null,2));
+                        if(res.data.success)
+                        {
+                            alert(`User already exist`);
+                        }
+                        else
+                        {
+                            //save to db
+                            console.log("email: "+email+"  pass: "+pass);
+                            axios.post('http://localhost:8081/home/newUserData',{email,pass})
+                                 .then(res=>{
+                                        if(res.data.success)
+                                        {
+                                            //redirect it to dashboard
+                                            navigate('/dashboard');
+                                        }
+                                        else
+                                        {
+                                            alert('Server Error');
+                                        }
+                                 })
+                                 .catch(err=>console.log(err));
+                        }
+                     })
+                     .catch(err=>console.log(err));
+            }
+            else
+                alert(`PassWord does not meet all requirenment`);
+        }
+        else
+            alert(`PassWord Mismatch`);
+
+    }
+
+
     return(
         <>
           <section class="bg-white">
@@ -74,6 +134,7 @@ function CreateAccount(){
                                     id=""
                                     placeholder="Enter email to get started"
                                     class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
+                                    onChange={(e)=>setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -100,6 +161,7 @@ function CreateAccount(){
                                     id=""
                                     placeholder="Enter your password"
                                     class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
+                                    onChange={(e)=>{setPass(e.target.value)}}
                                 />
                             </div>
                         </div>
@@ -126,6 +188,7 @@ function CreateAccount(){
                                     id=""
                                     placeholder="Confirm password"
                                     class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
+                                    onChange={(e)=>{setConfirmPass(e.target.value)}}
                                 />
                             </div>
 
@@ -134,14 +197,15 @@ function CreateAccount(){
 
 
                         <div>
-							<Link to="/dashboard">
+							
 							<button
                                 type="submit"
                                 class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
+                                onClick={handleSubmit}
                             >
                                 Create Account
                             </button>
-							</Link>
+							
                             
                         </div>
                     </div>

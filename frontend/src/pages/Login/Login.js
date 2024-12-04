@@ -14,7 +14,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
+     
       const response = await axios.post('http://localhost:8081/home/login', { email, password });
+      console.log("response: "+JSON.stringify(response,null,2));
       if (response.data.success) {
         localStorage.setItem('token', response.data.token);
         setUserData({ email }); // Update context with user data
