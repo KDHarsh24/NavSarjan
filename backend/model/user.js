@@ -1,57 +1,52 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 // Define the social media schema
-const socialSchema = new mongoose.Schema({
-  platform: {
-    type: String,
-    required: true
-  },
-  link: {
-    type: String,
-    required: true
-  }
-});
+
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    match: [/.+@.+\..+/, 'Please enter a valid email address'],
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 8,
   },
   name: {
-    type: String
-  },
-  phone: {
-    type: String,  // Optional now
+    type: String,
+    required: true,
   },
   address: {
-    type: String,  // Optional now
-  },
-  profession: {
-    type: String,  // Optional now
-  },
-  social: [socialSchema], // Array of social media accounts
-  photo: {
-    type: String, // URL of the user's profile picture (optional)
-  },
-  role: {
     type: String,
-    default: 'student'
+    required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  phone: {
+    type: String,
+    required: true,
+    match: [/^\d{10}$/, 'Phone number must be a valid 10-digit number'],
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+  image: {
+    type: String,
+    default: null,
+  },
+  social: {
+    type: [
+      {
+        platform: { type: String, required: true },
+        url: { type: String, required: true },
+      },
+    ],
+    default: null, 
+  },
+  dob: {
+    type: String,
+    required: true,
+  },
+}, { timestamps: false, versionKey: false });
 
 
 // Hash password before saving
