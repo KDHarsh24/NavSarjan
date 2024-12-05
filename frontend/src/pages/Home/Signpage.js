@@ -1,7 +1,37 @@
-import React from "react";
-import {Link} from 'react-router-dom';
+import React  from "react";
+import {Link,useNavigate} from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import { useUser } from '../../context/UserContext'; // Import context
 
-function Signpage(){
+function Signpage()
+{
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const { setUserData } = useUser(); // Access context function
+
+    const handleSubmit=async(e)=>
+    {
+        e.preventDefault();
+        try {
+     
+            const response = await axios.post('http://localhost:8081/home/login', { email, password });
+            console.log("response: "+JSON.stringify(response,null,2));
+            if (response.data.success) {
+              localStorage.setItem('token', response.data.token);
+              setUserData({ email }); // Update context with user data
+              alert('Login Successful!');
+              navigate('/dashboard');
+            } else {
+              alert(response.data.message);
+            }
+          } catch (error) {
+            alert('Login failed. Please try again.');
+          }
+
+    }
+
 
     return (
         <section class="bg-white">
@@ -26,6 +56,7 @@ function Signpage(){
                                     id=""
                                     placeholder="Enter email to get started"
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
+                                    onChange={(e)=>setEmail(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -43,14 +74,15 @@ function Signpage(){
                                     id=""
                                     placeholder="Enter your password"
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
+                                    onChange={(e)=>setPassword(e.target.value)}
                                 />
                             </div>
                         </div>
-                      <Link to="/dashboard">
+                      
                         <div>
-                            <button type="submit" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Log in</button>
+                            <button type="submit" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"   onClick={handleSubmit}>Log in</button>
                         </div>
-                      </Link>
+                      
                     </div>
                 </form>
             </div>

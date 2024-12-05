@@ -10,15 +10,19 @@ const MyContext = createContext();
 
 
 const Dashboard = () => {
+    const { userData } = useUser();   //to access email use userData.email
+
     const [isToggleSidebar, setisToggleSidebar] = useState(false);
     const values = {
         isToggleSidebar, setisToggleSidebar
     }
 
     return(
+        
         <MyContext.Provider value={values}>
             <div className="main d-flex">
                     <Header useUser={useUser}/>
+                    
                 <div className={`sidebarWrapper ${isToggleSidebar===true? 'toggle': ''}`}>
                     <Sidebar userlog={useUser}/>
                 </div>
