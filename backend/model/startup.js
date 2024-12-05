@@ -1,95 +1,71 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-// Define the Startup Schema
-const StartupSchema = new mongoose.Schema({
-  name: {
-    type: String
-    
+const Schema = mongoose.Schema;
+
+const InvestorSchema = new Schema({
+  id: Number,
+  name: String,
+  email: String,
+  amount: Number,
+  document: {
+    name: String,
+    url: String,
   },
-  industry: {
-    type: [String] // Array of strings for multiple industries
-   
-  },
-  description: {
-    type: String
-  },
-  founder: {
-    type: String
-  },
-  founderuserid: {
-    type: String
-    
-  },
-  coFounders: {
-    type: [String], // Array of co-founder names
-    default: [],
-  },
-  model: {
-    type: [String], // Array of business models
-    default: [],
-  },
-  funding: {
-    type: String, // Funding amount as a string
-    default: "0",
-  },
-  established: {
-    type: String // Date when the startup was established
-    
-  },
-  logo: {
-    type: String, // URL to the startup's logo
-    default: "",
-  },
-  images: {
-    type: [String], // Array of URLs to additional images
-    default: [],
-  },
-  social: {
-    type: [{
-      platform:{type:String},
-      url:{type:String}
-    }], // Array of social media links
-    default: [],
-  },
-  incorporated: {
-    type: Boolean, // Indicates if the startup is incorporated
-    default: false,
-  },
-  address: {
-    type: String // Address of the startup
-    
-  },
-  pitch: {
-    type: String, // Elevator pitch for the startup
-    default: "",
-  },
-  documents: {
-    type: [{
-      title:{type: String},
-      url:{type:String}
-    }], // Array of document URLs
-    default: [],
-  },
-  products: {
-    type: [{
-      name: { type: String},
-      description: { type: String },
-      price: { type: String },
-  },], // Array of product names or descriptions
-    default: [],
-  },
-  website: {
-    type: String, // Website URL
-    default: "",
-  },
-  graph: {
-    type: mongoose.Schema.Types.Mixed, // Object for storing graph-related data
-    default: {},
-  },
-}, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
+  verified: Boolean,
 });
 
+const GraphDataSchema = new Schema({
+  label: String,
+  revenue: Number,
+  profit: Number,
+  netProfit: Number,
+  document: {
+    name: String,
+    url: String,
+  },
+  verified: Boolean,
+});
+
+const SocialSchema = new Schema({
+  handle: String,
+  link: String,
+});
+
+const ProductSchema = new Schema({
+  name: String,
+  description: String,
+});
+
+const DocumentSchema = new Schema({
+  name: String,
+  url: String,
+});
+
+const StartupSchema = new Schema({
+  name: { type: String, required: true },
+  startupid: { type: String, unique: true },
+  industry: [String],
+  description: String,
+  founder: String,
+  founderuserid: { type: String, required: true },
+  coFounders: [String],
+  model: [String],
+  funding: Number,
+  established: String,
+  logo: String,
+  images: [String],
+  social: [SocialSchema],
+  incorporated: Boolean,
+  address: String,
+  pitch: String,
+  documents: [DocumentSchema],
+  products: [ProductSchema],
+  graph: {
+    label: String,
+    data: [GraphDataSchema],
+  },
+  investors: [InvestorSchema],
+});
 // Export the Model
 export default mongoose.model("Startup", StartupSchema, "startup");
 

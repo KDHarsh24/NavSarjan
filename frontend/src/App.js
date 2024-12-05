@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
-import Dashboard from './pages/Dashboard/Dashboard';
+//import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Policy_maker/Components/Dashboard';
 import Project from './pages/Project/Project';
 import ProjectProfile from './pages/Project/ProjectProfile';
 import StartupProfile from './pages/Startup/Startupprofile';

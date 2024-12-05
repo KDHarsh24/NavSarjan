@@ -1,10 +1,11 @@
 import express from "express";
-import { dashboardDetail,userProfileDetail, newStartUpDetail} from "../Controller/startUpController.js"; 
+import { mystartupDetail, startupDetail,userProfileDetail, newStartUpDetail} from "../Controller/startUpController.js"; 
 
 const router = express.Router();
 
 // Route to fetch startup details
-router.get('/detail', dashboardDetail); 
+router.get('/startup/detail', startupDetail); 
+router.post('/mystartup/detail', mystartupDetail);
 router.get('/profileDetail',userProfileDetail);
 router.post('/newStartUp',newStartUpDetail);
 

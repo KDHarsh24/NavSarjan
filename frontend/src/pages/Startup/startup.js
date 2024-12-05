@@ -31,7 +31,7 @@ const Startup = () => {
 
     const projectDash = [{text: 'Registered Startups', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Total revenue', val: 'Rs. 100cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
       useEffect(()=>{
-       axios.get('http://localhost:8081/home/startUp/detail')
+       axios.get('http://localhost:8081/home/startUp/startup/detail')
             .then(res=>{
               const startups = res.data.data;
               console.log(startups);
