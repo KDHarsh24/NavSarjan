@@ -309,7 +309,7 @@ const Startup = () => {
             <div className="projectStats w-100">
             {projectDash.map((row, index) => {
                 return(
-                    <DashboardBox valUser={row} color={row.color}/>
+                    <DashboardBox key={index} valUser={row} color={row.color}/>
                 ); })}
             </div>
         </div>

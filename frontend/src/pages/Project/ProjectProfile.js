@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
-import { Add, Delete } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, FormControlLabel } from "@mui/material";
+import { Edit, Delete, CloudUpload } from "@mui/icons-material";
+import { userData } from "../Login/Login";
 
 const ProjectProfile = () => {
   // Initial project data
+  const navigate  = useNavigate();
   const [project, setProject] = useState({
+    ownerName: 'Harsh',
+    ownerid: 'harshkumardas24@gmail.com',
     id: 1,
     name: "WebTree", // Non-editable
     description: "HTML parser and tree structure generator.",
-    technologies: "Python, Flask",
+    technologies: ["Python", "Flask"],
     status: "In Progress",
     progress: [
       {
@@ -25,6 +30,9 @@ const ProjectProfile = () => {
         id: 1,
         name: "John Doe",
         email: "john.doe@example.com",
+        amount: 1000,
+        document: {name: 'hello', url: 'pdf.com'},
+        verified: true
       },
     ],
     collaborators: [
@@ -41,7 +49,13 @@ const ProjectProfile = () => {
   const [newDate, setNewDate] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [uploadedDocs, setUploadedDocs] = useState([]);
-
+   const technologyDomains = [
+        "3D Printing", "5G", "AI/ML", "Analytics", "API", "AR-VR-MR", "Automation", "Battery", "Big Data", "Biometrics", 
+        "Blockchain", "Cloud Computing", "Computer Vision", "Drone", "Electric Powertrains", "Electric Vehicles", 
+        "Energy Storage", "Generative AI", "Genomics", "Geospatial & Space Tech", "Hardware", "IAAS", "IoT", 
+        "Logistics", "Micro-Mobility", "Mobile App", "Nanotechnology", "NLP/ Deep Learning", "Other", "PAAS", 
+        "Quantum Computing", "Robotics", "SAAS", "Software", "Web Platform"
+    ];
   const [newCollaborator, setNewCollaborator] = useState({
     name: "",
     email: "",
@@ -106,6 +120,10 @@ const ProjectProfile = () => {
 
   // Toggle edit mode
   const toggleEditing = () => {
+    if (editing)
+    {
+      console.log(project)
+    }
     setEditing((prev) => !prev);
   };
 
@@ -135,7 +153,65 @@ const ProjectProfile = () => {
       collaborators: prev.collaborators.filter((collab) => collab.id !== id),
     }));
   };
+  const [investorEditDialogOpen, setInvestorEditDialogOpen] = useState(false);
+  const [selectedInvestor, setSelectedInvestor] = useState(null);
 
+const handleEditInvestor = (investor) => {
+  setSelectedInvestor({ ...investor });
+  setInvestorEditDialogOpen(true);
+};
+
+const handleSaveInvestor = () => {
+  if (!selectedInvestor.name || !selectedInvestor.email || !selectedInvestor.amount) {
+    alert("Please fill all fields!");
+    return;
+  }
+
+  setProject((prev) => ({
+    ...prev, investors: [...prev.investors, { id: Date.now(), ...selectedInvestor }]
+  }));
+
+  setInvestorEditDialogOpen(false);
+  setSelectedInvestor(null);
+};
+
+const handleRemoveInvestor = (investorId) => {
+  const updatedInvestors = project.investors.filter((investor) => investor.id !== investorId);
+  setProject((prev) => ({
+    ...prev,
+    investors: updatedInvestors,
+  }));
+};
+
+const handleInvestorDocumentChange = (e) => {
+  const file = e.target.files[0];
+  setSelectedInvestor((prev) => ({
+    ...prev,
+    document: file ? { name: file.name, url: URL.createObjectURL(file) } : prev.document,
+  }));
+};
+const handleInputChange = (e) => {
+  const { name, value, type, checked } = e.target;
+  if (name === 'incorporated'){
+    setProject((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+}
+else if (type === "checkbox") {
+  setProject((prevState) => {
+    const updatedValue = checked
+      ? [...prevState[name], value] // Add to array if checked
+      : prevState[name].filter((item) => item !== value); // Remove from array if unchecked
+    return { ...prevState, [name]: updatedValue };
+  });
+} else {
+  setProject((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+}
+};
   return (
     <Container>
       {/* Project Details */}
@@ -144,37 +220,19 @@ const ProjectProfile = () => {
           <Typography variant="h4" gutterBottom>
             {project.name} {/* Non-editable */}
           </Typography>
-          <TextField
-            fullWidth
-            label="Description"
-            variant="outlined"
-            value={project.description}
-            disabled={!editing}
-            onChange={(e) => handleFieldChange("description", e.target.value)}
-            style={{ marginBottom: "10px" }}
-            multiline
-            maxRows={Infinity}
-          />
-          <TextField
-            fullWidth
-            label="Technologies"
-            variant="outlined"
-            value={project.technologies}
-            disabled={!editing}
-            onChange={(e) =>
-              handleFieldChange("technologies", e.target.value)
-            }
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            fullWidth
-            label="Current Status"
-            variant="outlined"
-            value={project.status}
-            disabled={!editing}
-            onChange={(e) => handleFieldChange("status", e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
+          <Button style={{marginBottom: '20px'}} variant="contained" color="primary" onClick={() => navigate(`/dashboard/profile/${project.ownerid}`)}>Researcher: {project.ownerName}</Button>
+          <TextField fullWidth label="Description & Abstract" variant="outlined" minRows={5} value={project.description} disabled={!editing} onChange={(e) => handleFieldChange("description", e.target.value)} style={{ marginBottom: "10px" }} multiline maxRows={Infinity}/>
+          {editing ? 
+              <div style={{marginBottom: '15px'}}>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select Technology Used</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {technologyDomains.map((model, index) => (
+                    <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={project.technologies.includes(model)} onChange={handleInputChange} name="technologies"/>} label={model}/>
+                  ))}
+                </div>
+              </div>
+              :<TextField fullWidth label="Industry" variant="outlined" value={project.technologies} name="industry" onChange={handleInputChange} disabled={!editing} sx={{ marginBottom: "10px" }}/>}
+          <TextField fullWidth label="Current Status" variant="outlined" value={project.status} disabled={!editing} onChange={(e) => handleFieldChange("status", e.target.value)} style={{ marginBottom: "10px" }}/>
 
           <Divider style={{ margin: "20px 0" }} />
 
@@ -182,17 +240,7 @@ const ProjectProfile = () => {
           <Typography variant="h5" gutterBottom>
             Completion Percentage
           </Typography>
-          <Slider
-            value={project.completion}
-            onChange={handleCompletionChange}
-            aria-labelledby="completion-slider"
-            valueLabelDisplay="auto"
-            step={5}
-            marks
-            min={0}
-            max={100}
-            disabled={!editing}
-          />
+          <Slider value={project.completion} onChange={handleCompletionChange} aria-labelledby="completion-slider" valueLabelDisplay="auto" step={5} marks min={0} max={100} disabled={!editing}/>
           <Typography variant="body2" color="textSecondary">
             Current Completion: {project.completion}%
           </Typography>
@@ -206,76 +254,27 @@ const ProjectProfile = () => {
           <List>
             {project.collaborators.map((collab) => (
               <ListItem key={collab.id}>
-                <ListItemText
-                  primary={`${collab.name} (${collab.role})`}
-                  secondary={collab.email}
-                />
-                <IconButton
-                  color="error"
-                  onClick={() => handleRemoveCollaborator(collab.id)}
-                >
+                <ListItemText primary={`${collab.name} (${collab.role})`} secondary={collab.email}/>
+                <IconButton color="error" onClick={() => handleRemoveCollaborator(collab.id)}>
                   <Delete />
                 </IconButton>
               </ListItem>
             ))}
           </List>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setCollaboratorDialogOpen(true)}
-          >
+          <Button variant="contained" color="primary" onClick={() => setCollaboratorDialogOpen(true)}>
             Add Collaborator
           </Button>
 
           {/* Add Collaborator Dialog */}
-          <Dialog
-            open={collaboratorDialogOpen}
-            onClose={() => setCollaboratorDialogOpen(false)}
-          >
+          <Dialog open={collaboratorDialogOpen} onClose={() => setCollaboratorDialogOpen(false)}>
             <DialogTitle>Add Collaborator</DialogTitle>
             <DialogContent>
-              <TextField
-                fullWidth
-                label="Name"
-                value={newCollaborator.name}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                value={newCollaborator.email}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    email: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
-              <TextField
-                fullWidth
-                label="Role"
-                value={newCollaborator.role}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    role: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
+              <TextField fullWidth label="Name" value={newCollaborator.name} onChange={(e) => setNewCollaborator((prev) => ({...prev, name: e.target.value,}))} style={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Email" value={newCollaborator.email} onChange={(e) => setNewCollaborator((prev) => ({...prev, email: e.target.value,}))} style={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Role" value={newCollaborator.role} onChange={(e) => setNewCollaborator((prev) => ({...prev, role: e.target.value,}))} style={{ marginBottom: "10px" }}/>
             </DialogContent>
             <DialogActions>
-              <Button
-                onClick={() => setCollaboratorDialogOpen(false)}
-                color="secondary"
-              >
+              <Button onClick={() => setCollaboratorDialogOpen(false)} color="secondary">
                 Cancel
               </Button>
               <Button onClick={handleAddCollaborator} color="primary">
@@ -295,10 +294,7 @@ const ProjectProfile = () => {
   {project.progress.map((status, index) => (
     <Box key={index}>
       <ListItem>
-        <ListItemText
-          primary={status.description}
-          secondary={`Date: ${status.date}`}
-        />
+        <ListItemText primary={status.description} secondary={`Date: ${status.date}`}/>
       </ListItem>
       <Typography variant="body2" style={{ marginLeft: "16px" }}>
         Documents:
@@ -306,11 +302,7 @@ const ProjectProfile = () => {
       <List>
         {status.documents.map((doc, docIndex) => (
           <ListItem key={docIndex} style={{ marginLeft: "32px" }}>
-            <Link
-              href={doc.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href={doc.url} target="_blank" rel="noopener noreferrer">
               {doc.name}
             </Link>
           </ListItem>
@@ -327,30 +319,9 @@ const ProjectProfile = () => {
 <Typography variant="h5" gutterBottom>
   Add Progress Entry
 </Typography>
-<TextField
-  fullWidth
-  label="Date"
-  type="date"
-  InputLabelProps={{ shrink: true }}
-  variant="outlined"
-  value={newDate}
-  onChange={(e) => setNewDate(e.target.value)}
-  style={{ marginBottom: "10px" }}
-/>
-<TextField
-  fullWidth
-  label="Description"
-  variant="outlined"
-  value={newDescription}
-  onChange={(e) => setNewDescription(e.target.value)}
-  style={{ marginBottom: "10px" }}
-/>
-<input
-  type="file"
-  multiple
-  onChange={handleDocumentUpload}
-  style={{ marginBottom: "10px" }}
-/>
+<TextField fullWidth label="Date" type="date" InputLabelProps={{ shrink: true }} variant="outlined" value={newDate} onChange={(e) => setNewDate(e.target.value)} style={{ marginBottom: "10px" }}/>
+<TextField fullWidth label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)}  style={{ marginBottom: "10px" }}/>
+<input type="file" multiple onChange={handleDocumentUpload} style={{ marginBottom: "10px" }}/>
 <List>
   {uploadedDocs.map((doc, index) => (
     <ListItem key={index}>
@@ -361,43 +332,67 @@ const ProjectProfile = () => {
     </ListItem>
   ))}
 </List>
-<Button
-  variant="contained"
-  color="primary"
-  onClick={handleAddProgress}
-  disabled={!newDate.trim() || !newDescription.trim()}
->
+<Button variant="contained" color="primary" onClick={handleAddProgress} disabled={(!newDate.trim() || !newDescription.trim()) && !editing}>
   Add Progress
 </Button>
 
 <Divider style={{ margin: "20px 0" }} />
 
-{/* Investors Section */}
-<Typography variant="h5" gutterBottom>
-  Investors
-</Typography>
-<List>
-  {project.investors.map((investor) => (
-    <ListItem key={investor.id}>
-      <ListItemText
-        primary={investor.name}
-        secondary={investor.email}
-      />
-      <Button variant="outlined" color="primary">
-        View Profile
+<Typography variant="h4" gutterBottom>
+        Investors
+      </Typography>
+      <List>
+        {project.investors.map((investor) => (
+          <ListItem key={investor.id} style={{ marginBottom: "10px" }}>
+            <ListItemText primary={`${investor.name} - $${investor.amount}`} secondary={`Email: ${investor.email} | Document: ${investor.document?.name}`}
+            />
+            <IconButton color="primary" disabled={!editing} onClick={() => handleEditInvestor(investor)}>
+              <Edit />
+            </IconButton>
+            <IconButton color="error" disabled={!editing} onClick={() => handleRemoveInvestor(investor.id)}>
+              <Delete />
+            </IconButton>
+          </ListItem>
+        ))}
+      </List>
+      <Button disabled={!editing} variant="contained" color="primary" onClick={() => handleEditInvestor({ id: Date.now(), name: "", email: "", amount: "", document: { name: "", url: "" },})}>
+        Add Investor
       </Button>
-    </ListItem>
-  ))}
-</List>
 
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={toggleEditing}
-            style={{ marginTop: "20px" }}
-          >
+      {/* Edit/Add Investor Dialog */}
+      <Dialog open={investorEditDialogOpen} onClose={() => setInvestorEditDialogOpen(false)}>
+        <DialogTitle>{selectedInvestor?.id ? "Edit Investor" : "Add Investor"}</DialogTitle>
+        <DialogContent>
+          <TextField fullWidth label="Name" value={selectedInvestor?.name || ""} onChange={(e) => setSelectedInvestor((prev) => ({ ...prev, name: e.target.value }))} style={{ marginBottom: "10px" }}/>
+          <TextField fullWidth label="Email" value={selectedInvestor?.email || ""} onChange={(e) => setSelectedInvestor((prev) => ({ ...prev, email: e.target.value }))} style={{ marginBottom: "10px" }}/>
+          <TextField fullWidth label="Amount" type="number" value={selectedInvestor?.amount || ""} onChange={(e) => setSelectedInvestor((prev) => ({ ...prev, amount: e.target.value }))} style={{ marginBottom: "10px" }}/>
+          <Button variant="contained" component="label" color="primary" startIcon={<CloudUpload/>}>
+              Upload Document
+              <input hidden accept=".pdf, .ppt, .docx" type="file" onChange={handleInvestorDocumentChange}/>
+            </Button>
+          {selectedInvestor?.document?.name && (
+            <Typography variant="body2">
+              Current Document: {selectedInvestor.document.name}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setInvestorEditDialogOpen(false)} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSaveInvestor} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+        {/*run this after data {(userData.user === 'investor')?:} */}
+          <Button variant="contained" color="secondary" onClick={toggleEditing} style={{ marginTop: "20px" }} >
             {editing ? "Save" : "Edit"}
           </Button>
+          {/*run this after data {(userData.type === 'investor')?:} */}
+          <Button variant="contained" color="primary" style={{ marginTop: "20px" }}>Invest</Button>
+          </div>
         </CardContent>
       </Card>
     </Container>

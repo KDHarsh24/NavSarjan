@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
+import { Checkbox,  FormControlLabel, Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import { AiFillProject } from "react-icons/ai";
 
@@ -8,7 +8,7 @@ const NewProject = () => {
   const [project, setProject] = useState({
     name: "", // Non-editable
     description: "",
-    technologies: "",
+    technologies: [],
     status: "",
     progress: [
     //   {
@@ -122,7 +122,13 @@ const NewProject = () => {
   const handleRemoveDocument = (index) => {
     setUploadedDocs((prev) => prev.filter((_, i) => i !== index));
   };
-
+  const technologyDomains = [
+    "3D Printing", "5G", "AI/ML", "Analytics", "API", "AR-VR-MR", "Automation", "Battery", "Big Data", "Biometrics", 
+    "Blockchain", "Cloud Computing", "Computer Vision", "Drone", "Electric Powertrains", "Electric Vehicles", 
+    "Energy Storage", "Generative AI", "Genomics", "Geospatial & Space Tech", "Hardware", "IAAS", "IoT", 
+    "Logistics", "Micro-Mobility", "Mobile App", "Nanotechnology", "NLP/ Deep Learning", "Other", "PAAS", 
+    "Quantum Computing", "Robotics", "SAAS", "Software", "Web Platform"
+];
   // Remove a collaborator
   const handleRemoveCollaborator = (id) => {
     setProject((prev) => ({
@@ -130,10 +136,29 @@ const NewProject = () => {
       collaborators: prev.collaborators.filter((collab) => collab.id !== id),
     }));
   };
-
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setProject((prevState) => {
+        const updatedValue = checked
+          ? [...prevState[name], value] // Add to array if checked
+          : prevState[name].filter((item) => item !== value); // Remove from array if unchecked
+        return { ...prevState, [name]: updatedValue };
+      });
+    } else {
+    setProject((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+  const handleSubmit = () =>{
+    console.log(project)
+  }
   return (
     <Container>
       {/* Project Details */}
+      <form>
       <div className="projectTop" style={{padding: '0px'}}>
         <div className="projectDash">
             <span>New Project</span> <AiFillProject/>
@@ -141,9 +166,14 @@ const NewProject = () => {
         </div>
       <Card style={{ margin: "20px 0", padding: "20px" }}>
         <CardContent>
-        <TextField fullWidth label="Title" variant="outlined" value={project.name} onChange={(e) => handleFieldChange("description", e.target.value)} style={{ marginBottom: "10px" }} maxRows={Infinity}/>
+        <TextField fullWidth label="Title" variant="outlined" value={project.name} onChange={(e) => handleFieldChange("name", e.target.value)} style={{ marginBottom: "10px" }}/>
           <TextField fullWidth label="Description" variant="outlined" value={project.description} onChange={(e) => handleFieldChange("description", e.target.value)} style={{ marginBottom: "10px" }} multiline maxRows={Infinity}/>
-          <TextField fullWidth label="Technologies" variant="outlined" value={project.technologies} onChange={(e) => handleFieldChange("technologies", e.target.value)} style={{ marginBottom: "10px" }}/>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select Technology Domains</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" style={{marginBottom: '20px'}}>
+              {technologyDomains.map((model, index) => (  
+                <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={project.technologies.includes(model)} onChange={handleInputChange} name="technologies"/>} label={model}/>
+              ))}
+            </div>
           <TextField fullWidth label="Current Status" variant="outlined" value={project.status} onChange={(e) => handleFieldChange("status", e.target.value)} style={{ marginBottom: "10px" }}/>
 
           <Divider style={{ margin: "20px 0" }} />
@@ -181,48 +211,12 @@ const NewProject = () => {
           <Dialog open={collaboratorDialogOpen} onClose={() => setCollaboratorDialogOpen(false)}>
             <DialogTitle>Add Collaborator</DialogTitle>
             <DialogContent>
-              <TextField
-                fullWidth
-                label="Name"
-                value={newCollaborator.name}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                value={newCollaborator.email}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    email: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
-              <TextField
-                fullWidth
-                label="Role"
-                value={newCollaborator.role}
-                onChange={(e) =>
-                  setNewCollaborator((prev) => ({
-                    ...prev,
-                    role: e.target.value,
-                  }))
-                }
-                style={{ marginBottom: "10px" }}
-              />
+              <TextField fullWidth label="Name" value={newCollaborator.name} onChange={(e) => setNewCollaborator((prev) => ({ ...prev, name: e.target.value}))} style={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Email" value={newCollaborator.email} onChange={(e) => setNewCollaborator((prev) => ({ ...prev, email: e.target.value, }))} style={{ marginBottom: "10px" }}/>
+              <TextField fullWidth label="Role" value={newCollaborator.role} onChange={(e) => setNewCollaborator((prev) => ({ ...prev, role: e.target.value, }))} style={{ marginBottom: "10px" }}/>
             </DialogContent>
             <DialogActions>
-              <Button
-                onClick={() => setCollaboratorDialogOpen(false)}
-                color="secondary"
-              >
+              <Button onClick={() => setCollaboratorDialogOpen(false)} color="secondary">
                 Cancel
               </Button>
               <Button onClick={handleAddCollaborator} color="primary">
@@ -242,10 +236,7 @@ const NewProject = () => {
   {project.progress.map((status, index) => (
     <Box key={index}>
       <ListItem>
-        <ListItemText
-          primary={status.description}
-          secondary={`Date: ${status.date}`}
-        />
+        <ListItemText primary={status.description} secondary={`Date: ${status.date}`}/>
       </ListItem>
       <Typography variant="body2" style={{ marginLeft: "16px" }}>
         Documents:
@@ -253,11 +244,7 @@ const NewProject = () => {
       <List>
         {status.documents.map((doc, docIndex) => (
           <ListItem key={docIndex} style={{ marginLeft: "32px" }}>
-            <Link
-              href={doc.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href={doc.url} target="_blank" rel="noopener noreferrer">
               {doc.name}
             </Link>
           </ListItem>
@@ -274,30 +261,10 @@ const NewProject = () => {
 <Typography variant="h5" gutterBottom>
   Add Progress Entry
 </Typography>
-<TextField
-  fullWidth
-  label="Date"
-  type="date"
-  InputLabelProps={{ shrink: true }}
-  variant="outlined"
-  value={newDate}
-  onChange={(e) => setNewDate(e.target.value)}
-  style={{ marginBottom: "10px" }}
+<TextField fullWidth label="Date" type="date" InputLabelProps={{ shrink: true }} variant="outlined" value={newDate} onChange={(e) => setNewDate(e.target.value)} style={{ marginBottom: "10px" }}
 />
-<TextField
-  fullWidth
-  label="Description"
-  variant="outlined"
-  value={newDescription}
-  onChange={(e) => setNewDescription(e.target.value)}
-  style={{ marginBottom: "10px" }}
-/>
-<input
-  type="file"
-  multiple
-  onChange={handleDocumentUpload}
-  style={{ marginBottom: "10px" }}
-/>
+<TextField fullWidth label="Description" variant="outlined" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} style={{ marginBottom: "10px" }}/>
+<input type="file" multiple onChange={handleDocumentUpload} style={{ marginBottom: "10px" }}/>
 <List>
   {uploadedDocs.map((doc, index) => (
     <ListItem key={index}>
@@ -308,36 +275,34 @@ const NewProject = () => {
     </ListItem>
   ))}
 </List>
-<Button
-  variant="contained"
-  color="primary"
-  onClick={handleAddProgress}
-  disabled={!newDate.trim() || !newDescription.trim()}
->
+<Button variant="contained" color="primary" onClick={handleAddProgress} disabled={!newDate.trim() || !newDescription.trim()}>
   Add Progress
 </Button>
 
 <Divider style={{ margin: "20px 0" }} />
 
-{/* Investors Section */}
-<Typography variant="h5" gutterBottom>
-  Investors
-</Typography>
-<List>
-  {project.investors.map((investor) => (
-    <ListItem key={investor.id}>
-      <ListItemText
-        primary={investor.name}
-        secondary={investor.email}
-      />
-      <Button variant="outlined" color="primary">
-        View Profile
-      </Button>
-    </ListItem>
-  ))}
-</List>
-        </CardContent>
-      </Card>
+    {/* Investors Section */}
+    <Typography variant="h5" gutterBottom>
+      Investors
+    </Typography>
+    <List>
+      {project.investors.map((investor) => (
+        <ListItem key={investor.id}>
+          <ListItemText primary={investor.name} secondary={investor.email}/>
+          <Button variant="outlined" color="primary">
+            View Profile
+          </Button>
+        </ListItem>
+      ))}
+      Add it after Creating the Project.
+    </List>
+    <Button variant="contained" color="primary" onClick={handleSubmit} style={{ marginTop: "20px" }} >
+      Submit
+    </Button>
+    </CardContent>
+       
+    </Card>
+      </form>
     </Container>
   );
 };

@@ -5,9 +5,8 @@ import { FaLightbulb } from "react-icons/fa";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 function PatentForm() {
-    const [value, setValue] = React.useState("new");
+  const [value, setValue] = React.useState("");
   const navigate = useNavigate();
-
 
   const handleTabChange = (event, newValue) => {
     navigate(`${newValue}`);
@@ -23,7 +22,7 @@ function PatentForm() {
         </div>
         <Box sx={{ p: 3, padding: '0px 16px 10px 16px', width: '100%' }}>
         <Paper elevation={3} sx={{ p: 3, width: '100%' }} style={{width: '100%'}}>
-            <TabContext style={{width: '100%'}}>
+            <TabContext style={{width: '100%'}} value={value}>
             <Box sx={{ display: "flex", width: '100%', justifyContent: 'center' }}>
             <Tabs value={value} onChange={handleTabChange} variant="fullWidth" TabIndicatorProps={{ style: {backgroundColor: "#00bfff", height: "2px"},}} style={{width: '100%'}}
             sx={{"& .MuiTab-root": {

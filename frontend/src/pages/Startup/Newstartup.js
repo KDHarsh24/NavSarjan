@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaLightbulb } from "react-icons/fa";
 import { Box, Tab, Tabs, TextField, Button, Paper } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Checkbox, RadioGroup, FormControlLabel, FormLabel, TextareaAutosize } from "@mui/material";
@@ -34,7 +35,7 @@ const Newstartup = () => {
         coFounders: [],
         model: [],
         funding: "",
-        established: "",
+        established: new Date(),
         logo: "",
         images: [],
         social: [],
@@ -48,10 +49,17 @@ const Newstartup = () => {
           label: "",
           data: [],
         },
+        investors: [],
       });
       const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
-        if (type === "checkbox") {
+        if (name === 'incorporated'){
+            setStartup((prevState) => ({
+                ...prevState,
+                [name]: value,
+              }));
+        }
+        else if (type === "checkbox") {
           setStartup((prevState) => {
             const updatedValue = checked
               ? [...prevState[name], value] // Add to array if checked
@@ -66,13 +74,14 @@ const Newstartup = () => {
         }
       };
       
-      const handleLogoChange = (e) => {
-        const file = e.target.files[0];
+      const handleLogoUpload = (event) => {
+        const file = event.target.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onloadend = () => {
-            setStartup({ ...startup, logo: reader.result });
+          reader.onload = () => {
+            setStartup((prev) => ({ ...prev, logo: reader.result }));
           };
+          reader.readAsDataURL(file);
         }
       };
       const handleSocialChange = (e, socialPlatform) => {
@@ -101,7 +110,16 @@ const Newstartup = () => {
           setStartup({ ...startup, documents: [...startup.documents, newDoc] });
         }
       };
+      const handleSubmit = () => {
+        console.log(startup)
+      }
     return(
+        <>
+        <div className="projectTop">
+            <div className="projectDash">
+                <span>Register Startup</span> <FaLightbulb/>
+            </div>
+        </div>
         <Box sx={{ p: 3, padding: '0px 16px 10px 16px', width: '100%' }}>
         <Paper elevation={3} sx={{ p: 3, width: '100%' }} style={{width: '100%'}}>
             <TabContext value={value} style={{width: '100%'}}>
@@ -122,73 +140,76 @@ const Newstartup = () => {
             <Tab label="Business Fields" value="fields" style={{width: '100%'}} />
             <Tab label="Documents" value="documents" style={{width: '100%'}} />
           </Tabs>
-                
             </Box>
-
             <TabPanel value="basic">
-                    <form>  
-                    {/* Company Information */}
-                    <h2 className="text-2xl font-semibold text-gray-700 mb-6">
-                        Company Information
-                    </h2>
+              <form>  
+              {/* Company Information */}
+                <h2 className="text-2xl font-semibold text-gray-700 mb-6">
+                  Company Information
+                </h2>
 
-                    <div className="mb-6">
+                <div className="mb-6">
                         {/* About Company */}
-                        <div className="mb-6">
-                        <h4 className="text-lg font-medium text-gray-600 mb-2">
-                            About Company
-                        </h4>
+                  <div className="mb-6">
+                    <h4 className="text-lg font-medium text-gray-600 mb-2">
+                        About Company
+                    </h4>
 
-                        <div className="mb-4">
-                            <FormLabel className="text-gray-700 mb-2 block">
-                            Company Logo
-                            </FormLabel>
-                            <input type="file" name='logo' accept="image/*" className="w-full mt-2 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" onChange={handleLogoChange}/>
-                        </div>
+                    <div className="mb-4">
+                      <FormLabel className="text-gray-700 mb-2 block">
+                        Company Logo
+                      </FormLabel>
+                      <input type="file" name='logo' accept="image/*" className="w-full mt-2 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" onChange={handleLogoUpload}/>
+                    </div>
 
-                        <div className="grid grid-cols-1 gap-4">
-                            <TextField label="Company Name" placeholder="Startup Name" name="name" onChange={handleInputChange} fullWidth value={startup.name}/>
-                        </div>
-                        <div className="mt-6">
-                            <FormLabel className="text-gray-700 block mb-2">
-                            Is your startup incorporated?
-                            </FormLabel>
-                            <FormControlLabel control={<Checkbox color="primary" value={startup.incorporated} name="incorporated" onChange={handleInputChange}/>} label="Yes"/>
-                        </div>
-                        </div>
+                    <div className="grid grid-cols-1 gap-4">
+                      <TextField label="Company Name" placeholder="Startup Name" name="name" onChange={handleInputChange} fullWidth value={startup.name}/>
+                    </div>
+                      <div className="mt-6">
+                        <FormLabel className="text-gray-700 block mb-2">
+                          Is your startup incorporated?
+                        </FormLabel>
+                        <FormControlLabel control={<Checkbox color="primary" value={startup.incorporated} name="incorporated" onChange={handleInputChange}/>} label="Yes"/>
+                      </div>
+                      <div className="mt-6">
+                        <FormLabel className="text-gray-700 block mb-2">
+                          Date of Establishment
+                        </FormLabel>
+                        <TextField type="date" name="established" value={startup.established} onChange={handleInputChange}/>
+                      </div>
+                    </div>
 
                         {/* Address Fields */}
 
-                        <div className="mt-6">
-                        <FormLabel className="text-gray-700 mb-2 block">
-                            Address
-                        </FormLabel>
-                        <TextareaAutosize minRows={3} placeholder="Address" name='address' value={startup.address} onChange={handleInputChange} className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
-                        </div>
-                        <div className="mt-6">
-                        <FormLabel className="text-gray-700 mb-2 block">
-                            Elevator Pitch
-                        </FormLabel>
-                        <TextareaAutosize minRows={3} name='pitch' value={startup.pitch} onChange={handleInputChange} placeholder="We help (x) do (y) by doing (z)" className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
-                        </div>
-                        <div className="mt-6">
-                        <FormLabel className="text-gray-700 mb-2 block">
-                            Company Brief
-                        </FormLabel>
-                        <TextareaAutosize minRows={3} name='description' value={startup.description} onChange={handleInputChange} placeholder="Brief about the company" className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
-                        </div>
+                    <div className="mt-6">
+                      <FormLabel className="text-gray-700 mb-2 block">
+                        Address
+                      </FormLabel>
+                      <TextareaAutosize minRows={3} placeholder="Address" name='address' value={startup.address} onChange={handleInputChange} className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
+                      </div>
+                      <div className="mt-6">
+                      <FormLabel className="text-gray-700 mb-2 block">
+                        Elevator Pitch
+                      </FormLabel>
+                      <TextareaAutosize minRows={3} name='pitch' value={startup.pitch} onChange={handleInputChange} placeholder="We help (x) do (y) by doing (z)" className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
+                      </div>
+                      <div className="mt-6">
+                      <FormLabel className="text-gray-700 mb-2 block">
+                        Company Brief
+                      </FormLabel>
+                      <TextareaAutosize minRows={3} name='description' value={startup.description} onChange={handleInputChange} placeholder="Brief about the company" className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-gray-500"/>
+                      </div>
                     </div>
 
                     
                     {/* Business Models */}
                     <div className="mt-8">
                         <FormLabel className="text-gray-600 font-medium mb-4 block">
-                        Business Models
+                            Business Models
                         </FormLabel>
                         <RadioGroup row>
                         {["B2B", "B2B2C", "B2C", "B2G", "D2C"].map((model, index) => (
-                            <FormControlLabel key={index}
-                            control={ <Checkbox color="primary" value={model} checked={startup.model.includes(model)}  onChange={handleInputChange} name="model"/> } label={model}/>
+                            <FormControlLabel key={index} control={ <Checkbox color="primary" value={model} checked={startup.model.includes(model)}  onChange={handleInputChange} name="model"/> } label={model}/>
                         ))}
                         </RadioGroup>
                     </div>
@@ -199,16 +220,7 @@ const Newstartup = () => {
                     </h3>
                     {["Website", "LinkedIn", "Twitter", "YouTube", "Facebook", "Instagram"].map(
                         (social, index) => (
-                        <TextField
-                            key={index}
-                            label={social}
-                            placeholder={`Enter ${social} URL`}
-                            type="url"
-                            fullWidth
-                            className="mb-4"
-                            value={startup.social.find((item) => item.handle === social)?.link || ''}
-                            onChange={(e) => handleSocialChange(e, social)}
-                        />
+                        <TextField key={index} label={social} placeholder={`Enter ${social} URL`} type="url" fullWidth className="mb-4" value={startup.social.find((item) => item.handle === social)?.link || ''} onChange={(e) => handleSocialChange(e, social)}/>
                         )
                     )}
 
@@ -225,14 +237,14 @@ const Newstartup = () => {
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select Industry Domains</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {industryDomains.map((model, index) => (
-                            <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={startup.model.includes(model)} onChange={handleInputChange} name="model"/>} label={model}/>
+                            <FormControlLabel key={index} control={<Checkbox color="primary" value={model} checked={startup.industry.includes(model)} onChange={handleInputChange} name="industry"/>} label={model}/>
                         ))}
                     </div>
                 </div>
 
               
                 {/* Buttons */}
-                    <div className="flex justify-between mt-8">
+                <div className="flex justify-between mt-8">
                     <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{setValue('basic')}}>
                             Previous
                         </Button>
@@ -276,7 +288,7 @@ const Newstartup = () => {
                     <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{setValue('fields')}}>
                             Previous
                         </Button>
-                        <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{console.log(startup, 'Hello')}}>
+                        <Button variant="contained" color="primary" className="px-6 py-3" onClick={handleSubmit}>
                             Submit
                         </Button>
                 </div>
@@ -284,6 +296,7 @@ const Newstartup = () => {
             </TabContext>
         </Paper>
         </Box>
+        </>
     );
 }
 export default Newstartup;

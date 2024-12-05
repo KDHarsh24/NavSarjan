@@ -302,7 +302,7 @@ const MyProject = ({type='public'}) => {
       const projectDash = [{text: 'Total Projects', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Capital Owns', val: 'Rs1cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
       
     return (
-    <div classprojectName="projectpage">
+    <div className="projectpage">
         <div className="projectTop">
             <div className="projectDash">
                 <span>My Projects</span> <AiFillProject/>
@@ -317,7 +317,7 @@ const MyProject = ({type='public'}) => {
         <div className="flex mt-8" style={{padding: '0px 0px 0px 16px'}}>
           <Link to='new'>
             <Button variant="contained" color="primary" className="px-6 py-3">
-                Create New <FaPlus/>
+                Create New <FaPlus style={{marginLeft: '10px'}}/>
             </Button>
             </Link>
         </div>

@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Bubble } from '@typebot.io/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+     <Bubble
+      typebot="customer-support-5n1p09i"
+      theme={{ button: { backgroundColor: "#0042DA" } }}
+    />
     <App />
   </React.StrictMode>
 );

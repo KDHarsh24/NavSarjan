@@ -73,62 +73,24 @@ const IPRForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom style={{marginTop: '10px'}}>
                 Applicant Details
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Applicant Name"
-                        name="applicantName"
-                        value={formData.applicantName}
-                        onChange={handleChange}
-                        required
-                    />
+                    <TextField fullWidth  label="Applicant Name" name="applicantName" value={formData.applicantName} onChange={handleChange} required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        multiline
-                        rows={3}
-                        required
-                    />
+                    <TextField fullWidth label="Address" name="address" value={formData.address} onChange={handleChange} multiline rows={3} required/>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField
-                        fullWidth
-                        label="Nationality"
-                        name="nationality"
-                        value={formData.nationality}
-                        onChange={handleChange}
-                        required
-                    />
+                    <TextField fullWidth label="Nationality" name="nationality" value={formData.nationality} onChange={handleChange} required/>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField
-                        fullWidth
-                        label="Phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        required
-                    />
+                    <TextField fullWidth label="Phone" name="phone" value={formData.phone} onChange={handleChange}required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        type="email"
-                    />
+                    <TextField fullWidth label="Email" name="email" value={formData.email} onChange={handleChange} required type="email"/>
                 </Grid>
             </Grid>
 
@@ -137,50 +99,16 @@ const IPRForm = () => {
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Title of Invention"
-                        name="inventionTitle"
-                        value={formData.inventionTitle}
-                        onChange={handleChange}
-                        required
-                    />
+                    <TextField fullWidth label="Title of Invention" name="inventionTitle" value={formData.inventionTitle} onChange={handleChange} required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Abstract"
-                        name="abstract"
-                        value={formData.abstract}
-                        onChange={handleChange}
-                        multiline
-                        rows={4}
-                        required
-                    />
+                    <TextField fullWidth label="Abstract" name="abstract" value={formData.abstract} onChange={handleChange} multiline rows={4} required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Detailed Description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        multiline
-                        rows={4}
-                        required
-                    />
+                    <TextField fullWidth label="Detailed Description" name="description" value={formData.description} onChange={handleChange} multiline rows={4} required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        fullWidth
-                        label="Claims"
-                        name="claims"
-                        value={formData.claims}
-                        onChange={handleChange}
-                        multiline
-                        rows={4}
-                        required
-                    />
+                    <TextField fullWidth label="Claims" name="claims" value={formData.claims} onChange={handleChange} multiline rows={4} required/>
                 </Grid>
             </Grid>
 
@@ -188,13 +116,7 @@ const IPRForm = () => {
                 Upload Additional Documents
             </Typography>
             <label htmlFor="document-upload">
-                <input
-                    id="document-upload"
-                    multiple
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={handleFileUpload}
-                />
+                <input id="document-upload" multiple type="file" style={{ display: "none" }} onChange={handleFileUpload}/>
                 <Button variant="outlined" component="span" fullWidth>
                     Add Documents
                 </Button>
@@ -205,26 +127,10 @@ const IPRForm = () => {
                     <Typography variant="h6">Uploaded Documents</Typography>
                 )}
                 {formData.documents.map((file, index) => (
-                    <Box
-                        key={index}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            mt: 1,
-                            p: 1,
-                            border: "1px solid #ccc",
-                            borderRadius: "4px",
-                        }}
-                    >
+                    <Box key={index} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1, p: 1, border: "1px solid #ccc", borderRadius: "4px"}}>
                         <Typography>{file.name}</Typography>
                         <Box>
-                            <IconButton
-                                component="a"
-                                href={URL.createObjectURL(file)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <IconButton component="a" href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer">
                                 <OpenInNewIcon />
                             </IconButton>
                             <IconButton onClick={() => handleRemoveFile(index)}>
@@ -235,18 +141,7 @@ const IPRForm = () => {
                 ))}
             </Box>
 
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        name="declaration"
-                        checked={formData.declaration}
-                        onChange={handleChange}
-                        required
-                    />
-                }
-                label="I hereby declare that the information provided is true and accurate."
-                sx={{ mt: 4 }}
-            />
+            <FormControlLabel control={<Checkbox name="declaration" checked={formData.declaration} onChange={handleChange} required/>} label="I hereby declare that the information provided is true and accurate." sx={{ mt: 4 }}/>
 
             <Button variant="contained" type="submit" sx={{ mt: 2 }}>
                 Submit

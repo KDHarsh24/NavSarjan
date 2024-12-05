@@ -7,7 +7,16 @@ import { userData } from '../Login/Login';
 export default function ProfilePage({email}) {
   const { userId } = useParams(); // Get the userId from the URL
   const [profile, setProfile] = useState({});
-  
+  const [user, setUser] = useState({
+    email: 'harshkumardas24@gmail.com',
+    password: '123456789',
+    name: 'Harsh',
+    address: 'Empire State Building, \nNew York',
+    phone: '7592004436',
+    image: null,
+    social: [{ paltform: 'linkedin', url: 'linkedin.com'}, { paltform: 'github', url: 'github.com'}],
+    dob: '2004-10-07'
+  })
   // Fetch data when the page loads
   useEffect(() => {
     const fetchData = async () => {
