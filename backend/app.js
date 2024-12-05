@@ -34,42 +34,7 @@ app.get('/', (req, res) => {
   res.send('<h6>Welcome to the Navsarjan Backend</h6>');
 });
 
-// Create User Endpoint
-app.post('/', async (req, res) => {
-  try {
-    const { name, email, password, address, phone, dob } = req.body;
 
-    // Check if the email already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Parse the dob string into a Date object with only date information
-
-    // Create a new user object
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-      address,
-      phone,
-      dob, // Ensure only the date part is saved
-    });
-
-    // Save the new user
-    const savedUser = await newUser.save();
-
-    // Send success response
-    res.status(201).json({ message: 'Account created successfully!', user: savedUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error creating account', error: error.message });
-  }
-});
 
 
 // Routes
