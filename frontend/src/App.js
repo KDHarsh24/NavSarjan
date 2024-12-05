@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
-//import Dashboard from './pages/Dashboard/Dashboard';
-import Dashboard from './pages/Policy_maker/Components/Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
+//import Dashboard from './pages/Policy_maker/Components/Dashboard';
 import Project from './pages/Project/Project';
 import ProjectProfile from './pages/Project/ProjectProfile';
 import StartupProfile from './pages/Startup/Startupprofile';
@@ -21,21 +21,33 @@ import MyStartup from './pages/Startup/myStartup';
 import NewProject from './pages/Project/newProject';
 import Startup from './pages/Startup/startup';
 import Register from './pages/Login/Register';
-
+import { useState,useEffect } from 'react';
+//const [userEmail,setUserEmail]=useState(null);
 
 function App() {
+  const [userEmail, setUserEmail] = useState(() => {
+    // Retrieve email from localStorage
+    return localStorage.getItem('userEmail') || null;
+  });
+
+  useEffect(() => {
+    // Store email in localStorage whenever it changes
+    if (userEmail) {
+      localStorage.setItem('userEmail', userEmail);
+    }
+  }, [userEmail]);
   return (
   <BrowserRouter>
       <Routes>
-        <Route path={'/login'} exact={true} element={<Login/>}/>
+        <Route path={'/login'} exact={true} element={<Login     emailValue={setUserEmail}/>}/>
         <Route path={'/register'} exact={true} element={<Register/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
         <Route path='/' exact={true} element={<Homepage/>}/>
-        <Route path="/sign-page" element={<Signpage/>}/>
+        <Route path="/sign-page" element={<Signpage emailValue={setUserEmail}/>}/>
         <Route path="/create-account" element={<CreateAccount/>}/>
         {/* Forms Routes */}
 
-        <Route path={'/dashboard'} exact={true} element={<Dashboard/>}>
+        <Route path={'/dashboard'} exact={true} element={<Dashboard userEmail={userEmail}/>}>
           <Route path={'/dashboard/projects'} exact={true} element={<Project/>}/>
           <Route path={'/dashboard/myprojects'} exact={true} element={<MyProject/>}/>
           <Route path={'/dashboard/myprojects/new'} exact={true} element={<NewProject/>}/>
@@ -47,7 +59,7 @@ function App() {
           <Route path={'/dashboard/mystartups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
-          <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>
+          <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup userEmail={userEmail}/>}/>
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
           <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage/>}/>
           <Route path={'/dashboard/policymaker'} exact={true} element={<PolicyMakerLandingPage/>}/>
@@ -58,4 +70,5 @@ function App() {
 }
 
 export default App;
+
 

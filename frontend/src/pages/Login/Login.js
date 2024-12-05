@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext'; // Import context
 
-const Login = () => {
+const Login = ({emailValue}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Login = () => {
       if (response.data.success) {
         localStorage.setItem('token', response.data.token);
         setUserData({ email }); // Update context with user data
+        emailValue(email);
         alert('Login Successful!');
         navigate('/dashboard');
       } else {

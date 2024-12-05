@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Dashboard = () => {
+const Dashboard = ({userEmail}) => {
+    console.log("User Email: "+userEmail);
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [ongoingProjects, setOngoingProjects] = useState([]);
     const [startups, setStartups] = useState([]);

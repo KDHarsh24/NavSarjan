@@ -20,7 +20,7 @@ const Register = () => {
         // Update user data in context
         setUserData({ name, email });
         alert('Registration Successful!');
-        navigate('/dashboard'); // Redirect to dashboard after successful registration
+        navigate('/login'); // Redirect to dashboard after successful registration
       } else {
         alert(response.data.message);
       }

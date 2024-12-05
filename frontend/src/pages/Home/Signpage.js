@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useUser } from '../../context/UserContext'; // Import context
 
-function Signpage()
+function Signpage({emailValue})
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,6 +22,7 @@ function Signpage()
               localStorage.setItem('token', response.data.token);
               setUserData({ email }); // Update context with user data
               alert('Login Successful!');
+              emailValue(email);
               navigate('/dashboard');
             } else {
               alert(response.data.message);
