@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-// Define the social media schema
 
-
-// Define the user schema
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -40,7 +37,8 @@ const userSchema = new mongoose.Schema({
         url: { type: String, required: true },
       },
     ],
-    default: null, 
+    _id: false,
+    default: null,
   },
   dob: {
     type: String,
@@ -48,26 +46,16 @@ const userSchema = new mongoose.Schema({
   },
 }, { timestamps: false, versionKey: false });
 
-
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next(); // Only hash if the password is modified
-  this.password = await bcrypt.hash(this.password, 10); // Hash the password with 10 rounds of salt
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
 // Compare password method
 userSchema.methods.matchPassword = async function (password) {
-  return await bcrypt.compare(password, this.password); // Compare provided password with hashed password
+  return await bcrypt.compare(password, this.password);
 };
-
-// Update the updatedAt field whenever the document is modified
-userSchema.pre('save', function (next) {
-  if (this.isModified()) {
-    this.updatedAt = Date.now(); // Set updatedAt to the current time
-  }
-  next();
-});
-
 
 export default mongoose.model('User', userSchema, 'user');
