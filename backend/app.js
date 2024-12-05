@@ -2,10 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import User from './model/user.js';
 import startUpRoutes from './Route/startUpRoute.js';
 import userAuthRoutes from './Route/authRoute.js';
-import bcrypt from 'bcrypt';
+import projectRoutes from './Route/projectRoute.js'
 
 dotenv.config();
 
@@ -34,11 +33,9 @@ app.get('/', (req, res) => {
   res.send('<h6>Welcome to the Navsarjan Backend</h6>');
 });
 
-
-
-
 // Routes
 app.use('/home/startUp', startUpRoutes);
+app.use('/home/Projects', projectRoutes);
 app.use('/home', userAuthRoutes);
 
 // Error Handling Middleware

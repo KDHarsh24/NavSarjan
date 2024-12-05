@@ -286,7 +286,7 @@ const Newstartup = ({userEmail}) => {
                             Previous
                         </Button>
                         <Button variant="contained" color="primary" className="px-6 py-3" onClick={()=>{setValue('documents')}}>
-                            Next
+                          ``  Next
                         </Button>
                     </div>
                 </TabPanel>

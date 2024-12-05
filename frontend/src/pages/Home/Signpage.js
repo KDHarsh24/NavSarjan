@@ -2,14 +2,14 @@ import React  from "react";
 import {Link,useNavigate} from 'react-router-dom';
 import { useState } from "react";
 import axios from "axios";
-import { useUser } from '../../context/UserContext'; // Import context
+import { useUser } from '../../context/UserContext'; 
 
 function Signpage({emailValue})
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const { setUserData } = useUser(); // Access context function
+    const { setUserData } = useUser(); 
 
     const handleSubmit=async(e)=>
     {
