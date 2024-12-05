@@ -48,9 +48,7 @@ function Create_account() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users', formDataWithImage, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const response = axios.post('http://localhost:8081/home/register',dataToSubmit)
       if (response.status === 201) {
         alert('Account created successfully!');
       } else {
