@@ -29,7 +29,7 @@ export const mystartupDetail = async (req, res) => {
   console.log("in my startUp detail")
   try {
     const { email } = req.body; // Extract email from request body
-    console.log("emauil in mystartup: "+email);
+    console.log("email in mystartup: "+email);
     if (!email) {
       return res.status(400).json({
         success: false,

@@ -4,6 +4,7 @@ import DashboardBox from "../Dashboard/DasboardBox";
 import { AiFillProject, AiOutlineCalculator } from "react-icons/ai";
 import { FaMoneyBill, FaThList, FaPlus } from 'react-icons/fa';
 import { Button } from "@mui/material";
+import { userdata } from "../Home/Signpage";
 
 
 function countDistinctValues(arr, key) {
@@ -11,7 +12,7 @@ function countDistinctValues(arr, key) {
     return distinctValues.size;
 }
 
-const MyProject = ({type='public',userEmail}) => {
+const MyProject = () => {
     const projectColumns =[
         { field: "name", headerName: "Project Name", flex: 1.5,
         renderCell: (params) => (

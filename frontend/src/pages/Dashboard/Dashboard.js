@@ -6,17 +6,18 @@ import { useState, createContext } from "react";
 import Header from "../../components/Header/Header";
 import { useLocation, Outlet } from "react-router-dom";
 import { useUser } from '../../context/UserContext';
+import { userdata } from "../Home/Signpage";
 const MyContext = createContext();
 
 
-const Dashboard = ({userEmail}) => {
-    const { userData } = useUser();   //to access email use userData.email
+const Dashboard = () => {
+    const userEmail = userdata.email
     console.log("User Email: "+userEmail);
     const [isToggleSidebar, setisToggleSidebar] = useState(false);
     const values = {
         isToggleSidebar, setisToggleSidebar
     }
-
+    console.log(userdata)
     return(
         
         <MyContext.Provider value={values}>

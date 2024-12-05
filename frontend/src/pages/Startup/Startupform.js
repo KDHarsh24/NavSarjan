@@ -13,6 +13,8 @@ import {
 import { useForm, useFieldArray } from "react-hook-form";
 import { Add, Remove } from "@mui/icons-material";
 
+import { userdata } from "../Home/Signpage";
+
 const StartupForm = () => {
   const { register, handleSubmit, control } = useForm();
   const [files, setFiles] = useState({});

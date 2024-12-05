@@ -3,6 +3,9 @@ import { Box, Tab, Tabs, TextField, Button, Paper } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Checkbox, RadioGroup, FormControlLabel, FormLabel, TextareaAutosize } from "@mui/material";
 import axios from 'axios';
+import { userdata } from "../Home/Signpage";
+
+
 const Newstartup = ({userEmail}) => {
     const industryDomains = [
         "Horizontal", "AgriTech", "Cyber Security", "Drones", "Enterprise SaaS", "Food", "Hardware", "Language Deeptech",

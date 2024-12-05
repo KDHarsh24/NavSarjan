@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from "react-chartjs-2";
 import { postData } from "../../Data/backendmsg";
 import axios from "axios";
+import { userdata } from "../Home/Signpage";
 
 
 //take user from login id
@@ -94,6 +95,8 @@ const StartupProfile = ({userEmail}) => {
   });
 
 */
+
+
 //do not know user sent user as parameter to get detail
 useEffect(() => {
     axios.get('http://localhost:8081/home/startUp/profileDetail',{params: { id } })

@@ -6,6 +6,7 @@ import { FaLightbulb, FaMoneyBill, FaThList,  FaPlus } from 'react-icons/fa';
 import axios from 'axios';
 import { useState,useEffect } from "react";
 import { Button } from "@mui/material";
+import { userdata } from "../Home/Signpage";
 
 function countDistinctValues(arr, key) {
     const distinctValues = new Set(arr.map(item => item[key]));
@@ -31,25 +32,27 @@ const MyStartup = ({userEmail}) => {
       ];
 
     const projectDash = [{text: 'Registered Startups', val: projectRows.length, color: ['#1da256', '#48d483'], icon:<AiOutlineCalculator/>}, {text: 'Categories', val: countDistinctValues(projectRows, 'topic'), color: ['#c012e2', '#eb64fe'], icon: <FaThList/>}, {text: 'Total revenue', val: 'Rs. 100cr', color: ['#2c78ef', '#60aff5'], icon: <FaMoneyBill/>},];
-      useEffect(()=>{
-       axios.get('http://localhost:8081/home/startUp/mystartup/detail',{userEmail})
-            .then(res=>{
-              const startups = res.data.data;
-              console.log(startups);
-                const formattedData = startups.map(startup => ({
-                  id: startup._id,
-                  name: startup.name,
-                  description: startup.description,
-                  startDate: startup.established, // Use established date or default
-                  status: startup.funding, // Funding status or default
-                  teamLead: startup.founder || "Not complete", // Founder name or default
-                  topic: startup.industry.join(', ')
-                }));
-                // Update projectRows state
-                setProjectRows(formattedData);
-            })
-            .catch(err=>console.log(err));
-    },[])
+    useEffect(() => {
+      axios
+        .post('http://localhost:8081/home/startUp/mystartup/detail', { email: userdata.email }) // Ensure 'email' key is used
+        .then(res => {
+          const startups = res.data.data;
+          console.log(startups);
+          const formattedData = startups.map(startup => ({
+            id: startup._id,
+            name: startup.name,
+            description: startup.description,
+            startDate: startup.established, // Use established date or default
+            status: startup.funding, // Funding status or default
+            teamLead: startup.founder || "Not complete", // Founder name or default
+            topic: startup.industry.join(', '),
+          }));
+          // Update projectRows state
+          setProjectRows(formattedData);
+        })
+        .catch(err => console.log(err));
+    }, [userEmail]);
+    
 
     return (
     <div classprojectName="projectpage">

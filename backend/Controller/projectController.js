@@ -6,7 +6,6 @@ export const projectDetail = async (req, res) =>
 {
   try 
   {
-    // Fetch all documents from the project collection
     const project = await Project.find(); 
     console.log("data: "+project)
     // Send data as response
