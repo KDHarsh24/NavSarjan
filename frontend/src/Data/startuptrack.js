@@ -46,7 +46,7 @@ import testCase3 from './startup-test-case-3.json';
     neutral: '#718096'      // Gray
   }
 };*/
-const StartupInvestmentTracker = () => {
+const StartupInvestmentTracker = ({userEmail}) => {
   const [formData, setFormData] = useState({
     startupName: '',
     founder: '',

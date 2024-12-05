@@ -10,7 +10,7 @@ function countDistinctValues(arr, key) {
     return distinctValues.size;
 }
 
-const Project = ({type='public'}) => {
+const Project = ({type='public',userEmail}) => {
     const projectColumns =[
         { field: "name", headerName: "Project Name", flex: 1.5,
         renderCell: (params) => (

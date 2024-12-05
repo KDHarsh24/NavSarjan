@@ -3,7 +3,7 @@ import { Container, Typography, Card, CardContent, Button, TextField, List, List
 import { Add, Delete } from "@mui/icons-material";
 import { AiFillProject } from "react-icons/ai";
 
-const NewProject = () => {
+const NewProject = ({userEmail}) => {
   // Initial project data
   const [project, setProject] = useState({
     name: "", // Non-editable

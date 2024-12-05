@@ -12,7 +12,7 @@ function countDistinctValues(arr, key) {
     return distinctValues.size;
 }
 
-const Startup = () => {
+const Startup = ({userEmail}) => {
   const [projectRows,setProjectRows]=useState([]);
     const projectColumns =[
         { field: "name", headerName: "Brand", flex: 1.5,

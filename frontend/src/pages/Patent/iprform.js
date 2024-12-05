@@ -4,7 +4,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { FaLightbulb } from "react-icons/fa";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
-function PatentForm() {
+function PatentForm({userEmail}) {
     const [value, setValue] = React.useState("new");
   const navigate = useNavigate();
 

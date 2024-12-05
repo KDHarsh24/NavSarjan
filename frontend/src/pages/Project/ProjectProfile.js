@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-const ProjectProfile = () => {
+const ProjectProfile = ({userEmail}) => {
   // Initial project data
   const [project, setProject] = useState({
     id: 1,

@@ -3,7 +3,7 @@ import { Box, Tab, Tabs, TextField, Button, Paper } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Checkbox, RadioGroup, FormControlLabel, FormLabel, TextareaAutosize } from "@mui/material";
 import axios from 'axios';
-const Newstartup = () => {
+const Newstartup = ({userEmail}) => {
     const industryDomains = [
         "Horizontal", "AgriTech", "Cyber Security", "Drones", "Enterprise SaaS", "Food", "Hardware", "Language Deeptech",
         "Mobility", "Robotics", "Sustainability & Environment", "Waste Management", "Adtech", "B2B Ecommerce Platform", 

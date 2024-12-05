@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import axios from "axios";
 
-const IPRForm = () => {
+const IPRForm = ({userEmail}) => {
     const [formData, setFormData] = useState({
         applicantName: "",
         address: "",

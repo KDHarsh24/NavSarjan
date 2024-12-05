@@ -10,7 +10,7 @@ import Policy from './Policy';
 import Feedback from './Feedback';
 import './all.css'
 
-const PolicyMakerLandingPage = () => {
+const PolicyMakerLandingPage = ({userEmail}) => {
   return (
 
         <div className="p-8 space-y-8">

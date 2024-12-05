@@ -14,7 +14,7 @@ import axios from "axios";
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const StartupProfile = () => {
+const StartupProfile = ({userEmail}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [response, setResponse] = useState("");

@@ -41,28 +41,28 @@ function App() {
       <Routes>
         <Route path={'/login'} exact={true} element={<Login     emailValue={setUserEmail}/>}/>
         <Route path={'/register'} exact={true} element={<Register/>}/>
-        <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
-        <Route path='/' exact={true} element={<Homepage/>}/>
+        <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker  userEmail={userEmail}/>}/>
+        <Route path='/' exact={true} element={<Homepage userEmail={userEmail}/>}/>
         <Route path="/sign-page" element={<Signpage emailValue={setUserEmail}/>}/>
         <Route path="/create-account" element={<CreateAccount/>}/>
         {/* Forms Routes */}
 
         <Route path={'/dashboard'} exact={true} element={<Dashboard userEmail={userEmail}/>}>
-          <Route path={'/dashboard/projects'} exact={true} element={<Project/>}/>
-          <Route path={'/dashboard/myprojects'} exact={true} element={<MyProject/>}/>
-          <Route path={'/dashboard/myprojects/new'} exact={true} element={<NewProject/>}/>
-          <Route path={'/dashboard/patents'} exact={true} element={<PatentForm/>}>
-          <Route path={'/dashboard/patents/'} exact={true} element={<PatentApplicationForm/>}/>
-            <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm/>}/>
+          <Route path={'/dashboard/projects'} exact={true} element={<Project  userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/myprojects'} exact={true} element={<MyProject  userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/myprojects/new'} exact={true} element={<NewProject userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/patents'} exact={true} element={<PatentForm  userEmail={userEmail}/>}>
+          <Route path={'/dashboard/patents/'} exact={true} element={<PatentApplicationForm  userEmail={userEmail}/>}/>
+            <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm  userEmail={userEmail}/>}/>
           </Route>
-          <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
-          <Route path={'/dashboard/mystartups/startupprofile'} exact={true} element={<StartupProfile/>}/>
-          <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
-          <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
+          <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile  userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/mystartups/startupprofile'} exact={true} element={<StartupProfile  userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile  userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/startups'} exact={true} element={<Startup  userEmail={userEmail}/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup userEmail={userEmail}/>}/>
-          <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
-          <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage/>}/>
-          <Route path={'/dashboard/policymaker'} exact={true} element={<PolicyMakerLandingPage/>}/>
+          <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/profile/:userId'} exact={true} element={<ProfilePage userEmail={userEmail}/>}/>
+          <Route path={'/dashboard/policymaker'} exact={true} element={<PolicyMakerLandingPage  userEmail={userEmail}/>}/>
         </Route>
       </Routes>
   </BrowserRouter>
