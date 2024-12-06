@@ -1,8 +1,7 @@
-// server.js
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
-
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 5001;
 
@@ -17,7 +16,7 @@ const dbName = 'navsarjan'; // Replace with your database name
 
 async function connectToDatabase() {
   try {
-    const client = new MongoClient(uri);
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
     await client.connect();
     db = client.db(dbName);
     console.log("Connected to MongoDB successfully!");
@@ -26,6 +25,107 @@ async function connectToDatabase() {
     process.exit(1); // Exit the application if the connection fails
   }
 }
+
+
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required",
+      });
+    }
+
+    // Connect to MongoDB users collection
+    const usersCollection = db.collection('user');
+
+    // Find user by email
+    const user = await usersCollection.findOne({ email });
+
+    if (!user) {
+      // If user is not found
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Validate password using bcrypt
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      // Login successful
+      return res.status(200).json({
+        success: true,
+        message: "Login successful",
+        data: {
+          id: user._id,
+          email: user.email,
+          name: user.name, // assuming "name" exists in the user document
+        },
+      });
+    } else {
+      // Password mismatch
+      return res.status(401).json({
+        success: false,
+        message: "Invalid password",
+      });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
+
+app.post('/api/register', async (req, res) => {
+  try {
+    const { name, email, password, address, phone, dob, social, role } = req.body;
+
+    if (!email || !password || !name || !address || !phone || !dob || !role) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const usersCollection = db.collection('user'); // Ensure you have a "users" collection
+    const existingUser = await usersCollection.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Define role with a default value
+     // Default role, e.g., "user", "admin", etc.
+
+    const newUser = {
+      name,
+      email,
+      password: hashedPassword,
+      address,
+      phone,
+      dob,
+      image: req.file ? req.file.path : null,
+      social: social || null,
+      role, // Include the default or dynamic role
+    };
+
+    const result = await usersCollection.insertOne(newUser);
+
+    res.status(201).json({
+      message: 'Account created successfully!',
+      user: { ...newUser, _id: result.insertedId },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating account', error: error.message });
+  }
+});
 
 app.post('/api/insert', async (req, res) => {
   const { collectionName, data } = req.body;
