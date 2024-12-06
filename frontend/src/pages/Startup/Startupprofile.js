@@ -182,7 +182,7 @@ const handleInputChange = (e) => {
     name: "",
     email: "",
     amount: 0,
-    verified: false
+    verified: false,
   });
 
 const handleEditInvestor = (investor) => {
@@ -198,11 +198,15 @@ const handleSaveInvestor = () => {
   
 
   setStartup((prev) => ({
-    ...prev, investors: [...prev.investors, { id: Date.now(), ...selectedInvestor }]
+    ...prev, investors: [...prev.investors, { verified: false ,id: Date.now(), ...selectedInvestor }]
   }));
 
   setInvestorEditDialogOpen(false);
-  setSelectedInvestor(null);
+  setSelectedInvestor({
+    name: "",
+    email: "",
+    amount: 0,
+  });
 };
 
 const handleRemoveInvestor = (investorId) => {

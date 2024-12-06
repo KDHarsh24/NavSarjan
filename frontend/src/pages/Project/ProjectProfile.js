@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, FormControlLabel } from "@mui/material";
 import { Edit, Delete, CloudUpload } from "@mui/icons-material";
 import { userData } from "../Login/Login";
+import axios from "axios";
 
 const ProjectProfile = () => {
   // Initial project data
   const navigate  = useNavigate();
+  const [editing, setEditing] = useState(false); // Editing mode toggle
+  const [newDate, setNewDate] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [uploadedDocs, setUploadedDocs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [project, setProject] = useState({
     ownerName: 'Harsh',
     ownerid: 'harshkumardas24@gmail.com',
@@ -44,11 +50,36 @@ const ProjectProfile = () => {
       },
     ],
   });
+  const location = useLocation();
+  const { name, id } = location.state || {};
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:5000/api/fetchone", {
+          collectionName: "project", // Name of the collection
+          condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
+          projection: {}, // Fields to fetch
+        });
 
-  const [editing, setEditing] = useState(false); // Editing mode toggle
-  const [newDate, setNewDate] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [uploadedDocs, setUploadedDocs] = useState([]);
+        if (response.data.success) {
+          const projects = response.data.data;
+          console.log(projects)
+
+          // Format data for rows
+          // Update projectRows state
+          setProject(projects);
+          // Update projectDash state
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+    console.log(project)
+  }, []);
+
+  
    const technologyDomains = [
         "3D Printing", "5G", "AI/ML", "Analytics", "API", "AR-VR-MR", "Automation", "Battery", "Big Data", "Biometrics", 
         "Blockchain", "Cloud Computing", "Computer Vision", "Drone", "Electric Powertrains", "Electric Vehicles", 
@@ -62,7 +93,8 @@ const ProjectProfile = () => {
     role: "",
   });
   const [collaboratorDialogOpen, setCollaboratorDialogOpen] = useState(false);
-
+  const [investorEditDialogOpen, setInvestorEditDialogOpen] = useState(false);
+  const [selectedInvestor, setSelectedInvestor] = useState(null);
   // Add new collaborator
   const handleAddCollaborator = () => {
     if (
@@ -153,8 +185,7 @@ const ProjectProfile = () => {
       collaborators: prev.collaborators.filter((collab) => collab.id !== id),
     }));
   };
-  const [investorEditDialogOpen, setInvestorEditDialogOpen] = useState(false);
-  const [selectedInvestor, setSelectedInvestor] = useState(null);
+  
 
 const handleEditInvestor = (investor) => {
   setSelectedInvestor({ ...investor });
@@ -212,6 +243,9 @@ else if (type === "checkbox") {
   }));
 }
 };
+if (loading){
+  return(<div>Loading</div>);
+}
   return (
     <Container>
       {/* Project Details */}
@@ -261,7 +295,7 @@ else if (type === "checkbox") {
               </ListItem>
             ))}
           </List>
-          <Button variant="contained" color="primary" onClick={() => setCollaboratorDialogOpen(true)}>
+          <Button variant="contained" disabled={!editing} color="primary" onClick={() => setCollaboratorDialogOpen(true)}>
             Add Collaborator
           </Button>
 
