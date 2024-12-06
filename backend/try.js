@@ -15,6 +15,9 @@ const uri = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net
 const client = new MongoClient(uri);
 const dbName = 'navsarjan'; // Replace with your database name
 
+
+app.use('/home', userAuthRoutes);
+
 app.post('/api/insert', async (req, res) => {
   const { collectionName, data } = req.body;
   if (!collectionName || !data) {
