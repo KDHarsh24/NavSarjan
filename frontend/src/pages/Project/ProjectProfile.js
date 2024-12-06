@@ -55,7 +55,7 @@ const ProjectProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("http://localhost:5000/api/fetchone", {
+        const response = await axios.post("http://localhost:5001/api/fetchone", {
           collectionName: "project", // Name of the collection
           condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch
@@ -76,7 +76,6 @@ const ProjectProfile = () => {
       }
     };
     fetchData();
-    console.log(project)
   }, []);
 
   
@@ -95,6 +94,9 @@ const ProjectProfile = () => {
   const [collaboratorDialogOpen, setCollaboratorDialogOpen] = useState(false);
   const [investorEditDialogOpen, setInvestorEditDialogOpen] = useState(false);
   const [selectedInvestor, setSelectedInvestor] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
   // Add new collaborator
   const handleAddCollaborator = () => {
     if (
@@ -152,11 +154,34 @@ const ProjectProfile = () => {
 
   // Toggle edit mode
   const toggleEditing = () => {
-    if (editing)
-    {
-      console.log(project)
-    }
     setEditing((prev) => !prev);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    toggleEditing();
+    console.log(project);
+    try {
+      const response = await axios.post("http://localhost:5001/api/replace", {
+        collectionName: "project",
+        condition: {_id: project._id}, // Parse JSON from the input
+        data: project, // Parse JSON from the input
+      });
+
+      if (response.data.success) {
+        setDialogTitle("Success");
+        setDialogMessage("Document replaced successfully.");
+      } else {
+        setDialogTitle("Error");
+        setDialogMessage(response.data.message || "Failed to replace document.");
+      }
+    } catch (err) {
+      setDialogTitle("Error");
+      setDialogMessage(err.response?.data?.message || "Server error.");
+    } finally {
+      setLoading(false);
+      setDialogOpen(true); // Open dialog box
+    }
   };
 
   // Update project fields
@@ -421,9 +446,14 @@ if (loading){
       </Dialog>
       <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
         {/*run this after data {(userData.user === 'investor')?:} */}
+        {editing ? 
+          <Button variant="contained" color="primary" onClick={handleSubmit} style={{ marginTop: "20px" }} >
+            Save
+          </Button>:
           <Button variant="contained" color="secondary" onClick={toggleEditing} style={{ marginTop: "20px" }} >
-            {editing ? "Save" : "Edit"}
-          </Button>
+          Edit
+        </Button>
+          }
           {/*run this after data {(userData.type === 'investor')?:} */}
           <Button variant="contained" color="primary" style={{ marginTop: "20px" }}>Invest</Button>
           </div>

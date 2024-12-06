@@ -15,17 +15,17 @@ const uri = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net
 const client = new MongoClient(uri);
 const dbName = 'navsarjan'; // Replace with your database name
 
-
-async function connectDB() {
-  const client = new MongoClient(uri);
-  await client.connect();
-  db = client.db(dbName);
-  console.log('Connected to MongoDB');
+async function connectToDatabase() {
+  try {
+    const client = new MongoClient(uri);
+    await client.connect();
+    db = client.db(dbName);
+    console.log("Connected to MongoDB successfully!");
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error);
+    process.exit(1); // Exit the application if the connection fails
+  }
 }
-
-console.log(connectDB)
-
-
 
 app.post('/api/insert', async (req, res) => {
   const { collectionName, data } = req.body;
@@ -88,33 +88,51 @@ app.post('/api/fetchone', async (req, res) => {
     }
 });
 
-app.post('/api/updateOne', async (req, res) => {
-  const { collectionName, condition, projection } = req.body;
-
-  if (condition && condition._id) {
-    // Ensure '_id' is treated as a Mongo ObjectId if it's passed as a string
+app.post("/api/replace", async (req, res) => {
+  const { collectionName, condition, data } = req.body;
+  console.log("Received: ", collectionName, condition, data)
+  if (condition._id) {
     condition._id = new ObjectId(condition._id);
+    if (data._id){
+      data._id = new ObjectId(data._id)
+    }
   }
-  console.log(collectionName, condition, projection)
-  if (!collectionName) {
-    return res.status(400).json({ success: false, message: 'Collection name is required' });
+  if (!collectionName || !condition || !data) {
+    return res.status(400).json({ success: false, message: "Invalid input." });
   }
 
   try {
+    await client.connect();
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
-    const queryCondition = condition || {};
-    const queryProjection = projection || {};  
-    const data = await collection.updateOne(queryCondition, queryProjection);
-    console.log(data)
-    res.status(200).json({ success: true, data: data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Failed to fetch data', error });
+
+    // Convert _id to ObjectId if present in the condition
+   
+
+    const result = await collection.replaceOne(condition, data);
+
+    if (result.matchedCount === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Document not found." });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Document replaced successfully.",
+      result,
+    });
+  } catch (err) {
+    console.error("Error replacing document:", err);
+    res.status(500).json({ success: false, message: "Server error." });
+  } finally {
+    await client.close();
   }
 });
   
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+connectToDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 });

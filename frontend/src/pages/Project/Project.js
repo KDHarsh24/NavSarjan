@@ -4,14 +4,22 @@ import DashboardBox from "../Dashboard/DasboardBox";
 import { AiFillProject, AiOutlineCalculator } from "react-icons/ai";
 import { FaMoneyBill, FaThList } from 'react-icons/fa';
 import { useState, useEffect } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import axios from "axios";
 
 
-function countDistinctValues(arr, key) {
-    const distinctValues = new Set(arr.map(item => item[key]));
-    return distinctValues.size;
+function countDistinctValues(objectsArray, key) {
+  const valueSet = new Set();
+
+  objectsArray.forEach(obj => {
+    if (Array.isArray(obj[key])) {
+      obj[key].forEach(value => valueSet.add(value));
+    }
+  });
+
+  return valueSet.size; // Return the count of distinct values
 }
+
 
 const Project = () => {
   const [projectRows, setProjectRows] = useState([]); 
@@ -34,7 +42,7 @@ const Project = () => {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.post("http://localhost:5000/api/fetch", {
+            const response = await axios.post("http://localhost:5001/api/fetch", {
               collectionName: "project", // Name of the collection
               condition: {}, // Replace with your condition, e.g., {status: "active"}
               projection: { 
@@ -72,7 +80,7 @@ const Project = () => {
                 },
                 {
                   text: "Categories",
-                  val: countDistinctValues(formattedData, "topic"),
+                  val: countDistinctValues(projects, "technologies"),
                   color: ["#c012e2", "#eb64fe"],
                   icon: <FaThList />,
                 },
@@ -90,23 +98,24 @@ const Project = () => {
           }
         };
         fetchData();
-        console.log(projectRows)
       }, []);
 
       if (loading){
         return(
-        <Box sx={{ width: '100%' }}>
+          <div style={{ width: '100%' }}>
           <Skeleton animation="wave" width='100%' height='150px'/>
-          <div style={{width: '100%', display: 'flex'}}>
-            <Skeleton  width='100%' height='300px' style={{marginRight: '16px'}}/>
-            <Skeleton animation="wave" width='100%' height='300px' style={{marginRight: '16px'}}/>
-            <Skeleton animation={false} width='100%' height='300px'/>
+          <div style={{width: '100%', display: 'flex', position: 'relative', top: '-50px'}}>
+            <Skeleton  width='100%' style={{marginRight: '16px', height: '300px', padding: '0px'}}/>
+            <Skeleton animation="wave" width='100%' style={{marginRight: '16px', height: '300px', padding: '0px'}}/>
+            <Skeleton animation={false} width='100%' style={{ height: '300px', padding: '0px'}}/>
           </div>
-          <Skeleton animation="wave" width='100%' height='500px' style={{margin: '0px', padding: '0px'}}/>
-        </Box>);
+          <Skeleton animation="wave" width='100%' height='500px' style={{margin: '0px', padding: '0px', position: 'relative', top: '-150px'}}/>
+        </div>
+        );
       }
     return (
     <div className="projectpage">
+      
         <div className="projectTop">
             <div className="projectDash">
                 <span>Projects</span> <AiFillProject/>
