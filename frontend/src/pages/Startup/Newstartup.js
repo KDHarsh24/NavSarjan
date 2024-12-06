@@ -3,6 +3,8 @@ import { FaLightbulb } from "react-icons/fa";
 import { Box, Tab, Tabs, TextField, Button, Paper } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Checkbox, RadioGroup, FormControlLabel, FormLabel, TextareaAutosize } from "@mui/material";
+import { userdata } from "../Home/Signpage";
+import axios from "axios";
 
 const Newstartup = () => {
     const industryDomains = [
@@ -30,8 +32,8 @@ const Newstartup = () => {
         name: "",
         industry: [],
         description: "",
-        founder: "",
-        founderuserid: "",
+        founder: userdata.name,
+        founderuserid: userdata.email,
         coFounders: [],
         model: [],
         funding: "",
@@ -110,9 +112,29 @@ const Newstartup = () => {
           setStartup({ ...startup, documents: [...startup.documents, newDoc] });
         }
       };
-      const handleSubmit = () => {
-        console.log(startup)
-      }
+    
+
+const handleSubmit = async () => {
+  try {
+    // Send a POST request to the backend API with the startup data
+    const response = await axios.post("http://localhost:5001/api/insert", startup);
+    
+    if (response.data.success) {
+      // Handle the success response
+      console.log("Startup data submitted successfully:", response.data);
+      alert("Startup details submitted successfully!");
+    } else {
+      // Handle failure case
+      console.error("Failed to submit startup data:", response.data.message);
+      alert("Error submitting data. Please try again.");
+    }
+  } catch (error) {
+    // Handle error in API call
+    console.error("Error submitting startup data:", error);
+    alert("Error occurred while submitting. Please check the console for details.");
+  }
+};
+
     return(
         <>
         <div className="projectTop">

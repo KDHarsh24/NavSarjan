@@ -6,6 +6,7 @@ import { FaMoneyBill, FaThList, FaPlus } from 'react-icons/fa';
 import { Button, Skeleton } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { userdata } from "../Home/Signpage";
 
 function countDistinctValues(objectsArray, key) {
   const valueSet = new Set();
@@ -15,14 +16,16 @@ function countDistinctValues(objectsArray, key) {
       obj[key].forEach(value => valueSet.add(value));
     }
   });
+
   return valueSet.size; // Return the count of distinct values
 }
 
+
 const MyProject = () => {
-    const [projectRows, setProjectRows] = useState([]); 
-    const [projectDash, setProjectDash] = useState([]);
-    const [loading, setLoading] = useState(true); // For managing loading state
-    const projectColumns =[
+  const [projectRows, setProjectRows] = useState([]); 
+  const [projectDash, setProjectDash] = useState([]);
+  const [loading, setLoading] = useState(true); // For managing loading state
+  const projectColumns =[
         { field: "name", headerName: "Project Name", flex: 1.5,
         renderCell: (params) => (
             <Link to='projectprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
@@ -31,19 +34,17 @@ const MyProject = () => {
           ),
         },
         { field: "description", headerName: "Description", flex: 3.2 },
-        { field: "startDate", headerName: "Start Date", flex: 0.8 },
         { field: "topic", headerName: "Topic", flex: 1.2 },
         { field: "status", headerName: "Status", flex: 1 },
         { field: "teamLead", headerName: "Team Lead", flex: 1 },
       ];
-      /** Fetch API of Database SELECT * from Project; if for MyProject: Select * from Project where userid='value' **/
       /** Fetch API of Database SELECT * from Project; if for Myproject: Select * from Project where userid='value' **/
       useEffect(() => {
         const fetchData = async () => {
           try {
             const response = await axios.post("http://localhost:5001/api/fetch", {
               collectionName: "project", // Name of the collection
-              condition: {}, // Replace with your condition, e.g., {status: "active"}
+              condition: {ownerid: userdata.email}, // Replace with your condition, e.g., {status: "active"}
               projection: { 
                 name: 1, 
                 ownerid: 1, 
@@ -56,6 +57,7 @@ const MyProject = () => {
     
             if (response.data.success) {
               const projects = response.data.data;
+              console.log(projects)
     
               // Format data for rows
               const formattedData = projects.map((project) => ({
@@ -71,13 +73,13 @@ const MyProject = () => {
               // Update projectDash state
               setProjectDash([
                 {
-                  text: "Registered Project",
+                  text: "Registered Projects",
                   val: formattedData.length,
                   color: ["#1da256", "#48d483"],
                   icon: <AiOutlineCalculator />,
                 },
                 {
-                  text: "Your Fields",
+                  text: "Categories",
                   val: countDistinctValues(projects, "technologies"),
                   color: ["#c012e2", "#eb64fe"],
                   icon: <FaThList />,
@@ -111,12 +113,12 @@ const MyProject = () => {
         </div>
         );
       }
-      
     return (
     <div className="projectpage">
+      
         <div className="projectTop">
             <div className="projectDash">
-                <span>My Projects</span> <AiFillProject/>
+                <span>Projects</span> <AiFillProject/>
             </div>
             <div className="projectStats w-100">
             {projectDash.map((row, index) => {

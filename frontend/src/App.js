@@ -7,7 +7,6 @@ import ProjectProfile from './pages/Project/ProjectProfile';
 import Startup from './pages/Startup/Startup';
 import StartupProfile from './pages/Startup/Startupprofile';
 import ProfilePage from './pages/Profile/Profile';
-import Login from './pages/Login/Login';
 import Homepage from './pages/Home/Homepage';
 import StartupInvestmentTracker from './Data/startuptrack';
 import PolicyMakerLandingPage from './pages/Policy_maker/Components/policymakerpage';
@@ -25,7 +24,6 @@ function App() {
   return (
   <BrowserRouter>
       <Routes>
-        <Route path={'/login'} exact={true} element={<Login/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
         <Route path='/' exact={true} element={<Homepage/>}/>
         <Route path="/sign-page" element={<Signpage/>}/>
@@ -41,6 +39,7 @@ function App() {
             <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm/>}/>
           </Route>
           <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
+          <Route path={'/dashboard/myprojects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
           <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
           <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>

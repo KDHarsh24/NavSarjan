@@ -63,7 +63,8 @@ app.post('/api/login', async (req, res) => {
         data: {
           id: user._id,
           email: user.email,
-          name: user.name, // assuming "name" exists in the user document
+          name: user.name,
+          role: user.role // assuming "name" exists in the user document
         },
       });
     } else {

@@ -10,6 +10,7 @@ import {Menu, MenuItem, Button } from '@mui/material';
 import { Logout, RotateLeft } from '@mui/icons-material';
 import { Avatar } from "@mui/material";
 import { MyContext } from "../../pages/Dashboard/Dashboard";
+//import {userdata} from '../../pages/Home/Signpage'
 
 
 
@@ -52,7 +53,7 @@ const dropMenuTop = (data, anchorEl, handleClick, handleClose, open, classname) 
 }
 
 const Header = ({userdata}) => {
-    const myAccountlist = [ {text: 'My account', icon: <Avatar/>, link: `profile/${userdata.userid}`}, {text: 'Reset Password', icon: <RotateLeft/>, link: 'profile/password'}, {text: 'Logout', icon: <Logout/>, link: '/'}]
+    const myAccountlist = [ {text: 'My account', icon: <Avatar/>, link: `profile/${userdata.email}`}, {text: 'Reset Password', icon: <RotateLeft/>, link: 'profile/password'}, {text: 'Logout', icon: <Logout/>, link: '/'}]
     const [accountAnchor, setaccountAnchor] = useState(null);
     const openAccount = Boolean(accountAnchor);
     const handleClickaccount = (event) => {
@@ -115,7 +116,7 @@ const Header = ({userdata}) => {
                                     </div>
                                     <div className="userInfo">
                                         <h4>{userdata.name}</h4>
-                                        <p>{userdata.userid}</p>
+                                        <p>{userdata.email}</p>
                                     </div>
                                 </Button>
                                 {dropMenuTop(myAccountlist, accountAnchor , handleClickaccount, handleCloseaccount, openAccount, "account")}

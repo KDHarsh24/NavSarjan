@@ -1,40 +1,23 @@
 import React, { useState } from "react";
-import { Checkbox,  FormControlLabel, Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
+import { Checkbox, FormControlLabel, Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import { AiFillProject } from "react-icons/ai";
+import { userdata } from "../Home/Signpage";
+import axios from "axios";
 
 const NewProject = () => {
   // Initial project data
   const [project, setProject] = useState({
-    name: "", // Non-editable
+    name: "",
     description: "",
     technologies: [],
     status: "",
-    progress: [
-    //   {
-    //     date: "",
-    //     description: "",
-    //     documents: [
-    //       { name: "", url: "" },
-    //     ],
-    //   },
-    ],
-    completion: 0, // Editable percentage
-    investors: [
-    //   {
-    //     id: 1,
-    //     name: "",
-    //     email: "",
-    //   },
-    ],
-    collaborators: [
-    //   {
-    //     id: 1,
-    //     name: "",
-    //     email: "",
-    //     role: "",
-    //   },
-    ],
+    progress: [],
+    completion: 0,
+    investors: [],
+    collaborators: [],
+    ownerid: userdata.email,
+    ownerName: userdata.name,
   });
 
   const [newDate, setNewDate] = useState("");
@@ -65,7 +48,6 @@ const NewProject = () => {
       ],
     }));
 
-    // Clear inputs and close dialog
     setNewCollaborator({ name: "", email: "", role: "" });
     setCollaboratorDialogOpen(false);
   };
@@ -83,13 +65,12 @@ const NewProject = () => {
           description: newDescription,
           documents: uploadedDocs.map((file) => ({
             name: file.name,
-            url: URL.createObjectURL(file), // Generate temporary URLs for new files
+            url: URL.createObjectURL(file),
           })),
         },
       ],
     }));
 
-    // Clear the inputs
     setNewDate("");
     setNewDescription("");
     setUploadedDocs([]);
@@ -102,7 +83,6 @@ const NewProject = () => {
       completion: newValue,
     }));
   };
-
 
   // Update project fields
   const handleFieldChange = (field, value) => {
@@ -122,13 +102,15 @@ const NewProject = () => {
   const handleRemoveDocument = (index) => {
     setUploadedDocs((prev) => prev.filter((_, i) => i !== index));
   };
+
   const technologyDomains = [
-    "3D Printing", "5G", "AI/ML", "Analytics", "API", "AR-VR-MR", "Automation", "Battery", "Big Data", "Biometrics", 
-    "Blockchain", "Cloud Computing", "Computer Vision", "Drone", "Electric Powertrains", "Electric Vehicles", 
-    "Energy Storage", "Generative AI", "Genomics", "Geospatial & Space Tech", "Hardware", "IAAS", "IoT", 
-    "Logistics", "Micro-Mobility", "Mobile App", "Nanotechnology", "NLP/ Deep Learning", "Other", "PAAS", 
+    "3D Printing", "5G", "AI/ML", "Analytics", "API", "AR-VR-MR", "Automation", "Battery", "Big Data", "Biometrics",
+    "Blockchain", "Cloud Computing", "Computer Vision", "Drone", "Electric Powertrains", "Electric Vehicles",
+    "Energy Storage", "Generative AI", "Genomics", "Geospatial & Space Tech", "Hardware", "IAAS", "IoT",
+    "Logistics", "Micro-Mobility", "Mobile App", "Nanotechnology", "NLP/ Deep Learning", "Other", "PAAS",
     "Quantum Computing", "Robotics", "SAAS", "Software", "Web Platform"
-];
+  ];
+
   // Remove a collaborator
   const handleRemoveCollaborator = (id) => {
     setProject((prev) => ({
@@ -136,25 +118,44 @@ const NewProject = () => {
       collaborators: prev.collaborators.filter((collab) => collab.id !== id),
     }));
   };
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
       setProject((prevState) => {
         const updatedValue = checked
-          ? [...prevState[name], value] // Add to array if checked
-          : prevState[name].filter((item) => item !== value); // Remove from array if unchecked
+          ? [...prevState[name], value]
+          : prevState[name].filter((item) => item !== value);
         return { ...prevState, [name]: updatedValue };
       });
     } else {
-    setProject((prevState) => ({
+      setProject((prevState) => ({
         ...prevState,
         [name]: value,
       }));
     }
   };
-  const handleSubmit = () =>{
-    console.log(project)
-  }
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("http://localhost:5001/api/insert", {
+        collectionName: "project",
+        data: project,
+      });
+
+      if (response.status === 200) {
+        console.log("Project inserted successfully:", response.data);
+        alert("Project created successfully!");
+      } else {
+        console.error("Failed to insert project:", response.data.message);
+        alert(`Error: ${response.data.message}`);
+      }
+    } catch (error) {
+      console.error("Error while submitting project:", error);
+      alert("Failed to create project. Please try again.");
+    }
+  };
+
   return (
     <Container>
       {/* Project Details */}

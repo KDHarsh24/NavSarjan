@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, FormControlLabel } from "@mui/material";
 import { Edit, Delete, CloudUpload } from "@mui/icons-material";
-import { userData } from "../Login/Login";
 import axios from "axios";
 
 const ProjectProfile = () => {
@@ -76,7 +75,7 @@ const ProjectProfile = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   
    const technologyDomains = [
