@@ -4,7 +4,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 // Middleware
 app.use(cors());
@@ -16,7 +16,16 @@ const client = new MongoClient(uri);
 const dbName = 'navsarjan'; // Replace with your database name
 
 
-app.use('/home', userAuthRoutes);
+async function connectDB() {
+  const client = new MongoClient(uri);
+  await client.connect();
+  db = client.db(dbName);
+  console.log('Connected to MongoDB');
+}
+
+console.log(connectDB)
+
+
 
 app.post('/api/insert', async (req, res) => {
   const { collectionName, data } = req.body;
