@@ -11,7 +11,9 @@ import logo8 from "./Images/logo_08.png";
 
 function Marque() {
     return (
-        <Marquee pauseOnClick={true}>
+        <div className="my-10">
+        <h2 className="text-4xl text-center text-slate-900 font-semibold mb-2">Our PARTERS</h2>
+        <Marquee pauseOnClick={true} className="my-10">
             <div className="flex overflow-hidden whitespace-nowrap items-center hover:cursor-pointer">
                 <div className="inline-block mx-4">
                     <img src={logo1} alt="logo1" className="max-w-xs h-auto" />
@@ -39,6 +41,7 @@ function Marque() {
                 </div>
             </div>
         </Marquee>
+        </div>
     );
 };
 

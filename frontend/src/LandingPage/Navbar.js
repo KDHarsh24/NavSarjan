@@ -55,13 +55,13 @@ const Navbar = () => {
             ]
         }
     ];
-
+ 
     return (
         <>
             <Header />
-            <header className="bg-white shadow relative">
+            <div className="bg-white shadow relative">
                 <div className="container mx-auto px-4">
-                    <div className="flex items-center justify-between py-4">
+                    <div className="flex items-center justify-between py-2">
                         {/* Logo */}
                         <div className="header__middle__logo">
                             <NavLink exact to="/" activeClassName='is-active'>
@@ -87,7 +87,7 @@ const Navbar = () => {
                                     <NavLink 
                                         exact 
                                         to="/" 
-                                        className="text-black block px-4 py-2 hover:bg-gray-200 flex items-center"
+                                        className="text-black  px-4 py-2 hover:bg-gray-200 flex items-center"
                                     >
                                         <IoHomeOutline className="mr-2" /> Home
                                     </NavLink>
@@ -150,7 +150,7 @@ const Navbar = () => {
                                                 to="/" 
                                                 activeClassName='is-active' 
                                                 onClick={toggleMenu} 
-                                                className="block px-4 py-3 hover:bg-gray-100 flex items-center"
+                                                className=" px-4 py-3 hover:bg-gray-100 flex items-center"
                                             >
                                                 <IoHomeOutline className="mr-2" /> Home
                                             </NavLink>
@@ -200,7 +200,7 @@ const Navbar = () => {
                         </div>
                     )}
                 </div>
-            </header>
+            </div>
                   
             <Carousal/>
             <Countup/>

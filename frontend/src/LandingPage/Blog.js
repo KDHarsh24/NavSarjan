@@ -8,46 +8,48 @@ function Blog() {
 
     return (
         <>
-            <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-12 ">
-                <div className="text-center md:w-1/2 mx-auto">
-                    <h2 className="text-4xl text-green-400 font-semibold mb-4">Caring is the New Marks</h2>
-                    <p className="text-sm text-green-400 mb-8 md:w-3/4 mx-auto">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet justo ipsum. Sed accumsan quam vitae est varius fringilla. 
-                        Pellentesque placerat vestibulum lorem sed porta. Nullam mattis tristique iaculis. Nullam pulvinar sit amet risus pretium auctor. 
-                        Etiam quis massa pulvinar, aliquam quam vitae, tempus sem. Donec elementum pulvinar odio.
-                    </p>
-                </div>
-            </div>
 
-            {/* All blogs */}
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 items-center justify-between">
-                {
-                    blogs.map(blog => (
-                        <div key={blog.id} className="mx-auto relative mb-12 cursor-pointer">
-                            <img src={blog.image} alt={blog.title} className="w-full h-auto"/>
-                            <div>
-                                <h3 className="text-lg font-semibold">{blog.title}</h3>
-                                <div className="flex items-center gap-8">
-                                    <a href="/" className="font-bold text-green-200 hover:text-neutral-700">
-                                        Read More
-                                    </a>
-                                    <span>Meet all customers</span>
-                                    <svg 
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="17"
-                                        height="11"
-                                        viewBox="0 0 17 11"
-                                        fill="none"
-                                        className="inline-block ml-2"
-                                    >
-                                        <path d="M1 5.5H16M16 5.5L12.5 2M16 5.5L12.5 9" stroke="currentColor" strokeWidth="2"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
+<div className="px-4 lg:px-14 mt-16">
+  <div className="text-center md:w-3/4 mx-auto">
+    {/* Section Heading */}
+    <h2 className="text-3xl text-slate-900 font-bold mb-6">About NavSarjan</h2>
+    
+    {/* Paragraph 1: Overview */}
+    <p className="text-sm text-gray-600 mb-4">
+      <strong>NavSarjan</strong> is an advanced web application developed by Team Typewriters-II 
+      for the Smart India Hackathon 2024, addressing the challenges outlined in 
+      Problem Statement SIH1608 under the theme "Smart Education." The solution focuses on 
+      enhancing the monitoring and management of research, intellectual property rights (IPR), 
+      innovation, and start-ups in Gujarat State.
+    </p>
+
+    {/* Paragraph 2: Key Technologies */}
+    <p className="text-sm text-gray-600 mb-4">
+      This platform integrates modern technologies such as Artificial Intelligence (AI) and 
+      Machine Learning (ML) to centralize stakeholder collaboration, automate key processes 
+      like IP registration and start-up tracking, and deliver AI-driven insights for informed 
+      decision-making. It fosters a seamless ecosystem for researchers, entrepreneurs, 
+      policymakers, and investors to accelerate innovation and streamline resource allocation.
+    </p>
+
+    {/* Paragraph 3: Technical Features */}
+    <p className="text-sm text-gray-600 mb-4">
+      With its adaptable architecture, NavSarjan unifies various data sources, leverages scalable 
+      cloud technologies, and employs robust data security measures. Key features include 
+      real-time analytics, intuitive user interfaces powered by React.js, and secure communication 
+      enabled by WebRTC and OAuth2. It is designed to address scalability, cross-platform 
+      compatibility, and sustainability challenges while ensuring efficiency and transparency 
+      in Gujarat’s innovation landscape.
+    </p>
+
+    {/* Paragraph 4: Impact */}
+    <p className="text-sm text-gray-600 mb-4">
+      NavSarjan exemplifies innovation by merging diverse technologies, fostering collaboration, 
+      and creating an end-to-end solution tailored for evolving needs. It stands as a testament 
+      to the vision of transforming Gujarat into a hub of sustainable and impactful innovation.
+    </p>
+  </div>
+</div>
         </>
     );
 };

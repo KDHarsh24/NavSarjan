@@ -1,5 +1,6 @@
 import { Footer } from "flowbite-react";
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
+import logo from "./Images/logo.jpg";
 
 export function Component() {
   return (
@@ -7,7 +8,7 @@ export function Component() {
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-y-12 gap-x-8 xl:gap-x-12">
             <div class="col-span-2 md:col-span-4 xl:pr-8">
-                <img class="w-auto h-9" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
+                <img class="w-auto h-12 w-15" src={logo} alt="" />
 
                 <p class="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
 
@@ -111,7 +112,7 @@ export function Component() {
         <hr class="mt-16 mb-10 border-gray-200" />
 
         <div class="sm:flex sm:items-center sm:justify-between">
-            <p class="text-sm text-gray-600">© Copyright 2021, All Rights Reserved by Postcraft</p>
+            <p class="text-sm text-gray-600">© Copyright 2024, All Rights Reserved by NavSarjan</p>
 
             <ul class="flex items-center mt-5 space-x-3 md:order-3 sm:mt-0">
                 <li>
