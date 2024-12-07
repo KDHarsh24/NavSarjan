@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBBreadcrumb, MDBBreadcrumbItem, MDBIcon, MDBListGroup, MDBListGroupItem, MDBInput } from 'mdb-react-ui-kit';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { useParams } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+import axios from 'axios';
 
 export default function ProfilePage({email}) {
-  const { userId } = useParams(); // Get the userId from the URL
+  //const { userId } = useParams(); // Get the userId from the URL
   const [profile, setProfile] = useState({});
   
   // Fetch data when the page loads
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/profile/${userId}`);
-        const data = await response.json();
-        setProfile(data);
+        axios.post('http://localhost:8081/home/profile',{email})
+             .then(res=>{
+                    console.log("data: "+JSON.stringfy(res,null,2));
+                    setProfile(res.data);
+             })
+             .catch(err=>{
+
+             })
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
     };
     fetchData();
-  }, [userId]); // Re-fetch if userId changes
+  }, [email]); // Re-fetch if userId changes
 
   // State to manage profile data
     
@@ -166,7 +170,7 @@ export default function ProfilePage({email}) {
             </MDBCard>
 
             <MDBRow className="text-center">
-              {(useUser.userid === userId) ? ( <MDBCol>
+              {(email) ? ( <MDBCol>
                     {isEditing ? (
                       <>
                         <MDBBtn color="success" onClick={handleSave}>

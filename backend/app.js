@@ -5,6 +5,9 @@ import dotenv from 'dotenv';
 import startUpRoutes from './Route/startUpRoute.js';
 import userAuthRoutes from './Route/authRoute.js';
 import projectRoutes from './Route/projectRoute.js'
+import userProfileRoutes from './Route/profileRoute.js';
+
+
 
 dotenv.config();
 
@@ -37,6 +40,9 @@ app.get('/', (req, res) => {
 app.use('/home/startUp', startUpRoutes);
 app.use('/home/Projects', projectRoutes);
 app.use('/home', userAuthRoutes);
+app.use('/home/profile',userProfileRoutes);
+
+
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
