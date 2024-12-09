@@ -52,6 +52,7 @@ const Newstartup = () => {
           data: [],
         },
         investors: [],
+        isVerification: false
       });
       const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -117,7 +118,8 @@ const Newstartup = () => {
 const handleSubmit = async () => {
   try {
     // Send a POST request to the backend API with the startup data
-    const response = await axios.post("http://localhost:5001/api/insert", startup);
+    console.log(startup)
+    const response = await axios.post("http://localhost:5001/api/insert",{collectionName: 'startup', data:startup});
     
     if (response.data.success) {
       // Handle the success response

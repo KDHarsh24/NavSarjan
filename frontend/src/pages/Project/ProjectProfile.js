@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, FormControlLabel } from "@mui/material";
+import { Skeleton, DialogContentText, Container, Typography, Card, CardContent, Button, TextField, List, ListItem, ListItemText, Divider, Slider, IconButton, Box, Link, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, FormControlLabel } from "@mui/material";
 import { Edit, Delete, CloudUpload } from "@mui/icons-material";
 import axios from "axios";
+import { userdata } from "../Home/Signpage";
 
 const ProjectProfile = () => {
   // Initial project data
@@ -267,8 +268,16 @@ else if (type === "checkbox") {
   }));
 }
 };
+const handleDialogClose = (e) => {
+  if (e.currentTarget.title=== 'ok')
+    navigate('/dashboard')
+  setDialogOpen(false);
+};
 if (loading){
-  return(<div>Loading</div>);
+  return(<div style={{ width: '100%' }}>
+    <Skeleton animation="wave" width='100%' height='150px'/>
+    <Skeleton animation="wave" width='100%' height='100vh' style={{margin: '0px', padding: '0px', position: 'relative', top: '-150px'}}/>
+  </div>);
 }
   return (
     <Container>
@@ -390,7 +399,7 @@ if (loading){
     </ListItem>
   ))}
 </List>
-<Button variant="contained" color="primary" onClick={handleAddProgress} disabled={(!newDate.trim() || !newDescription.trim()) && !editing}>
+<Button variant="contained" color="primary" onClick={handleAddProgress} disabled={!editing || (!newDate.trim() || !newDescription.trim())}>
   Add Progress
 </Button>
 
@@ -402,11 +411,8 @@ if (loading){
       <List>
         {project.investors.map((investor) => (
           <ListItem key={investor.id} style={{ marginBottom: "10px" }}>
-            <ListItemText primary={`${investor.name} - $${investor.amount}`} secondary={`Email: ${investor.email} | Document: ${investor.document?.name}`}
-            />
-            <IconButton color="primary" disabled={!editing} onClick={() => handleEditInvestor(investor)}>
-              <Edit />
-            </IconButton>
+            <ListItemText primary={`${investor.name} - $${investor.amount}`} secondary={`Email: ${investor.email}`}/>
+            <Link href={investor.document?.url} target="_blank" rel="noopener noreferrer">{investor.document?.name}</Link>
             <IconButton color="error" disabled={!editing} onClick={() => handleRemoveInvestor(investor.id)}>
               <Delete />
             </IconButton>
@@ -445,19 +451,30 @@ if (loading){
       </Dialog>
       <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
         {/*run this after data {(userData.user === 'investor')?:} */}
-        {editing ? 
+        {(userdata.email === project.ownerid) ?(editing ? 
           <Button variant="contained" color="primary" onClick={handleSubmit} style={{ marginTop: "20px" }} >
             Save
           </Button>:
           <Button variant="contained" color="secondary" onClick={toggleEditing} style={{ marginTop: "20px" }} >
           Edit
-        </Button>
-          }
+        </Button>):<></>}
+        
           {/*run this after data {(userData.type === 'investor')?:} */}
           <Button variant="contained" color="primary" style={{ marginTop: "20px" }}>Invest</Button>
           </div>
         </CardContent>
       </Card>
+      <Dialog open={dialogOpen} title={'open'} onClose={handleDialogClose}>
+        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary" title={'ok'} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

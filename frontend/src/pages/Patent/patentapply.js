@@ -9,23 +9,28 @@ import {
     Checkbox,
     FormControlLabel,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import axios from "axios";
+import { userdata } from "../Home/Signpage";
 
 const IPRForm = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         applicantName: "",
         address: "",
         nationality: "",
         phone: "",
-        email: "",
+        email: userdata.email,
         inventionTitle: "",
         abstract: "",
         description: "",
         claims: "",
         documents: [],
         declaration: false,
+        status: "Sent to Our Executives",
+        message: "",
     });
 
     const handleChange = (e) => {
@@ -62,13 +67,24 @@ const IPRForm = () => {
             }
         });
         console.log(formData);
-        // try {
-        //     const response = await axios.post("http://localhost:5000/submit", data);
-        //     alert(response.data.message);
-        // } catch (error) {
-        //     console.error("Error submitting form:", error);
-        //     alert("Submission failed.");
-        // }
+        try {
+            const response = await axios.post("http://localhost:5001/api/insert", {
+              collectionName: "ipr",
+              data: formData,
+            });
+      
+            if (response.status === 200) {
+              console.log("Project inserted successfully:", response.data);
+              alert("Project created successfully!");
+            } else {
+              console.error("Failed to insert project:", response.data.message);
+              alert(`Error: ${response.data.message}`);
+            }
+            navigate('/dashboard')
+          } catch (error) {
+            console.error("Error while submitting project:", error);
+            alert("Failed to create project. Please try again.");
+          }
     };
 
     return (
@@ -90,7 +106,7 @@ const IPRForm = () => {
                     <TextField fullWidth label="Phone" name="phone" value={formData.phone} onChange={handleChange}required/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField fullWidth label="Email" name="email" value={formData.email} onChange={handleChange} required type="email"/>
+                    <TextField fullWidth label="Email" name="email" value={formData.email} disabled={true} onChange={handleChange} required type="email"/>
                 </Grid>
             </Grid>
 

@@ -28,7 +28,7 @@ const MyProject = () => {
   const projectColumns =[
         { field: "name", headerName: "Project Name", flex: 1.5,
         renderCell: (params) => (
-            <Link to='projectprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
+            <Link to='/dashboard/projects/projectprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
               {params.row.name}
             </Link>
           ),

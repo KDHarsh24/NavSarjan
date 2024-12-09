@@ -30,7 +30,7 @@ const MyStartup = () => {
   const projectColumns =[
         { field: "name", headerName: "Project Name", flex: 1.5,
         renderCell: (params) => (
-            <Link to='startupprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
+            <Link to='/dashboard/startups/startupprofile' state={ {name: params.row.name, id: params.row.id} } style={{ textDecoration: 'none', color: '#007BFF' }}>
               {params.row.name}
             </Link>
           ),
@@ -77,7 +77,7 @@ const MyStartup = () => {
               // Update projectDash state
               setProjectDash([
                 {
-                  text: "Registered Projects",
+                  text: "Registered Startups",
                   val: formattedData.length,
                   color: ["#1da256", "#48d483"],
                   icon: <AiOutlineCalculator />,
@@ -122,7 +122,7 @@ const MyStartup = () => {
       
         <div className="projectTop">
             <div className="projectDash">
-                <span>Startups</span> <AiFillProject/>
+                <span>My Creation</span> <AiFillProject/>
             </div>
             <div className="projectStats w-100">
             {projectDash.map((row, index) => {

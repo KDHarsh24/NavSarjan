@@ -3,28 +3,34 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useParams } from 'react-router-dom';
 import { userdata } from '../Home/Signpage';
+import axios from 'axios';
 
 export default function ProfilePage({email}) {
   const { userId } = useParams(); // Get the userId from the URL
   const [profile, setProfile] = useState({});
-  const [user, setUser] = useState({
-    email: 'harshkumardas24@gmail.com',
-    password: '123456789',
-    name: 'Harsh',
-    address: 'Empire State Building, \nNew York',
-    phone: '7592004436',
-    image: null,
-    social: [{ paltform: 'linkedin', url: 'linkedin.com'}, { paltform: 'github', url: 'github.com'}],
-    dob: '2004-10-07'
-  })
+  const [photo, setPhoto] = useState(
+    'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
+);
   // Fetch data when the page loads
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/profile/${userId}`);
-        const data = await response.json();
-        setProfile(data);
-      } catch (error) {
+        const response = await axios.post(`http://localhost:5001/api/fetchone`, {
+          collectionName: "user",
+          condition: {email: userdata.email}, // Parse JSON from the input
+          projection: {}
+      });
+      if (response.data.success) {
+        const startups = response.data.data;
+        console.log(startups)
+
+        // Format data for rows
+        // Update projectRows state
+        setProfile(startups);
+        setPhoto(startups.image)
+        // Update projectDash state
+      }}
+         catch (error) {
         console.error('Error fetching profile data:', error);
       }
     };
@@ -34,9 +40,7 @@ export default function ProfilePage({email}) {
   // State to manage profile data
     
 
-    const [photo, setPhoto] = useState(
-        'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp'
-    );
+    
 
     // Backup of the original profile for cancel functionality
     const [originalProfile, setOriginalProfile] = useState(profile);

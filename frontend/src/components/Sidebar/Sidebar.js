@@ -47,7 +47,7 @@ const Sidebar = ({userlog}) => {
                     </li>);
                 })}
             <li>
-                <Link to="/dashboard">
+                <Link to="/dashboard/people">
                 <Button className="w-100">
                     <span className="icon"><FaHandshake/></span>
                         People

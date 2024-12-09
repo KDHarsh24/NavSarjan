@@ -2,21 +2,26 @@ const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const { emit } = require('nodemon');
+const { Collection } = require('mongoose');
 const app = express();
 const PORT = 5001;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // JSON payload size limit
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // MongoDB connection
 const uri = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/?retryWrites=true&w=majority&appName=Navsarjan';
 const client = new MongoClient(uri);
 const dbName = 'navsarjan'; // Replace with your database name
+let db; // Global variable to hold the database instance
+
 
 async function connectToDatabase() {
   try {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    const client = new MongoClient(uri);
     await client.connect();
     db = client.db(dbName);
     console.log("Connected to MongoDB successfully!");
@@ -26,6 +31,22 @@ async function connectToDatabase() {
   }
 }
 
+const logHistory = async (db, { entityType, entityId, fieldChanged, changedBy, isVerification = false }) => {
+  try {
+    const historyData = {
+      entityType,
+      entityId,
+      fieldChanged,
+      changedBy,
+      changeDate: new Date(),
+      isVerification: isVerification,
+    };
+    await db.collection("history").insertOne(historyData);
+    console.log("History entry added:", historyData);
+  } catch (err) {
+    console.error("Failed to log history:", err.message);
+  }
+};
 
 app.post('/api/login', async (req, res) => {
   try {
@@ -91,10 +112,8 @@ app.post('/api/register', async (req, res) => {
     if (!email || !password || !name || !address || !phone || !dob || !role) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-
     const usersCollection = db.collection('user'); // Ensure you have a "users" collection
     const existingUser = await usersCollection.findOne({ email });
-
     if (existingUser) {
       return res.status(400).json({ message: 'Email already exists' });
     }
@@ -122,6 +141,7 @@ app.post('/api/register', async (req, res) => {
       message: 'Account created successfully!',
       user: { ...newUser, _id: result.insertedId },
     });
+    await logHistory(db, {entityType: 'user', entityId: email, fieldChanged: 'Account Regitered', changedBy: email})
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error creating account', error: error.message });
@@ -130,14 +150,15 @@ app.post('/api/register', async (req, res) => {
 
 app.post('/api/insert', async (req, res) => {
   const { collectionName, data } = req.body;
+  console.log(collectionName, data)
   if (!collectionName || !data) {
     return res.status(400).json({ success: false, message: 'Missing collection name or data' });
   }
   try {
-    const db = client.db(dbName);
     const collection = db.collection(collectionName);
     const result = await collection.insertOne(data);
     res.status(200).json({ success: true, message: 'Data inserted successfully', result });
+    await logHistory(db, {entityType: collectionName, entityId: result.insertedId, fieldChanged: (collectionName === 'startup')? 'New Startup Launched' : (collectionName === 'ipr') ? 'IPR Request' : 'New Project Open', changedBy: data?.ownerid || data?.founderuserid || 'admin'})
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Failed to insert data', error });
@@ -150,7 +171,6 @@ app.post('/api/fetch', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Collection name is required' });
     }
     try {
-      const db = client.db(dbName);
       const collection = db.collection(collectionName);
       const queryCondition = condition || {};
       const queryProjection = projection || {};  
@@ -176,7 +196,6 @@ app.post('/api/fetchone', async (req, res) => {
     }
   
     try {
-      const db = client.db(dbName);
       const collection = db.collection(collectionName);
       const queryCondition = condition || {};
       const queryProjection = projection || {};  
@@ -203,13 +222,9 @@ app.post("/api/replace", async (req, res) => {
   }
 
   try {
-    await client.connect();
-    const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
     // Convert _id to ObjectId if present in the condition
-   
-
     const result = await collection.replaceOne(condition, data);
 
     if (result.matchedCount === 0) {
@@ -223,7 +238,21 @@ app.post("/api/replace", async (req, res) => {
       message: "Document replaced successfully.",
       result,
     });
-  } catch (err) {
+    await logHistory(db, {entityType: collectionName, entityId: data._id, fieldChanged:(collectionName==='startup') ? 'Startup Edit': (collectionName === 'ipr') ? 'IPR Request Changed' : 'Project Approval', changedBy: data?.ownerid || data?.founderuserid || 'admin', isVerification: (collectionName==='history')? true: false})
+    if (collectionName === 'history' && data.isVerification === true)
+    {
+      let g = '_id'
+      console.log('hello')
+      if (data.entityType === 'user'){
+        
+        let resu = await db.collection(data.entityType).updateOne({ email: data.entityId}, {$set: {isVerification: true}})
+      }
+      else{
+        console.log('byeee', data)
+        let resu = await db.collection(data.entityType).updateOne({ _id: new ObjectId(data.entityId)}, {$set: {isVerification: true}})
+      }
+    }
+  } catch (err) { 
     console.error("Error replacing document:", err);
     res.status(500).json({ success: false, message: "Server error." });
   } finally {

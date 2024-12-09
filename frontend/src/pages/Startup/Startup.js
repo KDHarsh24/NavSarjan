@@ -45,7 +45,7 @@ const Startup = () => {
           try {
             const response = await axios.post("http://localhost:5001/api/fetch", {
               collectionName: "startup", // Name of the collection
-              condition: {}, // Replace with your condition, e.g., {Funding: "active"}
+              condition: {isVerification: true}, // Replace with your condition, e.g., {Funding: "active"}
               projection: { 
                 _id: 1,
                 name: 1, 

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { RadioGroup, Dialog, DialogActions, DialogContent, DialogTitle, ListItemText ,Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { DialogContentText, RadioGroup, Dialog, DialogActions, DialogContent, DialogTitle, ListItemText ,Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
 import { CloudUpload , Edit, Save as SaveIcon, Add as AddIcon, Delete  } from "@mui/icons-material";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { postData } from "../../Data/backendmsg";
+import axios from "axios";
+import { userdata } from "../Home/Signpage";
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -12,69 +14,38 @@ const StartupProfile = () => {
   const navigate = useNavigate();
   const [response, setResponse] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [startup, setStartup] = useState({
-    name: "TechVision Inc.",
-    startupid: 'C098765',
-    industry: ["Technology"],
-    description: "An innovative tech startup focusing on AI-driven solutions.",
-    founder: "Jane Doe",
-    founderuserid: 'ethan.hunt@example.com',
-    coFounders: ["John Smith", "Alice Johnson"],
-    model: ['B2B', 'B2B2C'],
-    funding: "$10M",
-    established: "2018",
-    logo: "https://via.placeholder.com/100",
-    images: [
-      "https://via.placeholder.com/500",
-      "https://via.placeholder.com/300",
-      "https://via.placeholder.com/300",
-    ],
-    social: [{handle: 'website',link: 'https://www.google.com',}, {handle: 'Instagram', link: 'nhi hai hmara'}],
-    incorporated: true,
-    address: 'Mountain View, \nPalo Altos, \nCalifornia',
-    pitch: 'Please Invest',
-    documents: [
-      { name: "Business Plan.pdf", url: "https://example.com/business-plan.pdf" },
-      { name: "Pitch Deck.ppt", url: "https://example.com/pitch-deck.ppt" },
-    ],
-    products: [
-      {
-        name: "AI Assistant",
-        description: "A virtual assistant powered by cutting-edge AI technology.",
-      },
-      {
-        name: "DataAnalyzer",
-        description: "An analytics tool for processing large-scale datasets.",
-      },
-    ],
-    graph: {
-      label: "Revenue, Profit & Net Profit (in Rs.(lac))",
-      data: [
-        { label: "2019", revenue: 5, profit: 3, netProfit: 2, document: {name: 'thizz.pdf', url: 'helloworld.com'}, verified: false },
-        { label: "2020", revenue: 12, profit: 8, netProfit: 6, document: null, verified: true },
-        { label: "2021", revenue: 18, profit: 14, netProfit: 10, document: null, verified: true },
-        { label: "2022", revenue: 25, profit: 20, netProfit: 15, document: null,verified: false },
-      ],
-    },
-    investors: [
-      {
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        amount: 1000,
-        document: {name: 'disinv.pdf', url: 'pdf.com'},
-        verified: true
-      },
-      {
-        id: 2,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        amount: 10000,
-        document: {name: 'disinv.pdf', url: 'pdf.com'},
-        verified: true
-      },
-    ],
-  });
+  const [loading, setLoading] = useState(true);
+  const [startup, setStartup] = useState({});
+  const location = useLocation();
+  const { name, id } = location.state || {};
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:5001/api/fetchone", {
+          collectionName: "startup", // Name of the collection
+          condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
+          projection: {}, // Fields to fetch
+        });
+
+        if (response.data.success) {
+          const startups = response.data.data;
+          console.log(startups)
+
+          // Format data for rows
+          // Update projectRows state
+          setStartup(startups);
+          // Update projectDash state
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [id]);
   const industryDomains = [
     "Horizontal", "AgriTech", "Cyber Security", "Drones", "Enterprise SaaS", "Food", "Hardware", "Language Deeptech",
     "Mobility", "Robotics", "Sustainability & Environment", "Waste Management", "Adtech", "B2B Ecommerce Platform", 
@@ -225,32 +196,35 @@ const handleInvestorDocumentChange = (e) => {
   }));
 };
 
-  const barChartData = {
-    labels: startup.graph.data.map(item => item.label),
+const barChartData = startup.graph?.data
+? {
+    labels: startup.graph.data.map((item) => item.label || ""), // Default to empty if label is missing
     datasets: [
       {
-        label: startup.graph.label,
-        data: startup.graph.data.map(item => item.revenue),
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label: startup.graph.label || "Revenue",
+        data: startup.graph.data.map((item) => item.revenue || 0),
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
       },
       {
         label: "Profit",
-        data: startup.graph.data.map(item => item.profit),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        data: startup.graph.data.map((item) => item.profit || 0),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
       {
         label: "Net Profit",
-        data: startup.graph.data.map(item => item.netProfit),
-        backgroundColor: 'rgba(153, 102, 255, 0.5)',
-        borderColor: 'rgba(153, 102, 255, 1)',
+        data: startup.graph.data.map((item) => item.netProfit || 0),
+        backgroundColor: "rgba(153, 102, 255, 0.5)",
+        borderColor: "rgba(153, 102, 255, 1)",
         borderWidth: 1,
       },
     ],
-  };
+  }
+: null;
+
 
   const barChartOptions = {
     responsive: true,
@@ -268,22 +242,46 @@ const handleInvestorDocumentChange = (e) => {
     },
   };
   const handleSubmit = async (e) => {
-    if (e) e.preventDefault(); // Prevent form default behavior only if event exists
-  
+    //e.preventDefault();
+    setLoading(true);
+
+    console.log(startup);
     try {
-      console.log(startup);
-      const data = await postData("data", startup); // Send data to backend
-      console.log("Data sent successfully:", data);
-    } catch (error) {
-      console.error("Error sending data to backend", error);
-      setResponse("An error occurred while sending data.");
+      const response = await axios.post("http://localhost:5001/api/replace", {
+        collectionName: "startup",
+        condition: {_id: startup._id}, // Parse JSON from the input
+        data: startup, // Parse JSON from the input
+      });
+
+      if (response.data.success) {
+        setDialogTitle("Success");
+        setDialogMessage("Document replaced successfully.");
+      } else {
+        setDialogTitle("Error");
+        setDialogMessage(response.data.message || "Failed to replace document.");
+      }
+    } catch (err) {
+      setDialogTitle("Error");
+      setDialogMessage(err.response?.data?.message || "Server error.");
+    } finally {
+      setLoading(false);
+      setDialogOpen(true); // Open dialog box
     }
   };
+  const handleDialogClose = (e) => {
+    if (e.currentTarget.title=== 'ok')
+      navigate('/dashboard')
+    setDialogOpen(false);
+  };
+  if (loading){
+    return(<div>Loading</div>);
+  }
   return (
     <div>
-     <Button variant="contained" color={editMode ? "secondary" : "primary"} onClick={() => {if (editMode)handleSubmit();setEditMode(!editMode);}} startIcon={editMode ? <SaveIcon /> : <Edit />}>
+      {(userdata.email === startup.founderuserid)?<Button variant="contained" color={editMode ? "secondary" : "primary"} onClick={() => {if (editMode)handleSubmit();setEditMode(!editMode);}} startIcon={editMode ? <SaveIcon /> : <Edit />}>
       {editMode ? "Save" : "Edit"}
-    </Button>
+    </Button> :<></>}
+     
       {/* Data section */}
       <Card style={{ margin: "20px 0px 30px 0px", borderRadius: "8px", padding: "20px" }}>
         <Grid container spacing={2}>
@@ -489,8 +487,9 @@ const handleInvestorDocumentChange = (e) => {
       <List>
         {startup.investors.map((investor) => (
           <ListItem key={investor.id} style={{ marginBottom: "10px" }}>
-            <ListItemText primary={`${investor.name} - $${investor.amount}`} secondary={`Email: ${investor.email} | Document: ${investor.document?.name}`}
+            <ListItemText primary={`${investor.name} - Rs.${investor.amount}`} secondary={`Email: ${investor.email}`}
             />
+            <Link href={startup.document?.url} target="_blank" rel="noopener noreferrer">{startup.document?.name}</Link>
             <IconButton color="primary" disabled={!editMode} onClick={() => handleEditInvestor(investor)}>
               <Edit />
             </IconButton>
@@ -532,6 +531,17 @@ const handleInvestorDocumentChange = (e) => {
       </Dialog>
         </CardContent>
       </Card>
+      <Dialog open={dialogOpen} title={'open'} onClose={handleDialogClose}>
+        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary" title={'ok'} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
