@@ -21,8 +21,21 @@ import MyStartup from './pages/Startup/myStartup';
 import NewProject from './pages/Project/newProject';
 import Startup from './pages/Startup/startup';
 import Register from './pages/Login/Register';
-import { useState,useEffect } from 'react';
-//const [userEmail,setUserEmail]=useState(null);
+import { useState,useEffect} from 'react';
+
+//for chat,videoCall,notification
+import Chat from './pages/Chat/chat.js';
+import Notify from './pages/Notification/notification.js';
+import { getFormControlLabelUtilityClasses } from '@mui/material';
+
+
+export let socketvalue = {};
+
+
+//fetch socketvalue from somewhere
+
+
+
 
 function App() {
   const [userEmail, setUserEmail] = useState(() => {
@@ -30,24 +43,36 @@ function App() {
     return localStorage.getItem('userEmail') || null;
   });
 
-  useEffect(() => {
-    // Store email in localStorage whenever it changes
-    if (userEmail) {
-      localStorage.setItem('userEmail', userEmail);
+  const [socket,setSocket]=useState('');
+
+  
+  useEffect(()=>{
+    if(socket)
+    {
+      socketvalue = socket;
+      console.log("socket in app: "+socket.id);
+      socket ? console.log("Hello") : console.log("Hello1");
     }
-  }, [userEmail]);
+
+  },[socket])
+    
   return (
   <BrowserRouter>
       <Routes>
-        <Route path={'/login'} exact={true} element={<Login     emailValue={setUserEmail}/>}/>
+        <Route path={'/login'} exact={true} element={<Login     emailValue={setUserEmail} />}/>
         <Route path={'/register'} exact={true} element={<Register/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker  userEmail={userEmail}/>}/>
-        <Route path='/' exact={true} element={<Homepage userEmail={userEmail}/>}/>
+        <Route path='/' exact={true} element={<Homepage user={userEmail} />}/>
         <Route path="/sign-page" element={<Signpage emailValue={setUserEmail}/>}/>
         <Route path="/create-account" element={<CreateAccount/>}/>
+
+        
+        <Route path="/notification" exact={true}  element={<Notify user={userEmail} socket={socket}/>}/>
+
         {/* Forms Routes */}
 
-        <Route path={'/dashboard'} exact={true} element={<Dashboard userEmail={userEmail}/>}>
+        <Route path={'/dashboard'} exact={true} element={<Dashboard user={userEmail} socketValue={setSocket}/>}>
+        <Route path={'/dashboard/chat'}exact={true} element={ <Chat user={userEmail}  /> } />
           <Route path={'/dashboard/projects'} exact={true} element={<Project  userEmail={userEmail}/>}/>
           <Route path={'/dashboard/myprojects'} exact={true} element={<MyProject  userEmail={userEmail}/>}/>
           <Route path={'/dashboard/myprojects/new'} exact={true} element={<NewProject userEmail={userEmail}/>}/>

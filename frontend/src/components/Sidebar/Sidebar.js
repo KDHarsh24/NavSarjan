@@ -15,7 +15,7 @@ const Sidebar = ({userlog}) => {
         { text: "Startups", icon: <MdEmojiObjects />, link: "startups" }
     ];
     const user = [
-        { text: "My Project", icon: <FaProjectDiagram />, link: "myprojects" },
+        { text: "My Project", icon: <FaProjectDiagram />, link: "chat" },
         { text: "Projects", icon: <AiFillProject />, link: "projects" },
         { text: "Startups", icon: <MdEmojiObjects />, link: "startups" },
         { text: "My Brand", icon: <FaSeedling />, link: "mystartups" },

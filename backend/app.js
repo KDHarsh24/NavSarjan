@@ -1,13 +1,16 @@
 import express from 'express';
 import cors from 'cors';
+import { Server } from 'socket.io';
+import { createServer } from "http";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import startUpRoutes from './Route/startUpRoute.js';
 import userAuthRoutes from './Route/authRoute.js';
 import projectRoutes from './Route/projectRoute.js'
 import userProfileRoutes from './Route/profileRoute.js';
-
-
+import chatRoutes from './Route/chatRoute.js';
+import notificationRoutes from './Route/notificationRoute.js';
+import { handleSocketConnection } from './Controller/socketController.js';
 
 dotenv.config();
 
@@ -31,6 +34,16 @@ app.use(
 );
 app.use(express.json());
 
+const httpServer = createServer(app);
+
+
+const io=new Server(httpServer,{
+    cors:{
+        origin:"http://localhost:3000"
+    }
+});
+
+
 // Default Route
 app.get('/', (req, res) => {
   res.send('<h6>Welcome to the Navsarjan Backend</h6>');
@@ -41,7 +54,12 @@ app.use('/home/startUp', startUpRoutes);
 app.use('/home/Projects', projectRoutes);
 app.use('/home', userAuthRoutes);
 app.use('/home/profile',userProfileRoutes);
+app.use('/home/chat',chatRoutes);
+app.use('/home/notification',notificationRoutes);
 
+
+// Socket.IO
+io.on("connection", (socket) => handleSocketConnection(io, socket));
 
 
 // Error Handling Middleware
@@ -53,6 +71,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
-});
+
+httpServer.listen(PORT,()=>{
+  console.log(`server listening at http://localhost:${PORT}`)
+})

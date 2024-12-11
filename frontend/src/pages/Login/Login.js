@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../../context/UserContext'; // Import context
 
+
+
+
+
+
 const Login = ({emailValue}) => {
+
+
+   // Only trigger on user or socketValue changes
+    
   const [email, setEmail] = useState('');
+  
+   
+
+
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { setUserData } = useUser(); // Access context function
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    
     try {
      
       const response = await axios.post('http://localhost:8081/home/login', { email, password });

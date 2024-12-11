@@ -3,7 +3,13 @@ import Homeheader from "../../components/Header/Homeheader";
 import HeroSection from "./Herosection";
 import ContentSection from "./Homecontent";
 
-const Homepage = ({userEmail}) => {
+const Homepage = ({user}) => {
+
+
+
+
+
+
     return(
         <div className="navsarjanHome">
             <Homeheader/>

@@ -1,0 +1,182 @@
+*{
+    padding:0px;
+    margin:0px;
+    box-sizing:border-box;
+}
+
+
+.chatContainer
+{
+    display:flex;
+    flex-direction:row;
+    height:100vh;
+    width:100vw;
+    background-color: blanchedalmond;
+}
+
+.contactContainer
+{
+    width:35%;
+    border:1px solid black;
+    height:100%;
+    padding:5px;
+}
+
+.contactHeader
+{
+    display:flex;
+    flex-direction: column;
+    
+    font-weight:600;
+}
+
+
+
+
+
+
+.contactContainer button
+{
+    font-weight:500;
+    border:none;
+    background-color: blanchedalmond;
+    margin-bottom:2px;
+}
+
+.contactContainer button:hover
+{
+    cursor:pointer;
+    font-weight:550;
+    border:0.1px solid rgb(52, 50, 50);
+    padding:2px;
+  
+}
+
+.contactBox
+{
+    display:flex;
+    flex-direction: column;
+    margin-top:2px;
+    padding:2px;
+}
+
+.contactBoxContainer
+{
+    display:flex;
+    justify-content: space-between;
+}
+
+.contactBoxContainer:hover
+{
+    cursor:pointer;
+    background-color:rgba(240, 236, 230, 0.771);
+}
+
+.contactBoxContainer 
+{
+    border-bottom:0.4px solid rgb(89, 80, 80);
+    padding:2px;
+}
+
+.dot
+{
+   
+    padding:0.5px;
+    border-radius: 45%;
+    width:auto;
+    background-color: rgb(113, 232, 192);
+}
+
+.chatBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add spacing between messages */
+    padding: 10px;
+    height: auto;
+    width:100%;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+.messageleft {
+    align-self: flex-start; /* Align to the left */
+    padding: 10px;
+    background-color: rgb(173, 154, 242);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    max-width: 60%; /* Limit message width */
+    word-wrap: break-word; /* Handle long words */
+}
+
+.messageright {
+    align-self: flex-end; /* Align to the right */
+    padding: 10px;
+    background-color: rgb(194, 242, 154);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    max-width: 60%; /* Limit message width */
+    word-wrap: break-word; /* Handle long words */
+}
+
+
+.inputBox
+{
+    display:flex;
+    flex-direction: row;
+    width:63%;
+    position:absolute;
+    bottom:2px;
+    align-items: flex-end;
+    margin-top:15px;
+}
+
+.inputBox input
+{
+    height:auto;
+    padding:5px;
+    width:100%;
+    background-color: rgb(150, 194, 252);
+    border:none;
+    border-radius:3%;
+}
+
+
+.inputBox button
+{
+    padding:5px;
+    background-color:rgb(230, 241, 177);
+    border-radius:5px;
+    margin-left: 5px;
+}
+
+
+
+
+
+.chatBoxHeader
+{
+    display:flex;
+    justify-content: space-around;
+    height:8%;
+    font-weight: 650;
+    font-size: medium;
+    width:74%;
+    text-align: center;
+    top:0px;
+    position:absolute;
+    background-color: transparent;
+    left:26%;
+    padding:1px;
+    
+}
+
+.chatBoxHeaderName
+{
+    width:75%;
+    justify-content: center;
+}
+
+.chatBoxHeaderVideoCall
+{
+    height:90%;
+   width:8%;
+}
