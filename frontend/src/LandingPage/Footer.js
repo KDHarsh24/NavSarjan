@@ -10,8 +10,7 @@ export function Component() {
             <div class="col-span-2 md:col-span-4 xl:pr-8">
                 <img class="w-auto h-12 w-15" src={logo} alt="" />
 
-                <p class="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
-
+                <p class="text-base leading-relaxed text-gray-600 mt-7">An Initiate of Gujarat Government to empower the startup ecosystem.</p>
                 <a href="#" title="" class="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -33,12 +32,9 @@ export function Component() {
                     </li>
 
                     <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Works </a>
+                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Objective </a>
                     </li>
 
-                    <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Career </a>
-                    </li>
                 </ul>
             </div>
 
@@ -50,9 +46,7 @@ export function Component() {
                         <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Customer Support </a>
                     </li>
 
-                    <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Delivery Details </a>
-                    </li>
+                   
 
                     <li>
                         <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Terms & Conditions </a>
@@ -73,16 +67,9 @@ export function Component() {
                     </li>
 
                     <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Development Tutorial </a>
+                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Mentor Sessions </a>
                     </li>
 
-                    <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> How to - Blog </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> YouTube Playlist </a>
-                    </li>
                 </ul>
             </div>
 
@@ -92,10 +79,6 @@ export function Component() {
                 <ul class="mt-6 space-y-5">
                     <li>
                         <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Customer Support </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-sm text-gray-800 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"> Delivery Details </a>
                     </li>
 
                     <li>

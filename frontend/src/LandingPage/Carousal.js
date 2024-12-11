@@ -5,6 +5,7 @@ import banner3 from "./Images/banner3.png";
 import banner4 from "./Images/banner4.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
+// import background from "./Images/background.jpg";
 
 function Carousal() {
   const [data, setData] = useState([]);
@@ -27,10 +28,11 @@ function Carousal() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-6 p-6 bg-gradient-to-b from-gray-100 to-gray-300">
+    
+    <div className="flex flex-wrap gap-6 p-20 bg-gradient-to-b bg-slate-50">
       {/* Carousel Section */}
-      <div className="flex-1 lg:w-2/3 rounded-lg shadow-md overflow-hidden bg-white">
-        <Carousel className="w-full h-[400px]">
+      <div className="flex-1 lg:w-2/3 rounded-lg shadow-md overflow-hidden">
+        <Carousel className="w-full h-[500px]">
           <div className="flex h-full items-center justify-center bg-gray-100">
             <img
               src={banner1}

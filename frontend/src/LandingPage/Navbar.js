@@ -150,7 +150,7 @@ const Navbar = () => {
                                                 to="/" 
                                                 activeClassName='is-active' 
                                                 onClick={toggleMenu} 
-                                                className=" px-4 py-3 hover:bg-gray-100 flex items-center"
+                                                className=" px-4 py-3 text-black hover:bg-gray-100 flex items-center"
                                             >
                                                 <IoHomeOutline className="mr-2" /> Home
                                             </NavLink>
@@ -159,7 +159,7 @@ const Navbar = () => {
                                             <li key={index} className="border-t">
                                                 <div 
                                                     onClick={() => toggleSubMenu(menuItem.title)}
-                                                    className="px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-100"
+                                                    className="px-4 py-3 flex text-black justify-between items-center cursor-pointer hover:bg-gray-100"
                                                 >
                                                     {menuItem.title}
                                                     <FiChevronDown 
@@ -175,7 +175,7 @@ const Navbar = () => {
                                                                 <NavLink 
                                                                     to={subItem.path} 
                                                                     onClick={toggleMenu}
-                                                                    className="block px-8 py-3 hover:bg-gray-100"
+                                                                    className="block px-8 py-3 text-black hover:bg-gray-100"
                                                                 >
                                                                     {subItem.label}
                                                                 </NavLink>
@@ -189,7 +189,7 @@ const Navbar = () => {
                                             <NavLink 
                                                 to="/contact" 
                                                 onClick={toggleMenu}
-                                                className="block px-4 py-3 border-t hover:bg-gray-100"
+                                                className="block px-4 py-3 border-t text-black hover:bg-gray-100"
                                             >
                                                 Contact Us
                                             </NavLink>
