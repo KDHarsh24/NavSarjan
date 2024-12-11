@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import Routing from './Main/Routing';
-import Routing from './LandingPage/Routing';
-
+// import Routing from './LandingPage/Routing';
+// import SURVEY_FORM from './PAGES/SURVEY_FORM';
+import Feedback_form from './PAGES/Feedback_form';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Routing/>
+    {/* <Routing/> */}
+    <Feedback_form/>
   </React.StrictMode>
 );
 
