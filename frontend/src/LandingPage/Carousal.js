@@ -29,7 +29,7 @@ function Carousal() {
 
   return (
     
-    <div className="flex flex-wrap gap-6 p-20 bg-gradient-to-b bg-slate-50">
+    <div className="flex flex-wrap gap-6 p-17 bg-gradient-to-b bg-slate-50">
       {/* Carousel Section */}
       <div className="flex-1 lg:w-2/3 rounded-lg shadow-md overflow-hidden">
         <Carousel className="w-full h-[500px]">

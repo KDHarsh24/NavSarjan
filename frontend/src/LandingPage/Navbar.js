@@ -60,8 +60,8 @@ const Navbar = () => {
         <>
             <Header />
             <div className="bg-white shadow relative">
-                <div className="container mx-auto px-4">
-                    <div className="flex items-center justify-between py-2">
+                <div className="container  px-4">
+                    <div className="flex items-center justify-between py-1">
                         {/* Logo */}
                         <div className="header__middle__logo">
                             <NavLink exact to="/" activeClassName='is-active'>

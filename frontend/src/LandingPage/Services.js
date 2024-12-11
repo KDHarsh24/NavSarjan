@@ -1,8 +1,9 @@
-import company1 from "./Images/company1.png"; 
-import company2 from "./Images/company2.png"; 
-import company3 from "./Images/company3.png"; 
-import company4 from "./Images/company4.png"; 
-import company5 from "./Images/company5.png"; 
+import image1 from "./Images/landikart.png";
+import image2 from "./Images/INTAS.png";
+import image3 from "./Images/digital_class.jpg";
+import image4 from "./Images/billdesk.jpg";
+import image5 from "./Images/blue_smart.jpg";
+import image6 from "./Images/bigspoon.jpg"; 
 import register from "./Images/Register.png";
 import unique_id from "./Images/unique_id.jpg";
 import assistance from "./Images/assistance.avif";
@@ -26,41 +27,23 @@ function Services(){
                     <Marquee pauseOnClick={true}>
             <div className="flex overflow-hidden whitespace-nowrap items-center hover:cursor-pointer">
                 <div className="inline-block mx-10">
-                    <img src={company1} alt="logo1" className="max-w-xs h-auto" />
+                    <img src={image1} alt="logo1" className="max-w-xs h-auto" />
                 </div>
                 <div className="inline-block mx-10">
-                    <img src={company2} alt="logo2" className="max-w-xs h-auto" />
+                    <img src={image2} alt="logo1" className="max-w-xs h-auto" />
                 </div>
                 <div className="inline-block mx-10">
-                    <img src={company3} alt="logo3" className="max-w-xs h-auto" />
+                    <img src={image3} alt="logo1" className="max-w-xs h-auto" />
                 </div>
                 <div className="inline-block mx-10">
-                    <img src={company4} alt="logo4" className="max-w-xs h-auto" />
+                    <img src={image4} alt="logo1" className="max-w-xs h-auto" />
                 </div>
                 <div className="inline-block mx-10">
-                    <img src={company5} alt="logo5" className="max-w-xs h-auto" />
+                    <img src={image5} alt="logo1" className="max-w-xs h-auto" />
                 </div>
                 <div className="inline-block mx-10">
-                    <img src={company4} alt="logo4" className="max-w-xs h-auto" />
+                    <img src={image6} alt="logo1" className="max-w-xs h-auto" />
                 </div>
-                <div className="inline-block mx-10">
-                    <img src={company5} alt="logo5" className="max-w-xs h-auto" />
-                </div>   
-                <div className="inline-block mx-10">
-                    <img src={company1} alt="logo1" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-10">
-                    <img src={company2} alt="logo2" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-10">
-                    <img src={company3} alt="logo3" className="max-w-xs h-auto" />
-                </div>      
-                <div className="inline-block mx-10">
-                    <img src={company2} alt="logo2" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-10">
-                    <img src={company3} alt="logo3" className="max-w-xs h-auto" />
-                </div>            
             </div>
         </Marquee>
 

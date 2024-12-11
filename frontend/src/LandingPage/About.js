@@ -17,8 +17,8 @@ function About(){
                             To inspire and support startups in Gujarat.
                             To provide a platform for collaboration and innovation.<br/>
                             <h2 className="text-center text-2xl">Key Features:</h2>
-                            Collaboration: Fostering connections and partnerships among startups, mentors, investors, and other stakeholders.
-                            Innovation: Encouraging creative ideas and promoting technological advancements.
+                            Collaboration: Fostering connections and partnerships among startups, mentors, investors, and other stakeholders.<br/>
+                            Innovation: Encouraging creative ideas and promoting technological advancements.<br/>
                             Support: Offering resources, guidance, and mentorship to help startups grow and succeed.</p>
                             <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500">
                                  Learn More
