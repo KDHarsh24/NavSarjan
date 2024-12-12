@@ -1,203 +1,189 @@
-import React, { useState } from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBIcon,
-  MDBBtn,
-  MDBTypography,
-  MDBTextArea,
-  MDBCardHeader,
-} from "mdb-react-ui-kit";
+import { useEffect,useState,useRef } from 'react';
+import '../../styles/chat.css';
+import axios from 'axios';
+import Message from './message';
+import { MdVideoCall } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
+import { socketvalue } from '../../App';
+import { userdata } from '../Home/Signpage';
+function Chat()
+{
+    let user=userdata.email; //userEmail
+    console.log("user: "+user);
+    console.log("socket in chat"+socketvalue.id);
+    if(!socketvalue)
+    {
+        console.log("socketvalue in chat: "+socketvalue.id);
+    }
+    
+    const[contactQueue,setContactQueue]=useState([]);
+    const[chatQueue,setChatQueue]=useState([]);
+    const[dest,setDest]=useState('');
+    let to=user;
+    const source=user;
+    const chatEndRef = useRef(null);
+    const navigate=useNavigate();
 
-export default function Chat() {
-  // Local JSON object for chat data
-  const initialData = {
-    members: [
-      {
-        id: "1",
-        name: "John Doe",
-        avatar: "avatar-8.webp",
-        lastMessage: "Hello, Are you there?",
-        time: "Just now",
-        unreadCount: 1,
-      },
-      {
-        id: "2",
-        name: "Danny Smith",
-        avatar: "avatar-1.webp",
-        lastMessage: "Lorem ipsum dolor sit.",
-        time: "5 mins ago",
-        unreadCount: 0,
-      },
-      {
-        id: "3",
-        name: "Lara Croft",
-        avatar: "avatar-5.webp",
-        lastMessage: "Sed ut perspiciatis.",
-        time: "Yesterday",
-        unreadCount: 0,
-      },
-    ],
-    messages: {
-      "1": [
-        { id: "1", sender: "John Doe", content: "Hello! How are you?", time: "12 mins ago" },
-        { id: "2", sender: "You", content: "I'm good, thank you! How about you?", time: "10 mins ago" },
-      ],
-      "2": [
-        { id: "1", sender: "Danny Smith", content: "Lorem ipsum dolor sit amet.", time: "5 mins ago" },
-      ],
-      "3": [
-        { id: "1", sender: "Lara Croft", content: "Sed ut perspiciatis unde.", time: "Yesterday" },
-      ],
-    },
-  };
 
-  const [members, setMembers] = useState(initialData.members);
-  const [messages, setMessages] = useState(initialData.messages);
-  const [currentMemberId, setCurrentMemberId] = useState("1");
-  const [currentMessage, setCurrentMessage] = useState("");
+    const handleMessage=(e)=>
+    {
+         e.preventDefault();
+         let message=document.getElementById('input').value;
+         //send message to server
+         document.getElementById('input').value="";
+         console.log("message: "+message);
+         socketvalue.emit("message",({from:source,to:dest,message:message}));
+    
+    }
 
-  // Handle sending a message
-  const handleSendMessage = () => {
-    if (!currentMessage.trim()) return;
-
-    const newMessage = {
-      id: (messages[currentMemberId]?.length || 0) + 1,
-      sender: "You",
-      content: currentMessage.trim(),
-      time: "Just now",
+    const scrollToBottom = () => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    const updatedMessages = {
-      ...messages,
-      [currentMemberId]: [...(messages[currentMemberId] || []), newMessage],
-    };
 
-    setMessages(updatedMessages);
-    setCurrentMessage("");
+    useEffect(()=>
+    {
+       
+        //make api call to show all contacts
+        axios.get("http://localhost:5001/home/chat/contact",{params:{user}})
+            .then(res=>{
+                    console.log("Contact directory"+JSON.stringify(res.data,null,2));
+                    
+                    setContactQueue(res.data);
+                    
+                })
+            .catch(err=>console.log(err))
 
-    // Update last message in member list
-    const updatedMembers = members.map((member) =>
-      member.id === currentMemberId
-        ? { ...member, lastMessage: newMessage.content, time: newMessage.time, unreadCount: 0 }
-        : member
-    );
-    setMembers(updatedMembers);
-  };
+        //server send message
+        socketvalue.on("newMessage",({from,to,message})=>{
+            console.log("Getting new message");
+            if ((from === dest && to === user) || (from === user && to === dest))
+            {
+                setChatQueue(prevChats => [...prevChats, {
+                    Source: from, 
+                    message: message
+                }]);
+            }
+            
+        })
 
-  // Handle selecting a member
-  const handleSelectMember = (id) => {
-    setCurrentMemberId(id);
 
-    // Reset unread count for the selected member
-    const updatedMembers = members.map((member) =>
-      member.id === id ? { ...member, unreadCount: 0 } : member
-    );
-    setMembers(updatedMembers);
-  };
 
-  return (
-    <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
-      <MDBRow>
-        {/* Member List */}
-        <MDBCol md="4" lg="3" className="mb-4 mb-md-0">
-          <h5 className="font-weight-bold mb-3 text-center text-lg-start">Members</h5>
-          <MDBCard>
-            <MDBCardBody>
-              <MDBTypography listUnStyled className="mb-0">
-                {members.map((member) => (
-                  <li
-                    key={member.id}
-                    className={`p-2 border-bottom ${currentMemberId === member.id ? "bg-light" : ""}`}
-                    onClick={() => handleSelectMember(member.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="d-flex justify-content-between">
-                      <div className="d-flex flex-row">
-                        <img
-                          src={`https://mdbcdn.b-cdn.net/img/Photos/Avatars/${member.avatar}`}
-                          alt="avatar"
-                          className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                          width="60"
-                        />
-                        <div className="pt-1">
-                          <p className="fw-bold mb-0">{member.name}</p>
-                          <p className="small text-muted">{member.lastMessage}</p>
+          // Cleanup on component unmount
+          return () => {
+            socketvalue.off("newMessage");
+        };
+
+    },[user,dest])
+
+
+    const showChats=(contact)=>
+    {
+
+        setDest(contact);
+        let to=contact;
+        let from=user;
+        console.log("contact: "+contact);
+        socketvalue.emit("joinRoom", { from: user, to: contact });
+
+
+        //make api call to load data
+        axios.get('http://localhost:5001/home/chat/message',{params:{from,to}})
+            .then(res=>{
+                console.log("Chat directory: "+JSON.stringify(res.data,null,2));
+                setChatQueue(res.data);
+            })
+            .catch(err=>console.log(err));
+
+
+        //make api call to mark all related message read
+        axios.post('http://localhost:5001/home/chat/readStatus',{params:{contact}})
+        .then(res=>{
+            console.log("res.data: "+JSON.stringify(res.data,null,2));
+        })
+        .catch(err=>console.log(err));
+
+        setTimeout(scrollToBottom, 0); 
+
+    }
+
+    useEffect(() => {
+        scrollToBottom(); // Scroll when chatQueue changes
+    }, [chatQueue]);
+
+
+    const handleVideoCall=(e)=>
+    {
+        e.preventDefault();
+        navigate('/dashboard/room');
+    }
+
+
+
+    return(
+        <>
+            <section  className="chatContainer">
+                    <div    className="contactContainer">
+                        <div    className="contactHeader">
+                            <button>Add New Contact</button>    
+                            <input type="text" placeholder='Search here'/>
                         </div>
-                      </div>
-                      <div className="pt-1">
-                        <p className="small text-muted mb-1">{member.time}</p>
-                        {member.unreadCount > 0 && (
-                          <span className="badge bg-danger float-end">{member.unreadCount}</span>
-                        )}
-                      </div>
+                        <div    className="contactBox">
+                                
+                                    {contactQueue.length>0?(contactQueue.map((contact,indx)=>(
+                                        <div    className="contactBoxContainer" key={indx}     onClick={(e)=>showChats(contact._id)} >
+                                            <p>{(contact._id!==user?contact._id:null)}</p>
+                                            <div id="contactNotificationCounter"    className='dot'></div>
+                                        </div>
+                                    ))):<p>No Contact Found</p>}
+                                    
+                                
+                                
+                        </div>    
                     </div>
-                  </li>
-                ))}
-              </MDBTypography>
-            </MDBCardBody>
-          </MDBCard>
-        </MDBCol>
+                    
+                        <div className="chatBox">
+                        
+                           <div className="chatBoxHeader">
+                                    <div    className="chatBoxHeaderName">User:{user}  Dest:{dest}</div>
+                                    <button className="chatBoxHeaderVideoCall"  onClick={handleVideoCall}><MdVideoCall /></button>
+                            </div>
 
-        {/* Chat Messages */}
-        <MDBCol md="8" lg="9">
-          <MDBTypography listUnStyled>
-            {(messages[currentMemberId] || []).map((message) => (
-              <li
-                key={message.id}
-                className={`d-flex justify-content-${
-                  message.sender === "You" ? "end" : "start"
-                } mb-4`}
-              >
-                {message.sender !== "You" && (
-                  <img
-                    src={`https://mdbcdn.b-cdn.net/img/Photos/Avatars/${
-                      members.find((member) => member.id === currentMemberId).avatar
-                    }`}
-                    alt="avatar"
-                    className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                    width="60"
-                  />
-                )}
-                <MDBCard className="w-75">
-                  <MDBCardHeader className="d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">{message.sender}</p>
-                    <p className="text-muted small mb-0">
-                      <MDBIcon far icon="clock" /> {message.time}
-                    </p>
-                  </MDBCardHeader>
-                  <MDBCardBody>
-                    <p className="mb-0">{message.content}</p>
-                  </MDBCardBody>
-                </MDBCard>
-                {message.sender === "You" && (
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                    alt="avatar"
-                    className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
-                    width="60"
-                  />
-                )}
-              </li>
-            ))}
-
-            <li className="bg-white mb-3">
-              <MDBTextArea
-                label="Type your message"
-                rows={4}
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-              />
-            </li>
-            <MDBBtn color="info" rounded className="float-end" onClick={handleSendMessage}>
-              Send
-            </MDBBtn>
-          </MDBTypography>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
-  );
+                            {chatQueue.length > 0 &&
+                                chatQueue.map((chat, indx) => (
+                                   
+                                        <Message
+                                            key={indx}
+                                            message={chat.message}
+                                            classs={chat.Source === user ? 'messageright' : 'messageleft'}
+                                        />
+                                  
+                                ))}
+                     
+                            <div ref={chatEndRef} />
+                    
+                        
+                        <div    className="inputBox">
+                            <input type="text" placeholder="Enter message" id="input"/>
+                            <button onClick={handleMessage}>Send</button>
+                        </div>
+                    </div>
+            </section>
+           
+        </>
+    );
 }
+
+export default Chat;
+
+
+
+
+
+
+
+
+
+
+
+

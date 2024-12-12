@@ -1,16 +1,32 @@
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
+
 const bcrypt = require('bcrypt');
 const { emit } = require('nodemon');
-const { Collection } = require('mongoose');
+
 const app = express();
 const PORT = 5001;
+const {Server}=require('socket.io');
+const {createServer}=require('http')
+
+
+//const Chat=require('./model/chat.js');
+//const  Contact= require ('./model/contact.js');
+//const Notification =require ('./model/notification.js');
+const { query } =require('express');
 
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '10mb' })); // JSON payload size limit
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
+const httpServer=createServer(app);
+const io=new Server(httpServer,{
+  cors:{
+    origin:"http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+})
 
 // MongoDB connection
 const uri = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/?retryWrites=true&w=majority&appName=Navsarjan';
@@ -31,7 +47,7 @@ async function connectToDatabase() {
   }
 }
 
-const logHistory = async (db, { entityType, entityId, fieldChanged, changedBy, isVerification = false }) => {
+const logHistory = async (db, { entityType, entityId, fieldChanged, changedBy, isVerification = 0 }) => {
   try {
     const historyData = {
       entityType,
@@ -245,11 +261,11 @@ app.post("/api/replace", async (req, res) => {
       console.log('hello')
       if (data.entityType === 'user'){
         
-        let resu = await db.collection(data.entityType).updateOne({ email: data.entityId}, {$set: {isVerification: true}})
+        let resu = await db.collection(data.entityType).updateOne({ email: data.entityId}, {$set: {isVerification: data.isVerification}})
       }
       else{
         console.log('byeee', data)
-        let resu = await db.collection(data.entityType).updateOne({ _id: new ObjectId(data.entityId)}, {$set: {isVerification: true}})
+        let resu = await db.collection(data.entityType).updateOne({ _id: new ObjectId(data.entityId)}, {$set: {level: data.isVerification}})
       }
     }
   } catch (err) { 
@@ -259,10 +275,219 @@ app.post("/api/replace", async (req, res) => {
     await client.close();
   }
 });
-  
+
+
+
+// Contact routes
+app.get("/home/chat/contact", async (req, res) => {
+    try {
+        const user = req.query.user;
+        console.log("user to identify contact: " + user);
+
+        // Find contact document
+        const contactCollection = db.collection('Contact');
+        const additionalQueryResult = await contactCollection.findOne({ userName: user });
+
+        let ans = new Map();
+        if (additionalQueryResult && additionalQueryResult.contactList) {
+            for (let contact of additionalQueryResult.contactList) {
+                let objectValue = { _id: contact, unreadMessageCount: 0 };
+                ans.set(objectValue._id, objectValue);
+            }
+        }
+
+        // Aggregate unread messages
+        const chatCollection = db.collection('Chat');
+        const queryResult = await chatCollection.aggregate([
+            { $match: { Status: "unread", Destination: user } },
+            {
+                $group: {
+                    _id: "$Source",
+                    unreadMessageCount: { $sum: 1 }
+                }
+            },
+            { $sort: { unreadMessageCount: -1 } }
+        ]).toArray();
+
+        // Add aggregated results to the Map
+        for (const item of queryResult) {
+            let objectValue = { _id: item._id, unreadMessageCount: item.unreadMessageCount };
+            ans.set(objectValue._id, objectValue);
+        }
+
+        // Convert Map to array
+        const finalAns = Array.from(ans.values());
+        res.send(finalAns);
+
+    } catch (error) {
+        console.error("Error in contact route:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Message retrieval route
+app.get("/home/chat/message", async (req, res) => {
+    try {
+        const from = req.query.from;
+        const to = req.query.to;
+        console.log("from: " + from + "  to: " + to);
+
+        const chatCollection = db.collection('Chat');
+        const queryResult = await chatCollection.find({
+            $or: [
+                { Source: from, Destination: to },
+                { Source: to, Destination: from }
+            ]
+        }).sort({ createdAt: 1 }).toArray();
+
+        res.send(queryResult);
+    } catch (error) {
+        console.error("Error in message retrieval:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Update read status route
+app.post("/home/chat/readStatus", async (req, res) => {
+    try {
+        const user = req.query.contact;
+        console.log("user: " + user);
+
+        const chatCollection = db.collection('Chat');
+        const queryResult = await chatCollection.updateMany(
+            { Source: user },
+            { $set: { Status: "read" } }
+        );
+
+        res.send(queryResult);
+    } catch (error) {
+        console.error("Error in read status update:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Notification retrieval route
+app.get("/home/notification/", async (req, res) => {
+    try {
+        const user = req.query.user;
+        console.log("user: " + user);
+
+        const notificationCollection = db.collection('Notification');
+        const queryResult = await notificationCollection
+            .find({ Destination: user })
+            .sort({ Priority: -1 })
+            .toArray();
+
+        console.log("get notification: " + JSON.stringify(queryResult, null, 2));
+        res.send(queryResult);
+    } catch (error) {
+        console.error("Error in notification retrieval:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Remove notification route
+app.post("/home/notification/removeNotify", async (req, res) => {
+    try {
+        const source = req.query.source;
+        const priority = req.query.priority;
+        const destination = req.query.user;
+        console.log(source + " " + priority + " " + destination);
+
+        const notificationCollection = db.collection('Notification');
+        const queryResult = await notificationCollection.deleteOne({
+            Source: source,
+            Priority: priority,
+            Destination: destination
+        });
+
+        console.log("remove notification: " + JSON.stringify(queryResult, null, 2));
+        res.send(queryResult);
+    } catch (error) {
+        console.error("Error in removing notification:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Socket.IO connection handling
+let onlineUser = new Map();
+io.on("connection", (socket) => {
+    // User connection and room joining
+    socket.on("Add", ({ from }) => {
+        console.log("User connected: " + from);
+        onlineUser.set(from, socket.id);
+    });
+
+    // Join room for private messaging
+    socket.on("joinRoom", ({ from, to }) => {
+        const roomId = [from, to].sort().join('_');
+        socket.join(roomId);
+        console.log(`User ${from} joined room ${roomId}`);
+    });
+
+    socket.on("message", async ({ from, to, message }) => {
+        try {
+            const contactCollection = db.collection('Contact');
+            const notificationCollection = db.collection('Notification');
+            const chatCollection = db.collection('Chat');
+
+            let status = "Unread";
+            const roomId = [from, to].sort().join('_');
+            
+            // Emit message to specific room
+            io.to(roomId).emit("newMessage", { from, to, message });
+
+            if (onlineUser.get(from) && onlineUser.get(to)) {
+                status = "read";
+            } else {
+                // Check and update contact list
+                const contact = await contactCollection.findOne({
+                    contactList: { $in: [to] }
+                });
+
+                if (!contact) {
+                    await contactCollection.updateOne(
+                        { userName: from },
+                        { $push: { contactList: to } }
+                    );
+                }
+
+                // Create notification
+                const newNotification = {
+                    Source: from,
+                    Destination: to,
+                    Message: message,
+                    Priority: 1
+                };
+
+                await notificationCollection.insertOne(newNotification);
+
+                // Emit offline notification
+                if (onlineUser.get(to)) {
+                    io.to(onlineUser.get(to)).emit("notification", { from, to, message });
+                }
+            }
+
+            // Save message to database
+            const newChat = {
+                message: message,
+                Source: from,
+                Destination: to,
+                Status: status,
+                createdAt: new Date()
+            };
+
+            await chatCollection.insertOne(newChat);
+
+        } catch (error) {
+            console.error("Error while processing message:", error);
+        }
+    });
+});
+
 // Start the server
 connectToDatabase().then(() => {
-  app.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 });

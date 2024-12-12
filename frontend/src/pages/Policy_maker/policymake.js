@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 
 function ChangeHistoryTable() {
   const [records, setRecords] = useState([]);
+  const [currentVal, setCurrentVal] = useState(0)
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [filterText, setFilterText] = useState("");
@@ -28,10 +29,11 @@ function ChangeHistoryTable() {
       try {
         const response = await axios.post("http://localhost:5001/api/fetch", {
           collectionName: "history",
-          condition: { isVerification: false },
+          condition: { isVerification: 0 },
           projection: {},
         });
         setRecords(response.data.data);
+        setCurrentVal(records.isVerification)
         setFilteredRecords(response.data.data);
       } catch (error) {
         console.error("Error fetching records:", error);
@@ -86,7 +88,7 @@ function ChangeHistoryTable() {
   };
 
   // Handle Save button click
-  const handleSave = async (recordId, isVerified, rejectionReason) => {
+  const handleAccept = async (recordId, isVerified, rejectionReason) => {
     const record = records.find((r) => r._id === recordId);
     if (!record) return;
 
@@ -97,7 +99,7 @@ function ChangeHistoryTable() {
         condition: { _id: recordId },
         data: {
           ...record,
-          isVerification: isVerified,
+          isVerification: currentVal+1,
           rejectionReason: isVerified ? null : rejectionReason,
         },
       });
@@ -111,7 +113,7 @@ function ChangeHistoryTable() {
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        NavSarjan Welcomes You,
+        NavSarjan, 
       </Typography>
 
       {/* Filter Input */}
@@ -162,10 +164,7 @@ function ChangeHistoryTable() {
             {filteredRecords.map((record) => (
               <TableRow key={record._id}>
                 <TableCell>
-                  <Link
-                    to={`/dashboard/${record.entityType}s/${record.entityType}profile`}
-                  >
-                    {record.entityId}
+                  <Link to={`/dashboard/${record.entityType}s/${record.entityType}profile`} state={ {name:record.fieldChanged, id: record.entityId}}> {record.entityId}
                   </Link>
                 </TableCell>
                 <TableCell>{record.fieldChanged}</TableCell>
@@ -196,7 +195,7 @@ function ChangeHistoryTable() {
                     variant="contained"
                     color="primary"
                     onClick={() =>
-                      handleSave(
+                      handleAccept(
                         record._id,
                         record.isVerification,
                         record.rejectionReason

@@ -4,6 +4,7 @@ import { Skeleton, DialogContentText, Container, Typography, Card, CardContent, 
 import { Edit, Delete, CloudUpload } from "@mui/icons-material";
 import axios from "axios";
 import { userdata } from "../Home/Signpage";
+import Timeline from "../../components/Timeline";
 
 const ProjectProfile = () => {
   // Initial project data
@@ -475,6 +476,7 @@ if (loading){
           </Button>
         </DialogActions>
       </Dialog>
+      
     </Container>
   );
 };

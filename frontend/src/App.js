@@ -7,7 +7,7 @@ import ProjectProfile from './pages/Project/ProjectProfile';
 import Startup from './pages/Startup/Startup';
 import StartupProfile from './pages/Startup/Startupprofile';
 import ProfilePage from './pages/Profile/Profile';
-import Homepage from './pages/Home/Homepage';
+import Navbar from './pages/LandingPage/Navbar';
 import StartupInvestmentTracker from './Data/startuptrack';
 import PolicyMakerLandingPage from './pages/Policy_maker/Components/policymakerpage';
 import PatentForm from './pages/Patent/iprform';
@@ -19,25 +19,53 @@ import MyProject from './pages/Project/myProject';
 import MyStartup from './pages/Startup/myStartup';
 import NewProject from './pages/Project/newProject';
 import ChangeHistoryTable from './pages/Policy_maker/policymake';
-import Chat from './pages/Chat/chat';
+
 import DefaultPage from './pages/defaultpage';
 import IPRDatas from './pages/Patent/patentexist';
+import CalendarPage from './pages/CalendarPage';
+import Chat from './pages/Chat/chat.js';
+import Notify from './pages/Notification/notification.js';
+import { useState,useEffect } from 'react';
+import ChangeHistoryTableSenior from './pages/Policy_maker/policymaker2.js';
+import ChangeHistoryTableSuper from './pages/Policy_maker/policymaker3.js';
+import Videopage from './pages/Video/homepage.js';
+import RoomPage from './pages/Video/roompage.js';
 
+export let socketvalue = {}
 function App() {
+  const [socket,setSocket]=useState('');
+  useEffect(()=>{
+    if(socket)
+    {
+      socketvalue=socket;
+      console.log("Socket value in app: "+socket.id);
+    }
+  },[socket]);
+
+
+
   return (
   <BrowserRouter>
       <Routes>
         <Route path='*' element={<DefaultPage/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
-        <Route path='/' exact={true} element={<Homepage/>}/>
+        <Route path='/' exact={true} element={<Navbar/>}/>
         <Route path="/sign-page" element={<Signpage/>}/>
         <Route path="/create-account" element={<CreateAccount/>}/>
+        <Route path="/policymaker2" element={<ChangeHistoryTableSenior/>}/>
+        <Route path="/policymaker3" element={<ChangeHistoryTableSuper/>}/>
         {/* Forms Routes */}
         
-        <Route path={'/dashboard'} exact={true} element={<Dashboard/>}>
+        <Route path={'/dashboard'} exact={true} element={<Dashboard socketValue={setSocket}/>}>
         <Route path={'/dashboard'} exact={true} element={<PolicyMakerLandingPage/>}/>
-        <Route path={'/dashboard/people'} exact={true} element={<Chat/>}/>
+        <Route path={'/dashboard/chat'} exact={true} element={<Chat/>}/>
+        <Route path={'/dashboard/room'} exact={true} element={<Videopage/>}/>
+        <Route path={'/dashboard/room/:roomId'} exact={true} element={<RoomPage/>}/>
+        
+        <Route path={'/dashboard/calendar'} exact={true} element={<CalendarPage/>}/>
           <Route path="/dashboard/policymaker" element={<ChangeHistoryTable/>}/>
+          <Route path="/dashboard/policymaker2" element={<ChangeHistoryTableSenior/>}/>
+          <Route path="/dashboard/policymaker3" element={<ChangeHistoryTableSuper/>}/>
           <Route path="/dashboard/iprdata" element={<IPRDatas/>}/>
           <Route path={'/dashboard/projects'} exact={true} element={<Project/>}/>
           <Route path={'/dashboard/myprojects'} exact={true} element={<MyProject/>}/>

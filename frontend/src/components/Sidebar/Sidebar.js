@@ -47,10 +47,19 @@ const Sidebar = ({userlog}) => {
                     </li>);
                 })}
             <li>
-                <Link to="/dashboard/people">
+                <Link to="/dashboard/chat">
                 <Button className="w-100">
                     <span className="icon"><FaHandshake/></span>
                         People
+                    <span className="arrow"><FaAngleRight/></span>
+                </Button>
+                </Link>
+            </li>
+            <li>
+                <Link to="/dashboard/calendar">
+                <Button className="w-100">
+                    <span className="icon"><FaHandshake/></span>
+                        Calendar
                     <span className="arrow"><FaAngleRight/></span>
                 </Button>
                 </Link>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { MdOutlinePendingActions } from "react-icons/md";
 import { DialogContentText, RadioGroup, Dialog, DialogActions, DialogContent, DialogTitle, ListItemText ,Card, Grid, CardMedia, CardContent, Typography, List, ListItem, Button, TextField, IconButton, Box, FormLabel, FormControlLabel, Checkbox } from "@mui/material";
 import { CloudUpload , Edit, Save as SaveIcon, Add as AddIcon, Delete  } from "@mui/icons-material";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -7,12 +8,13 @@ import { Bar } from "react-chartjs-2";
 import { postData } from "../../Data/backendmsg";
 import axios from "axios";
 import { userdata } from "../Home/Signpage";
+import AdvancedResourceRequestForm from "./resourceform";
+import Timeline from "../../components/Timeline";
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const StartupProfile = () => {
   const navigate = useNavigate();
-  const [response, setResponse] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [startup, setStartup] = useState({});
@@ -502,8 +504,8 @@ const barChartData = startup.graph?.data
       <Button disabled={!editMode} variant="contained" color="primary" onClick={() => handleEditInvestor({ id: Date.now(), name: "", email: "", amount: "", document: { name: "", url: "" },})}>
         Add Investor
       </Button>
-
-      {/* Edit/Add Investor Dialog */}
+      
+        {/* Edit/Add Investor Dialog */}
       <Dialog open={investorEditDialogOpen} onClose={() => setInvestorEditDialogOpen(false)}>
         <DialogTitle>{selectedInvestor?.id ? "Edit Investor" : "Add Investor"}</DialogTitle>
         <DialogContent>
@@ -542,6 +544,23 @@ const barChartData = startup.graph?.data
           </Button>
         </DialogActions>
       </Dialog>
+      <Typography>
+        Evaluation Status
+      </Typography>
+      <Timeline state={startup.level}/>
+      <Card sx={{ mt: 4 }} style={{ margin: "20px 0px 30px 0px", borderRadius: "8px", padding: "20px" }}>
+        <Typography variant="h5" gutterBottom>
+          Investment Report
+        </Typography>
+        <Link to={'/tracker'} state={{id: startup._id}}>
+        <Button variant="contained" color="primary">
+          Generate Report
+        </Button>
+      </Link>
+      </Card>
+      <Card>
+        <AdvancedResourceRequestForm/>
+      </Card>
     </div>
   );
 };

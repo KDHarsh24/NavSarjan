@@ -389,7 +389,9 @@ header button.rounded-circle:hover{
 }
 /* Hide Google Translate branding */
 .goog-te-banner-frame.skiptranslate {
-  display: none !important;
+  visibility: hidden;
+  position: fixed !important;
+  top: -50px;
 }
 body {
   top: 0 !important;
@@ -417,4 +419,12 @@ body {
 }
 .revenue-line-chart{
   height: fit-content;
+}
+input:disabled{
+  color: black;
+  -webkit-text-fill-color: rgba(0, 0, 0, 1) !important;
+}
+textarea:disabled{
+  color: black;
+  -webkit-text-fill-color: rgba(0, 0, 0, 1) !important;
 }

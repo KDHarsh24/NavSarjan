@@ -1,5 +1,6 @@
 import DataTable from "../../components/Datagrid/DataTable";
 import { Link } from "react-router-dom";
+
 import DashboardBox from "../Dashboard/DasboardBox";
 import { AiFillProject, AiOutlineCalculator } from "react-icons/ai";
 import { FaMoneyBill, FaThList } from 'react-icons/fa';
@@ -45,7 +46,7 @@ const Startup = () => {
           try {
             const response = await axios.post("http://localhost:5001/api/fetch", {
               collectionName: "startup", // Name of the collection
-              condition: {isVerification: true}, // Replace with your condition, e.g., {Funding: "active"}
+              condition: {}, // Replace with your condition, e.g., {Funding: "active"}
               projection: { 
                 _id: 1,
                 name: 1, 
