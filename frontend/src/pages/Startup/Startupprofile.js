@@ -9,7 +9,9 @@ import { postData } from "../../Data/backendmsg";
 import axios from "axios";
 import { userdata } from "../Home/Signpage";
 import AdvancedResourceRequestForm from "./resourceform";
+import { GrResources } from "react-icons/gr";
 import Timeline from "../../components/Timeline";
+import ResourceRequestForm from "../resource";
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -283,6 +285,11 @@ const barChartData = startup.graph?.data
       {(userdata.email === startup.founderuserid)?<Button variant="contained" color={editMode ? "secondary" : "primary"} onClick={() => {if (editMode)handleSubmit();setEditMode(!editMode);}} startIcon={editMode ? <SaveIcon /> : <Edit />}>
       {editMode ? "Save" : "Edit"}
     </Button> :<></>}
+
+    <Link to={'/dashboard/startups/startupprofile/resourcerequest'}>{(userdata.email === startup.founderuserid)?<Button variant="contained" color={editMode ? "secondary" : "primary"}  startIcon={ <GrResources /> }>
+     
+    </Button> :<></>}</Link>
+
      
       {/* Data section */}
       <Card style={{ margin: "20px 0px 30px 0px", borderRadius: "8px", padding: "20px" }}>

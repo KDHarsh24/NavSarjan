@@ -6,6 +6,7 @@ import Feedback from './Feedback';
 import axios from 'axios';
 import './all.css';
 import { format } from 'date-fns';
+import Timeline from '../../../components/Timeline';
 
 const PolicyMakerLandingPage = () => {
   ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -194,6 +195,7 @@ const PolicyMakerLandingPage = () => {
                 >
                   <h4 className="text-lg font-bold text-gray-800">{project.name}</h4>
                   <p className="text-gray-700">{project.description}</p>
+                  
                 </div>
               ))}
             </div>

@@ -30,6 +30,7 @@ import ChangeHistoryTableSenior from './pages/Policy_maker/policymaker2.js';
 import ChangeHistoryTableSuper from './pages/Policy_maker/policymaker3.js';
 import Videopage from './pages/Video/homepage.js';
 import RoomPage from './pages/Video/roompage.js';
+import ResourceRequestForm from './pages/resource.js';
 
 export let socketvalue = {}
 function App() {
@@ -72,12 +73,13 @@ function App() {
           <Route path={'/dashboard/myprojects/new'} exact={true} element={<NewProject/>}/>
           <Route path={'/dashboard/patents'} exact={true} element={<PatentForm/>}>
           <Route path={'/dashboard/patents/'} exact={true} element={<PatentApplicationForm/>}/>
-            <Route path={'/dashboard/patents/active'} exact={true} element={<PatentApplicationForm/>}/>
+            <Route path={'/dashboard/patents/active'} exact={true} element={<IPRDatas/>}/>
           </Route>
           <Route path={'/dashboard/projects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
           <Route path={'/dashboard/myprojects/projectprofile'} exact={true} element={<ProjectProfile/>}/>
           <Route path={'/dashboard/startups'} exact={true} element={<Startup/>}/>
           <Route path={'/dashboard/startups/startupprofile'} exact={true} element={<StartupProfile/>}/>
+          <Route path={'/dashboard/startups/startupprofile/resourcerequest'} exact={true} element={<ResourceRequestForm/>}/>
           <Route path={'/dashboard/mystartups'} exact={true} element={<MyStartup/>}/>
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
           <Route path={'/dashboard/profile'} exact={true} element={<ProfilePage/>}/>

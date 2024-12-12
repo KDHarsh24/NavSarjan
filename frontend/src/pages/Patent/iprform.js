@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Tab, Tabs, TextField, Button, Typography, Paper, IconButton, Grid } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { FaLightbulb } from "react-icons/fa";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 function PatentForm() {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
   const navigate = useNavigate();
 
   const handleTabChange = (event, newValue) => {

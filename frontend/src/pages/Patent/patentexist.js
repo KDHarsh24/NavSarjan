@@ -17,6 +17,8 @@ import {
   Typography,
   Skeleton
 } from "@mui/material";
+import { userdata } from "../Home/Signpage";
+import Timeline from "../../components/Timeline";
 
 const IPRDatas = () => {
   const [loading, setLoading] = useState(true); // For managing loading state
@@ -56,7 +58,7 @@ const IPRDatas = () => {
       try {
         const response = await axios.post("http://localhost:5001/api/fetch", {
           collectionName: "ipr", // Name of the collection
-          condition: {}, // Replace with your condition, e.g., {status: "active"}
+          condition: {email: userdata.email}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch
         });
 
@@ -120,7 +122,7 @@ const IPRDatas = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
-        Form Submissions
+        Your Application
       </Typography>
       <TableContainer component={Paper}>
         <Table>
@@ -146,7 +148,7 @@ const IPRDatas = () => {
                     color="primary"
                     onClick={() => handleDialogOpen(record)}
                   >
-                    Update
+                    Details
                   </Button>
                 </TableCell>
               </TableRow>
@@ -198,30 +200,12 @@ const IPRDatas = () => {
                   </div>
                 ))}
               </Typography>
-              <TextField
-                label="Status"
-                fullWidth
-                margin="normal"
-                value={currentRecord.status}
-                onChange={handleStatusChange}
-              />
-              <TextField
-                label="Message"
-                fullWidth
-                margin="normal"
-                value={currentRecord.message}
-                onChange={handleMessageChange}
-              />
+              
             </div>
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} color="primary" variant="contained">
-            Save
-          </Button>
+        <Timeline />
         </DialogActions>
       </Dialog>
     </div>

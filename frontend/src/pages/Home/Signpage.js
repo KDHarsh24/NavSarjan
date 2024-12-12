@@ -28,6 +28,7 @@ function Signpage() {
           email: response.data.data.email,
           id: response.data.data.id,
           name: response.data.data.name,
+          role: response.data.data.role
         };
 
         console.log("Userdata:", userdata);
