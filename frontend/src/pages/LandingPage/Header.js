@@ -2,7 +2,7 @@
 function Header(){
     return( 
         <>
-            <div className="py-1 text-black flex flex-wrap flex-row-reverse">
+            <div className="py-1 bg-white text-black flex flex-wrap flex-row-reverse">
                 <div className="flex flex-wrap flex-row-reverse">
                 <select className="mx-2">
                     <option>Select a language</option>

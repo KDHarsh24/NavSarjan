@@ -5,7 +5,6 @@ import banner3 from "./Images/banner3.png";
 import banner4 from "./Images/banner4.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import background from "./Images/background.jpg";
 
 function Carousal() {
   const [data, setData] = useState([]);
@@ -28,8 +27,7 @@ function Carousal() {
   }, []);
 
   return (
-    
-    <div className="flex flex-wrap gap-6 p-20 bg-gradient-to-b bg-slate-50">
+    <div className="flex bg-white flex-wrap gap-6 p-20 bg-gradient-to-b bg-slate-50">
       {/* Carousel Section */}
       <div className="flex-1 lg:w-2/3 rounded-lg shadow-md overflow-hidden">
         <Carousel className="w-full h-[500px]">
@@ -70,7 +68,12 @@ function Carousal() {
           News Updates
         </h2>
         <div className="relative h-96 overflow-hidden">
-          <div className="absolute inset-0 flex flex-col animate-scroll space-y-4">
+          <div
+            className="absolute inset-0 flex flex-col space-y-4"
+            style={{
+              animation: "vertical-scroll 10s linear infinite",
+            }}
+          >
             {data.map((article, index) => (
               <div
                 key={index}

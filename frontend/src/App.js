@@ -32,6 +32,10 @@ import Videopage from './pages/Video/homepage.js';
 import RoomPage from './pages/Video/roompage.js';
 import ResourceRequestForm from './pages/resource.js';
 
+import Gujarat_Policy from './pages/LandingPage/Gujarat_Policy.js';
+import Services from './pages/LandingPage/Services.js';
+import {Component} from './pages/LandingPage/Footer.js';
+
 export let socketvalue = {}
 function App() {
   const [socket,setSocket]=useState('');
@@ -51,6 +55,12 @@ function App() {
         <Route path='*' element={<DefaultPage/>}/>
         <Route path={'/tracker'} exact={true} element={<StartupInvestmentTracker/>}/>
         <Route path='/' exact={true} element={<Navbar/>}/>
+
+        <Route path={'/Gujarat_Policy'} element={<Gujarat_Policy/>}/>
+        <Route path={'/Services'} element={<Services/>}/>
+        <Route path={'/Footer'} element={<Component/>}/>
+
+
         <Route path="/sign-page" element={<Signpage/>}/>
         <Route path="/create-account" element={<CreateAccount/>}/>
         <Route path="/policymaker2" element={<ChangeHistoryTableSenior/>}/>
@@ -84,6 +94,8 @@ function App() {
           <Route path={'/dashboard/mystartups/new'} exact={true} element={<Newstartup/>}/>
           <Route path={'/dashboard/profile'} exact={true} element={<ProfilePage/>}/>
           {/* <Route path={'/dashboard/policymaker'} exact={true} element={<PolicyMakerLandingPage/>}/> */}
+
+
         </Route>
       </Routes>
   </BrowserRouter>

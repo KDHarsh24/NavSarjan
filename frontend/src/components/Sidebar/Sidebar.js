@@ -53,7 +53,7 @@ const Sidebar = () => {
                 <Link to="/dashboard/chat">
                 <Button className="w-100">
                     <span className="icon"><FaHandshake/></span>
-                        People
+                        Connection
                     <span className="arrow"><FaAngleRight/></span>
                 </Button>
                 </Link>
@@ -69,15 +69,7 @@ const Sidebar = () => {
             </li>
         </ul>
         <ul>
-        <li>
-            <Link to="/">
-            <Button className="w-100">
-                <span className="icon"><FaGear/></span>
-                    Settings
-                <span className="arrow"><FaAngleRight/></span>
-            </Button>
-            </Link>
-            </li>
+       
         </ul>
         <br/>
         <div className="logoutWrapper">

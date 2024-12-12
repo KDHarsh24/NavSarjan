@@ -1,6 +1,7 @@
 import { Footer } from "flowbite-react";
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import logo from "./Images/logo.jpg";
+import {Link} from 'react-router-dom';
 
 export function Component() {
   return (
@@ -8,7 +9,9 @@ export function Component() {
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-y-12 gap-x-8 xl:gap-x-12">
             <div class="col-span-2 md:col-span-4 xl:pr-8">
-                <img class="w-auto h-12 w-15" src={logo} alt="" />
+               <Link to="/">
+               <img class="w-auto h-12 w-15" src={logo} alt="" />
+               </Link>
 
                 <p class="text-base leading-relaxed text-gray-600 mt-7">An Initiate of Gujarat Government to empower the startup ecosystem.</p>
                 <a href="#" title="" class="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7">

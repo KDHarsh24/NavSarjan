@@ -11,38 +11,24 @@ import logo8 from "./Images/logo_08.png";
 
 function Marque() {
     return (
-        <div className="my-10">
-        <h2 className="text-4xl text-center text-slate-900 font-semibold mb-2">Our Government Partners to Drive Growth and Transparency</h2>
-        <Marquee pauseOnClick={true} className="my-10">
-            <div className="flex overflow-hidden whitespace-nowrap items-center hover:cursor-pointer">
-                <div className="inline-block mx-4">
-                    <img src={logo1} alt="logo1" className="max-w-xs h-auto" />
+        <div className="bg-white py-8">
+            <h2 className="text-4xl text-center text-slate-900 font-semibold mb-6">
+                Our Government Partners to Drive Growth and Transparency
+            </h2>
+            <Marquee pauseOnClick={true}>
+                <div className="flex items-center space-x-8">
+                    <img src={logo1} alt="logo1" className="h-24 w-auto" />
+                    <img src={logo2} alt="logo2" className="h-24 w-auto" />
+                    <img src={logo3} alt="logo3" className="h-24 w-auto" />
+                    <img src={logo4} alt="logo4" className="h-24 w-auto" />
+                    <img src={logo5} alt="logo5" className="h-24 w-auto" />
+                    <img src={logo6} alt="logo6" className="h-24 w-auto" />
+                    <img src={logo7} alt="logo7" className="h-24 w-auto" />
+                    <img src={logo8} alt="logo8" className="h-24 w-auto" />
                 </div>
-                <div className="inline-block mx-4">
-                    <img src={logo2} alt="logo2" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo3} alt="logo3" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo4} alt="logo4" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo5} alt="logo5" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo6} alt="logo6" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo7} alt="logo7" className="max-w-xs h-auto" />
-                </div>
-                <div className="inline-block mx-4">
-                    <img src={logo8} alt="logo8" className="max-w-xs h-auto" />
-                </div>
-            </div>
-        </Marquee>
+            </Marquee>
         </div>
     );
-};
+}
 
 export default Marque;
