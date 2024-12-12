@@ -9,7 +9,7 @@ function Blog() {
     return (
         <>
 
-<div className="px-4  bg-whitelg:px-14 mt-16">
+<div className="px-4  bg-white lg:px-14 py-10">
   <div className="text-center md:w-3/4 mx-auto">
     {/* Section Heading */}
     <h2 className="text-3xl text-slate-900 font-bold mb-6">About NavSarjan</h2>

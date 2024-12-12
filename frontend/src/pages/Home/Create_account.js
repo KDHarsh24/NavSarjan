@@ -13,7 +13,7 @@ function Create_account(){
 
                         <div class="relative">
                             <div class="w-full max-w-xl xl:w-full xl:mx-auto xl:pr-24 xl:max-w-xl">
-                                <h3 class="text-4xl font-bold text-white">Join 35k+ web professionals & <br class="hidden xl:block" />build your website</h3>
+                                <h3 class="text-4xl font-bold text-white">Join 2k+ Mentors & <br class="hidden xl:block" />build your startup</h3>
                                 <ul class="grid grid-cols-1 mt-10 sm:grid-cols-2 gap-x-8 gap-y-4">
                                     <li class="flex items-center space-x-3">
                                         <div class="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 bg-blue-500 rounded-full">
@@ -29,7 +29,7 @@ function Create_account(){
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <span class="text-lg font-medium text-white"> Unlimited Exports </span>
+                                        <span class="text-lg font-medium text-white"> Transparency </span>
                                     </li>
                                     <li class="flex items-center space-x-3">
                                         <div class="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 bg-blue-500 rounded-full">
@@ -45,7 +45,7 @@ function Create_account(){
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <span class="text-lg font-medium text-white"> Design Files Included </span>
+                                        <span class="text-lg font-medium text-white"> Middle Man Elimination </span>
                                     </li>
                                 </ul>
                             </div>
@@ -168,33 +168,8 @@ function Create_account(){
                                 </div>
                             </form>
 
-                            <div class="mt-3 space-y-3">
-                                <button
-                                    type="button"
-                                    class="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
-                                >
-                                    <div class="absolute inset-y-0 left-0 p-4">
-                                        <svg class="w-6 h-6 text-rose-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"
-                                            ></path>
-                                        </svg>
-                                    </div>
-                                    Sign in with Google
-                                </button>
-
-                                <button
-                                    type="button"
-                                    class="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
-                                >
-                                    <div class="absolute inset-y-0 left-0 p-4">
-                                        <svg class="w-6 h-6 text-[#2563EB]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
-                                        </svg>
-                                    </div>
-                                    Sign in with Facebook
-                                </button>
-                            </div>
+                            
+                               
                         </div>
                     </div>
                 </div>

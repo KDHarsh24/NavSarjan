@@ -1,12 +1,12 @@
-@keyframes marquee {
-    0% {
-      transform: translateY(100%); /* Start from below the container */
-    }
-    100% {
-      transform: translateY(-100%); /* End above the container */
-    }
+@keyframes vertical-scroll {
+  0% {
+    transform: translateY(100%);
   }
-  
-  .animate-marquee {
-    animation: marquee 10s linear infinite; /* Adjust duration as needed */
+  100% {
+    transform: translateY(-100%);
   }
+}
+
+.relative .absolute {
+  will-change: transform;
+}

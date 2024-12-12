@@ -6,7 +6,7 @@ import presentation from './Images/presentation.png';
 
 function Countup(){
     return(
-            <div className='grid md:grid-cols-4 sm:grid-cols-2 text-center px-20 '>
+            <div className='bg-white  grid md:grid-cols-4 sm:grid-cols-2 text-center px-20 '>
                 <div>
                     <div className='flex flex-wrap text-center'>
                         <img src={Startup} alt="startup img" className='w-15 h-20'/>

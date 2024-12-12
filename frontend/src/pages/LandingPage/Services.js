@@ -8,6 +8,7 @@ import register from "./Images/Register.png";
 import unique_id from "./Images/unique_id.jpg";
 import assistance from "./Images/assistance.avif";
 import Marquee from "react-fast-marquee";
+import {Link} from 'react-router-dom';
 
 
 function Services(){
@@ -18,7 +19,7 @@ function Services(){
     ]
     return(
         <>
-            <div className="md:px-14 px-4 py-16 max-w-screen-2xl mx-auto">
+            <div className="md:px-14 px-4 py-16 max-w-screen-2xl bg-white mx-auto">
                 <div className="text-center my-8">
                     <h2 className="text-4xl text-gray-700 font-semibold mb-2">Our Successful StartUps</h2>
                     <p className="text-gray-700">We have been working with successful 500+ startups</p>
@@ -59,7 +60,8 @@ function Services(){
             <div key={service.id} className="px-4 py-8 text-center md:w-[300px] 
             mx-auto md:h-80 rounded-md shadow cursor-pointer hover:-translate-y-5 hover:border-b-4
             hover:border-indigo-700 hover:shadow-indigo-600 transition-all duration-300 flex items-center justify-center h-full">
-                <div>
+               <Link to="/sign-page">
+               <div>
                     <div className="bg-white h-14 w-14 mx-auto rounded-tl-3xl rounded-br-3xl overflow-hidden shadow-lg transition-transform duration-300 transform hover:scale-105">
                         <img
                             src={service.image}
@@ -70,6 +72,7 @@ function Services(){
                     <h4 className="text-2xl font-bold text-gray-700 mb-2 px-2">{service.title}</h4>
                     <p className="text-sm text-gray-700">{service.description}</p>
                 </div>
+                </Link>
             </div>
         ))
     }
