@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 
@@ -29,9 +30,9 @@ const io=new Server(httpServer,{
 })
 
 // MongoDB connection
-const uri = 'mongodb+srv://navsarjansih:navsarjansih@navsarjan.nqyo7.mongodb.net/?retryWrites=true&w=majority&appName=Navsarjan';
+const uri = process.env.MONGO_URI;
+const dbName = process.env.DB_NAME;
 const client = new MongoClient(uri);
-const dbName = 'navsarjan'; // Replace with your database name
 let db; // Global variable to hold the database instance
 
 
