@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const { emit } = require('nodemon');
 
 const app = express();
-const PORT = 5001;
+
 const {Server}=require('socket.io');
 const {createServer}=require('http')
 
@@ -487,6 +487,7 @@ io.on("connection", (socket) => {
 });
 
 // Start the server
+const PORT = process.env.PORT || 5001;
 connectToDatabase().then(() => {
   httpServer.listen(PORT, () => {
     console.log(`Server is running on http://Vercel`);
