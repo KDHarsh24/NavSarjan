@@ -3,7 +3,7 @@ require('dotenv').config();
 const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors');
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { emit } = require('nodemon');
 
 const app = express();
@@ -489,6 +489,6 @@ io.on("connection", (socket) => {
 // Start the server
 connectToDatabase().then(() => {
   httpServer.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://Vercel`);
   });
 });
