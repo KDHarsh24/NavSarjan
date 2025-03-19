@@ -63,7 +63,7 @@ const StartupInvestmentTracker = () => {
   const location = useLocation();
   const { id } = location.state || {};
   console.log(id)
-  const API_BASE_URL = "http://localhost:5001"; // Note: Changed to match the server port in the provided server.js
+  const API_BASE_URL = "https://navsarjanbackend-sage.vercel.app"; // Note: Changed to match the server port in the provided server.js
 
 const postData = async (endpoint, data) => {
   try {
@@ -106,7 +106,7 @@ const [startupId, setStartupId] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("http://localhost:5001/api/fetchone", {
+        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetchone", {
           collectionName: "startup", // Name of the collection
           condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch

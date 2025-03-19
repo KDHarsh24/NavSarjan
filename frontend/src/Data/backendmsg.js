@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000"; // Base URL for the backend
+const API_BASE_URL = "https://navsarjanbackend-sage.vercel.app"; // Base URL for the backend
 
 // General function to send POST requests
 export const postData = async (endpoint, data) => {

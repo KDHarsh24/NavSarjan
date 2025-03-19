@@ -15,7 +15,7 @@ export default function ProfilePage({email}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(`http://localhost:5001/api/fetchone`, {
+        const response = await axios.post(`https://navsarjanbackend-sage.vercel.app/api/fetchone`, {
           collectionName: "user",
           condition: {email: userdata.email}, // Parse JSON from the input
           projection: {}

@@ -22,7 +22,7 @@ const Dashboard = ({socketValue}) => {
   
   useEffect(() => {
     // Create a new socket connection
-    const newSocket = io('http://localhost:5001/', {
+    const newSocket = io('https://navsarjanbackend-sage.vercel.app/', {
       // Optional: add connection options if needed
       reconnection: true,
       reconnectionAttempts: 5,

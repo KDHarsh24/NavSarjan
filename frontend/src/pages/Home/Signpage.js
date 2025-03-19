@@ -16,7 +16,7 @@ function Signpage() {
     e.preventDefault(); // Prevent page reload
     setIsLoading(true); // Set loading state
     try {
-      const response = await axios.post("http://localhost:5001/api/login", {
+      const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/login", {
         email,
         password,
       });

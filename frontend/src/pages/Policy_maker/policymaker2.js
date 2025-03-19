@@ -27,7 +27,7 @@ function ChangeHistoryTableSenior() {
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.post("http://localhost:5001/api/fetch", {
+        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetch", {
           collectionName: "history",
           condition: { isVerification: 1 },
           projection: {},
@@ -94,7 +94,7 @@ function ChangeHistoryTableSenior() {
 
     try {
       // Update the record in the database
-      await axios.post("http://localhost:5001/api/replace", {
+      await axios.post("https://navsarjanbackend-sage.vercel.app/api/replace", {
         collectionName: "history",
         condition: { _id: recordId },
         data: {

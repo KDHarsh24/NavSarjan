@@ -82,7 +82,7 @@ const ResourceRequestForm = () => {
     const fetchInstitutes = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post('http://localhost:5001/api/fetch', {
+        const response = await axios.post('https://navsarjanbackend-sage.vercel.app/api/fetch', {
           collectionName: 'institute',
           condition: {}, // Fetch all institutes
           projection: {} // Fetch all fields
@@ -192,7 +192,7 @@ const ResourceRequestForm = () => {
         };
 
         // Send POST request to backend
-        const response = await axios.post('http://localhost:5001/api/insert', {
+        const response = await axios.post('https://navsarjanbackend-sage.vercel.app/api/insert', {
           collectionName: 'resources',
           data: resourceRequestData
         });

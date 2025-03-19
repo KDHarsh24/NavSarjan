@@ -68,7 +68,7 @@ const IPRForm = () => {
         });
         console.log(formData);
         try {
-            const response = await axios.post("http://localhost:5001/api/insert", {
+            const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/insert", {
               collectionName: "ipr",
               data: formData,
             });

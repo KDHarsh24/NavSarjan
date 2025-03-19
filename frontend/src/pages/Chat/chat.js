@@ -45,7 +45,7 @@ function Chat()
     {
        
         //make api call to show all contacts
-        axios.get("http://localhost:5001/home/chat/contact",{params:{user}})
+        axios.get("https://navsarjanbackend-sage.vercel.app/home/chat/contact",{params:{user}})
             .then(res=>{
                     console.log("Contact directory"+JSON.stringify(res.data,null,2));
                     
@@ -88,7 +88,7 @@ function Chat()
 
 
         //make api call to load data
-        axios.get('http://localhost:5001/home/chat/message',{params:{from,to}})
+        axios.get('https://navsarjanbackend-sage.vercel.app/home/chat/message',{params:{from,to}})
             .then(res=>{
                 console.log("Chat directory: "+JSON.stringify(res.data,null,2));
                 setChatQueue(res.data);
@@ -97,7 +97,7 @@ function Chat()
 
 
         //make api call to mark all related message read
-        axios.post('http://localhost:5001/home/chat/readStatus',{params:{contact}})
+        axios.post('https://navsarjanbackend-sage.vercel.app/home/chat/readStatus',{params:{contact}})
         .then(res=>{
             console.log("res.data: "+JSON.stringify(res.data,null,2));
         })
