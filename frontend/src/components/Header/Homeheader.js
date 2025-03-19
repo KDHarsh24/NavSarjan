@@ -8,7 +8,9 @@ import {
   IconButton,
 } from "@mui/material";
 import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import TranslateComponent from "../../TranslateComponent";
 import MenuIcon from "@mui/icons-material/Menu";
+import { FaLanguage } from "react-icons/fa";
 
 const Homeheader = () => {
   useEffect(() => {
@@ -65,14 +67,7 @@ const Homeheader = () => {
           </IconButton>
 
           {/* Language Section */}
-          <Box
-            id="google_translate_element"
-            style={{
-              marginLeft: "10px",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          />
+          <Button className="rounded-circle mr-3"><TranslateComponent/><FaLanguage className="langbtn"/></Button>
         </Box>
 
         {/* Desktop Navigation */}
