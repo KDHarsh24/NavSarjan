@@ -24,7 +24,7 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 const httpServer=createServer(app);
 const io=new Server(httpServer,{
   cors:{
-    origin:"http://localhost:3000",
+    origin:"https://navsarjan.vercel.app",
     methods: ["GET", "POST"]
   }
 })
