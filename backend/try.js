@@ -22,6 +22,7 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' })); // JSON payload size limit
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 const httpServer=createServer(app);
+<<<<<<< HEAD
 const io = new Server(httpServer, {
   cors: {
     origin: [
@@ -30,6 +31,12 @@ const io = new Server(httpServer, {
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
+=======
+const io=new Server(httpServer,{
+  cors:{
+    origin:"https://navsarjan.vercel.app",
+    methods: ["GET", "POST"]
+>>>>>>> d2e3185ec9c933dce884e2431c696ad6a1aa2e18
   }
 });
 
