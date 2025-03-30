@@ -22,12 +22,17 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' })); // JSON payload size limit
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 const httpServer=createServer(app);
-const io=new Server(httpServer,{
-  cors:{
-    origin:"http://localhost:3000",
-    methods: ["GET", "POST"]
+const io = new Server(httpServer, {
+  cors: {
+    origin: [
+      "https://navsarjan.vercel.app",  // New domain added
+      "https://navsarjan-kdharsh24s-projects.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
   }
-})
+});
+
 
 // MongoDB connection
 const uri = process.env.MONGO_URI;
