@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "message.js",
   "scripts": {
-    "start": "nodemon try.js"
+    "start": "node try.js"
   },
   "keywords": [],
   "author": "",
