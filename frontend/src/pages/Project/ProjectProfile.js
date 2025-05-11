@@ -56,7 +56,7 @@ const ProjectProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetchone", {
+        const response = await axios.post("https://navsarjan-2.onrender.comapi/fetchone", {
           collectionName: "project", // Name of the collection
           condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch
@@ -163,7 +163,7 @@ const ProjectProfile = () => {
     toggleEditing();
     console.log(project);
     try {
-      const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/replace", {
+      const response = await axios.post("https://navsarjan-2.onrender.comapi/replace", {
         collectionName: "project",
         condition: {_id: project._id}, // Parse JSON from the input
         data: project, // Parse JSON from the input

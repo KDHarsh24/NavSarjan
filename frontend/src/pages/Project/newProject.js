@@ -138,7 +138,7 @@ const NewProject = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/insert", {
+      const response = await axios.post("https://navsarjan-2.onrender.comapi/insert", {
         collectionName: "project",
         data: project,
       });

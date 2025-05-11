@@ -44,7 +44,7 @@ const MyStartup = () => {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetch", {
+            const response = await axios.post("https://navsarjan-2.onrender.comapi/fetch", {
               collectionName: "startup", // Name of the collection
               condition: {founderuserid : userdata.email}, // Replace with your condition, e.g., {Funding: "active"}
               projection: { 

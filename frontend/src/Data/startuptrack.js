@@ -106,7 +106,7 @@ const [startupId, setStartupId] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetchone", {
+        const response = await axios.post("https://navsarjan-2.onrender.comapi/fetchone", {
           collectionName: "startup", // Name of the collection
           condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch

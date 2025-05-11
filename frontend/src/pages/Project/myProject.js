@@ -42,7 +42,7 @@ const MyProject = () => {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetch", {
+            const response = await axios.post("https://navsarjan-2.onrender.comapi/fetch", {
               collectionName: "project", // Name of the collection
               condition: {ownerid: userdata.email}, // Replace with your condition, e.g., {status: "active"}
               projection: { 

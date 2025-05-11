@@ -12,7 +12,7 @@ function Notify() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('https://navsarjanbackend-sage.vercel.app/home/notification', { params: { user } })
+    axios.get('https://navsarjan-2.onrender.comhome/notification', { params: { user } })
       .then(res => {
         console.log("Fetched notifications:", res.data);
         setNotifyQueue(res.data);
@@ -21,7 +21,7 @@ function Notify() {
   }, [user]);
 
   const handleNotification = useCallback((source, priority) => {
-    axios.post('https://navsarjanbackend-sage.vercel.app/home/chat/removeNotify', { params: { source, priority, user } })
+    axios.post('https://navsarjan-2.onrender.comhome/chat/removeNotify', { params: { source, priority, user } })
       .then(() => {
         setNotifyQueue(prevQueue =>
           prevQueue.filter(notify =>

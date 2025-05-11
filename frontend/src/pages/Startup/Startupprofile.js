@@ -28,7 +28,7 @@ const StartupProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetchone", {
+        const response = await axios.post("https://navsarjan-2.onrender.comapi/fetchone", {
           collectionName: "startup", // Name of the collection
           condition: {_id: id}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch
@@ -251,7 +251,7 @@ const barChartData = startup.graph?.data
 
     console.log(startup);
     try {
-      const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/replace", {
+      const response = await axios.post("https://navsarjan-2.onrender.comapi/replace", {
         collectionName: "startup",
         condition: {_id: startup._id}, // Parse JSON from the input
         data: startup, // Parse JSON from the input

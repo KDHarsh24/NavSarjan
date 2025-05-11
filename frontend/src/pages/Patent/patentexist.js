@@ -56,7 +56,7 @@ const IPRDatas = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetch", {
+        const response = await axios.post("https://navsarjan-2.onrender.comapi/fetch", {
           collectionName: "ipr", // Name of the collection
           condition: {email: userdata.email}, // Replace with your condition, e.g., {status: "active"}
           projection: {}, // Fields to fetch

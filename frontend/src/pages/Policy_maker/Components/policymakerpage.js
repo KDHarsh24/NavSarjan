@@ -41,13 +41,13 @@ const PolicyMakerLandingPage = () => {
     try {
       setLoading(true);
 
-      const projectResponse = await axios.post('https://navsarjanbackend-sage.vercel.app/api/fetch', {
+      const projectResponse = await axios.post('https://navsarjan-2.onrender.comapi/fetch', {
         collectionName: 'project',
         condition: {},
         projection: {}
       });
 
-      const eventsResponse = await axios.post('https://navsarjanbackend-sage.vercel.app/api/fetch', {
+      const eventsResponse = await axios.post('https://navsarjan-2.onrender.comapi/fetch', {
         collectionName: 'events',
         condition: {},
         projection: {}

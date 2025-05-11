@@ -31,7 +31,7 @@ const CalendarPage = () => {
           return;
         }
 
-        const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/fetch", {
+        const response = await axios.post("https://navsarjan-2.onrender.comapi/fetch", {
           collectionName: "events",
           condition: { Participants: user.id },
         });
@@ -79,7 +79,7 @@ const CalendarPage = () => {
         Participants: [user.id],
       };
 
-      await axios.post("https://navsarjanbackend-sage.vercel.app/api/insert", {
+      await axios.post("https://navsarjan-2.onrender.comapi/insert", {
         collectionName: "events",
         data: eventToSave,
       });

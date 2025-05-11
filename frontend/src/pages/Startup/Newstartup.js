@@ -119,7 +119,7 @@ const handleSubmit = async () => {
   try {
     // Send a POST request to the backend API with the startup data
     console.log(startup)
-    const response = await axios.post("https://navsarjanbackend-sage.vercel.app/api/insert",{collectionName: 'startup', data:startup});
+    const response = await axios.post("https://navsarjan-2.onrender.comapi/insert",{collectionName: 'startup', data:startup});
     
     if (response.data.success) {
       // Handle the success response
