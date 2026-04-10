@@ -1,19 +1,22 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "message.js",
+  "type": "module",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node try.js"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "bcryptjs": "^3.0.2",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.4.1",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.3.2",
+    "jsonwebtoken": "^9.0.3",
     "mongodb": "^6.11.0",
     "socket.io": "^4.8.1"
   },
